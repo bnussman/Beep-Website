@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Home from './Home.js';
+import Login from './Login.js';
+import EditProfile from './EditProfile.js';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { UserContext } from './UserContext.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [user, setUser] = useState();
+    const storageUser = localStorage.getItem('user');
+    
+    if (!user && storageUser) {
+        setUser(JSON.parse(storageUser));
+    }
+
+    return (
+        <UserContext.Provider value={{user, setUser}}>
+            <Router>
+                <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/profile" component={EditProfile} />
+                    <Route path="/" component={Home} />
+                </Switch>
+            </Router>
+        </UserContext.Provider>
+    );
 }
 
 export default App;
