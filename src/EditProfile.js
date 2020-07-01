@@ -12,7 +12,7 @@ function EditProfile() {
     
     const [error, setError] = useState();
     const [success, setSuccess] = useState();
-    const [username, setUsername] = useState(user.username);
+    const [username] = useState(user.username);
     const [first, setFirst] = useState(user.first);
     const [last, setLast] = useState(user.last);
     const [email, setEmail] = useState(user.email);

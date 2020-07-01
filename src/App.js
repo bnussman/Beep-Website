@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 function App() {
     const [user, setUser] = useState();
     const storageUser = localStorage.getItem('user');

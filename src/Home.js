@@ -12,11 +12,11 @@ function Home() {
                 <Jumbotron>
                     <h1>Welcome to the Beep App!</h1>
                     <p>
-                    The Beep App is an app launching soon that aims to simplify the ride sharing system
+                    The Beep App is an app <b>launching soon</b> that aims to simplify the ride sharing system
                     in Boone.
                     </p>
                     <p>
-                    <Button variant="primary">Learn more</Button>
+                    <Button variant="primary">More coming soon!</Button>
                     </p>
                 </Jumbotron>
             </Container>

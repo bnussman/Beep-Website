@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useHistory } from "react-router-dom";
 
 const BeepAppBar = (props) => {
     const { user, setUser } = useContext(UserContext);
+    let history = useHistory();
 
     function logout () {
         fetch('https://beep.nussman.us/api/auth/logout', {
@@ -23,6 +25,7 @@ const BeepAppBar = (props) => {
             console.log(data);
             if (data.status === "success") {
                 localStorage.clear();
+                history.push("/");
                 setUser(null);
             }
         })
@@ -48,7 +51,6 @@ const BeepAppBar = (props) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
-                        <Nav.Link href="#link">Link</Nav.Link>
                         <NavDropdown title={user.first + " " + user.last} id="basic-nav-dropdown">
                             <NavDropdown.Item as={Link} to="/profile">Edit Account</NavDropdown.Item>
                             <NavDropdown.Divider />
