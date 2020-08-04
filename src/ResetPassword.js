@@ -1,35 +1,32 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext.js';
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 
-function Login() {
-    const {user, setUser} = useContext(UserContext);
-    const [username, setUsername] = useState("");
+function ResetPassword() {
+    const { user } = useContext(UserContext);
     const [password, setPassword] = useState("");
     const [error, setError] = useState();
 
-    function handleLogin(e) {
+    function handleResetPassword(e) {
         e.preventDefault();
-        fetch('https://beep.nussman.us/api/auth/login', {
+        fetch('https://beep.nussman.us/api/auth/password/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'username': username,
                 'password': password
             }),
         })
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
-                setUser(data);
-                localStorage.setItem('user', JSON.stringify(data));
+                console.log(data);
             }
             else {
                 setError(data.message);
@@ -58,23 +55,18 @@ function Login() {
                 :
                 null
             }
-            <Form onSubmit={handleLogin}>
+            <Form onSubmit={handleResetPassword}>
                 <Form.Group>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="username" autoComplete="username" placeholder="Username" onChange={(value) => setUsername(value.target.value)} />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" autoComplete="password" placeholder="Password" onChange={(value) => setPassword(value.target.value)} />
+                    <Form.Label>New Password</Form.Label>
+                    <Form.Control type="password" autoComplete="password" placeholder="password" onChange={(value) => setPassword(value.target.value)} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                    Login
+                    Reset Password
                 </Button>
             </Form>
-            <Link to={"/password/forgot"}>Forgot Password</Link>
         </Container>
         </>
     );
 }
 
-export default Login;
+export default ResetPassword;
