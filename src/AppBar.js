@@ -10,6 +10,8 @@ const BeepAppBar = (props) => {
     const { user, setUser } = useContext(UserContext);
     let history = useHistory();
 
+    console.log(process.env);
+
     function logout () {
         fetch('https://ridebeep.app/api/auth/logout', {
             method: 'POST',
