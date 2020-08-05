@@ -21,7 +21,7 @@ function App() {
             <Router>
                 <Switch>
                     <Route path="/password/forgot" component={ForgotPassword} />
-                    <Route path="/password/reset" component={ResetPassword} />
+                    <Route path="/password/reset/:id" component={ResetPassword} />
                     <Route path="/login" component={Login} />
                     <Route path="/profile" component={EditProfile} />
                     <Route path="/" component={Home} />

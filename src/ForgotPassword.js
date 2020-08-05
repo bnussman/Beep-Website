@@ -10,7 +10,7 @@ import Alert from 'react-bootstrap/Alert';
 function ForgotPassword() {
     const { user } = useContext(UserContext);
     const [email, setEmail] = useState("");
-    const [error, setError] = useState();
+    const [status, setStatus] = useState();
 
     function handleForgotPassword(e) {
         e.preventDefault();
@@ -25,12 +25,7 @@ function ForgotPassword() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === "success") {
-                console.log(data);
-            }
-            else {
-                setError(data.message);
-            }
+            setStatus(data);
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -48,19 +43,17 @@ function ForgotPassword() {
         <>
         <BeepAppBar/>
         <Container>
-            {error ? 
-                <Alert variant="danger">
-                    {error}
+            {status && 
+                <Alert variant={status.status === "success" ? "success" : "danger" }>
+                    {status.message}
                 </Alert>
-                :
-                null
             }
             <Form onSubmit={handleForgotPassword}>
                 <Form.Group>
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="email" autoComplete="email" placeholder="example@ridebeep.app" onChange={(value) => setEmail(value.target.value)} />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" disabled={status?.status === "success"}>
                     Send Reset Password Email
                 </Button>
             </Form>

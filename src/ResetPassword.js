@@ -7,10 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 
-function ResetPassword() {
+function ResetPassword({ match }) {
+    const id = match.params.id;
     const { user } = useContext(UserContext);
     const [password, setPassword] = useState("");
-    const [error, setError] = useState();
+    const [status, setStatus] = useState();
 
     function handleResetPassword(e) {
         e.preventDefault();
@@ -20,17 +21,13 @@ function ResetPassword() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                'id': id,
                 'password': password
             }),
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === "success") {
-                console.log(data);
-            }
-            else {
-                setError(data.message);
-            }
+            setStatus(data);
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -48,12 +45,10 @@ function ResetPassword() {
         <>
         <BeepAppBar/>
         <Container>
-            {error ? 
-                <Alert variant="danger">
-                    {error}
+            {status && 
+                <Alert variant={status.status === "success" ? "success" : "danger" }>
+                    {status.message}
                 </Alert>
-                :
-                null
             }
             <Form onSubmit={handleResetPassword}>
                 <Form.Group>
