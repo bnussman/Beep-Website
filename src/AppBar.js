@@ -11,7 +11,7 @@ const BeepAppBar = (props) => {
     let history = useHistory();
 
     function logout () {
-        fetch('https://beep.nussman.us/api/auth/logout', {
+        fetch('https://ridebeep.app/api/auth/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

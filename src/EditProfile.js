@@ -27,7 +27,7 @@ function EditProfile() {
 
     function handleEdit(e) {
         e.preventDefault();
-        fetch('https://beep.nussman.us/api/account/edit', {
+        fetch('https://ridebeep.app/api/account/edit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
