@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+import { config } from './utils/config';
 
 function EditProfile() {
     const {user, setUser} = useContext(UserContext);
@@ -27,7 +28,7 @@ function EditProfile() {
 
     function handleEdit(e) {
         e.preventDefault();
-        fetch('https://ridebeep.app/api/account/edit', {
+        fetch(config.apiUrl + '/account/edit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

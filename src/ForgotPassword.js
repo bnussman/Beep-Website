@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+import { config } from './utils/config';
 
 function ForgotPassword() {
     const { user } = useContext(UserContext);
@@ -14,7 +15,7 @@ function ForgotPassword() {
 
     function handleForgotPassword(e) {
         e.preventDefault();
-        fetch('https://ridebeep.app/api/auth/password/forgot', {
+        fetch(config.apiUrl + 'auth/password/forgot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

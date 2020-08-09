@@ -5,15 +5,14 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useHistory } from "react-router-dom";
+import { config } from "./utils/config";
 
-const BeepAppBar = (props) => {
+const BeepAppBar = () => {
     const { user, setUser } = useContext(UserContext);
     let history = useHistory();
 
-    console.log(process.env);
-
     function logout () {
-        fetch('https://ridebeep.app/api/auth/logout', {
+        fetch(config.apiUrl + '/auth/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+import { config } from './utils/config';
 
 function ResetPassword({ match }) {
     const id = match.params.id;
@@ -15,7 +16,7 @@ function ResetPassword({ match }) {
 
     function handleResetPassword(e) {
         e.preventDefault();
-        fetch('https://ridebeep.app/api/auth/password/reset', {
+        fetch(config.apiUrl + '/auth/password/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

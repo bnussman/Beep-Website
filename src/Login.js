@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+import { config } from './utils/config';
 
 function Login() {
     const {user, setUser} = useContext(UserContext);
@@ -15,7 +16,7 @@ function Login() {
 
     function handleLogin(e) {
         e.preventDefault();
-        fetch('https://ridebeep.app/api/auth/login', {
+        fetch(config.apiUrl + '/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
