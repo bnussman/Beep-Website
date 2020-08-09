@@ -14,7 +14,7 @@ function ForgotPassword() {
 
     function handleForgotPassword(e) {
         e.preventDefault();
-        fetch('https://api.ridebeep.app/auth/password/forgot', {
+        fetch('https://ridebeep.app/api/auth/password/forgot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ function Login() {
 
     function handleLogin(e) {
         e.preventDefault();
-        fetch('https://api.ridebeep.app/auth/login', {
+        fetch('https://ridebeep.app/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
