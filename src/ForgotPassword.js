@@ -15,7 +15,7 @@ function ForgotPassword() {
 
     function handleForgotPassword(e) {
         e.preventDefault();
-        fetch(config.apiUrl + 'auth/password/forgot', {
+        fetch(config.apiUrl + '/auth/password/forgot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
