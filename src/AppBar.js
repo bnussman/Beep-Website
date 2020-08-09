@@ -13,7 +13,7 @@ const BeepAppBar = (props) => {
     console.log(process.env);
 
     function logout () {
-        fetch('https://ridebeep.app/api/auth/logout', {
+        fetch('https://api.ridebeep.app/auth/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

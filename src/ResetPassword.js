@@ -15,7 +15,7 @@ function ResetPassword({ match }) {
 
     function handleResetPassword(e) {
         e.preventDefault();
-        fetch('https://ridebeep.app/api/auth/password/reset', {
+        fetch('https://api.ridebeep.app/auth/password/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -27,7 +27,7 @@ function EditProfile() {
 
     function handleEdit(e) {
         e.preventDefault();
-        fetch('https://ridebeep.app/api/account/edit', {
+        fetch('https://api.ridebeep.app/account/edit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
