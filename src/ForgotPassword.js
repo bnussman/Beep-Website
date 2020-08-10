@@ -52,7 +52,7 @@ function ForgotPassword() {
             <Form onSubmit={handleForgotPassword}>
                 <Form.Group>
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" autoComplete="email" placeholder="example@ridebeep.app" onChange={(value) => setEmail(value.target.value)} />
+                    <Form.Control type="email" autoComplete="email" placeholder="example@ridebeep.app" onChange={(value) => setEmail(value.target.value)} disabled={status?.status === "success"}/>
                 </Form.Group>
                 <Button variant="primary" type="submit" disabled={status?.status === "success"}>
                     Send Reset Password Email

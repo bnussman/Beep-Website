@@ -13,7 +13,7 @@ function ResetPassword({ match }) {
     const { user } = useContext(UserContext);
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState();
-
+    
     function handleResetPassword(e) {
         e.preventDefault();
         fetch(config.apiUrl + '/auth/password/reset', {
@@ -54,9 +54,9 @@ function ResetPassword({ match }) {
             <Form onSubmit={handleResetPassword}>
                 <Form.Group>
                     <Form.Label>New Password</Form.Label>
-                    <Form.Control type="password" autoComplete="password" placeholder="password" onChange={(value) => setPassword(value.target.value)} />
+                    <Form.Control type="password" autoComplete="password" placeholder="Password" onChange={(value) => setPassword(value.target.value)} disabled={status?.status === "success"}/>
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" disabled={status?.status === "success"}>
                     Reset Password
                 </Button>
             </Form>
