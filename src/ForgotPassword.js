@@ -2,10 +2,6 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext.js';
 import { Redirect } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
 import { config } from './utils/config';
 
 function ForgotPassword() {
@@ -43,22 +39,18 @@ function ForgotPassword() {
     return (
         <>
         <BeepAppBar/>
-        <Container>
             {status && 
-                <Alert variant={status.status === "success" ? "success" : "danger" }>
+                <p variant={status.status === "success" ? "success" : "danger" }>
                     {status.message}
-                </Alert>
+                </p>
             }
-            <Form onSubmit={handleForgotPassword}>
-                <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" autoComplete="email" placeholder="example@ridebeep.app" onChange={(value) => setEmail(value.target.value)} disabled={status?.status === "success"}/>
-                </Form.Group>
-                <Button variant="primary" type="submit" disabled={status?.status === "success"}>
+            <form onSubmit={handleForgotPassword}>
+                <p>Email</p>
+                <input type="email" autoComplete="email" placeholder="example@ridebeep.app" onChange={(value) => setEmail(value.target.value)} disabled={status?.status === "success"}/>
+                <p variant="primary" type="submit" disabled={status?.status === "success"}>
                     Send Reset Password Email
-                </Button>
-            </Form>
-        </Container>
+                </p>
+            </form>
         </>
     );
 }

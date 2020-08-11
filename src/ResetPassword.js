@@ -2,10 +2,6 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext.js';
 import { Redirect } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
 import { config } from './utils/config';
 
 function ResetPassword({ match }) {
@@ -45,22 +41,18 @@ function ResetPassword({ match }) {
     return (
         <>
         <BeepAppBar/>
-        <Container>
             {status && 
-                <Alert variant={status.status === "success" ? "success" : "danger" }>
+                <p variant={status.status === "success" ? "success" : "danger" }>
                     {status.message}
-                </Alert>
+                </p>
             }
-            <Form onSubmit={handleResetPassword}>
-                <Form.Group>
-                    <Form.Label>New Password</Form.Label>
-                    <Form.Control type="password" autoComplete="password" placeholder="Password" onChange={(value) => setPassword(value.target.value)} disabled={status?.status === "success"}/>
-                </Form.Group>
-                <Button variant="primary" type="submit" disabled={status?.status === "success"}>
+            <form onSubmit={handleResetPassword}>
+                <p>New Password</p>
+                <input type="password" autoComplete="password" placeholder="Password" onChange={(value) => setPassword(value.target.value)} disabled={status?.status === "success"}/>
+                <p variant="primary" type="submit" disabled={status?.status === "success"}>
                     Reset Password
-                </Button>
-            </Form>
-        </Container>
+                </p>
+            </form>
         </>
     );
 }
