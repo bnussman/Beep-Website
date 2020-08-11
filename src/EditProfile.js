@@ -64,23 +64,27 @@ function EditProfile() {
     return (
         <>
         <BeepAppBar/>
-            {error && {error} }
-            {success && {success} }
-            <form onSubmit={handleEdit}>
-                <p>Username</p>
-                <input value={username} type="username" autoComplete="username" placeholder="Username" disabled />
-                <p>First Name</p>
-                <input value={first} type="text" autoComplete="given-name" placeholder="First Name" onChange={(value) => setFirst(value.target.value)} />
-                <p>Last Name</p>
-                <input value={last} type="text" autoComplete="family-name" placeholder="Last Name" onChange={(value) => setLast(value.target.value)} />
-                <p>Email</p>
-                <input value={email} type="text" autoComplete="email" placeholder="Email Address" onChange={(value) => setEmail(value.target.value)} />
-                <p>Phone</p>
-                <input value={phone} type="text" autoComplete="tel" placeholder="Phone Number" onChange={(value) => setPhone(value.target.value)} />
-                <p>Venmo</p>
-                <input value={venmo} type="text" autoComplete="username" placeholder="Venmo Username" onChange={(value) => setVenmo(value.target.value)} />
-                Update Profile
-            </form>
+            <div className="lg:container px-4 mx-auto">
+                {error && <p>{error}</p> }
+                {success && <p>{success}</p> }
+                <form onSubmit={handleEdit}>
+                    <label className="text-gray-500 font-bold" htmlFor="username">Username</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={username} id="username" type="username" autoComplete="username" placeholder="Username" disabled />
+                    <label className="text-gray-500 font-bold" htmlFor="first">First Name</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={first} id="first" type="text" autoComplete="given-name" placeholder="First Name" onChange={(value) => setFirst(value.target.value)} />
+                    <label className="text-gray-500 font-bold" htmlFor="last">Last Name</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={last} id="last" type="text" autoComplete="family-name" placeholder="Last Name" onChange={(value) => setLast(value.target.value)} />
+                    <label className="text-gray-500 font-bold" htmlFor="email">Email</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={email} id="email" type="text" autoComplete="email" placeholder="Email Address" onChange={(value) => setEmail(value.target.value)} />
+                    <label className="text-gray-500 font-bold" htmlFor="phone">Phone</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={phone} id="phone" type="text" autoComplete="tel" placeholder="Phone Number" onChange={(value) => setPhone(value.target.value)} />
+                    <label className="text-gray-500 font-bold" htmlFor="venmo">Venmo</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={venmo} id="venmo" type="text" autoComplete="username" placeholder="Venmo Username" onChange={(value) => setVenmo(value.target.value)} />
+                    <button type="submit" className="mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                        Update Profile
+                    </button>
+                </form>
+            </div>
         </>
     );
 }
