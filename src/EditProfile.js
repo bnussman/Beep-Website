@@ -7,8 +7,7 @@ import { config } from './utils/config';
 function EditProfile() {
     const {user, setUser} = useContext(UserContext);
     
-    const [error, setError] = useState();
-    const [success, setSuccess] = useState();
+    const [status, setStatus] = useState();
     const [username] = useState(user.username);
     const [first, setFirst] = useState(user.first);
     const [last, setLast] = useState(user.last);
@@ -49,11 +48,8 @@ function EditProfile() {
                 tempUser.venmo = venmo;
                 localStorage.setItem("user", JSON.stringify(tempUser));
                 setUser(tempUser);
-                setSuccess(data.message);
             }
-            else {
-                setError(data.message);
-            }
+            setStatus(data);
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -65,8 +61,11 @@ function EditProfile() {
         <>
         <BeepAppBar/>
             <div className="lg:container px-4 mx-auto">
-                {error && <p>{error}</p> }
-                {success && <p>{success}</p> }
+                {status && 
+                    <div role="alert" className={status.status === "success" ? "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" : "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" }>
+                        {status.message}
+                    </div>
+                }
                 <form onSubmit={handleEdit}>
                     <label className="text-gray-500 font-bold" htmlFor="username">Username</label>
                     <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={username} id="username" type="username" autoComplete="username" placeholder="Username" disabled />
