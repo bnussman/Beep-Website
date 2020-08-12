@@ -6,7 +6,7 @@ import ForgotPassword from './ForgotPassword.js';
 import ResetPassword from './ResetPassword.js';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext.js';
-import './assets/main.css'
+import './assets/tailwind.css';
 
 function App() {
     const [user, setUser] = useState();
