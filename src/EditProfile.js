@@ -6,20 +6,21 @@ import { config } from './utils/config';
 
 function EditProfile() {
     const {user, setUser} = useContext(UserContext);
-    
+
     const [status, setStatus] = useState();
-    const [username] = useState(user.username);
-    const [first, setFirst] = useState(user.first);
-    const [last, setLast] = useState(user.last);
-    const [email, setEmail] = useState(user.email);
-    const [phone, setPhone] = useState(user.phone);
-    const [venmo, setVenmo] = useState(user.venmo);
+    const [username] = useState(user?.username);
+    const [first, setFirst] = useState(user?.first);
+    const [last, setLast] = useState(user?.last);
+    const [email, setEmail] = useState(user?.email);
+    const [phone, setPhone] = useState(user?.phone);
+    const [venmo, setVenmo] = useState(user?.venmo);
 
     //if some function tells us to redirect or a user is defined
     //redirect to the home page
     if(!user) {
         return <Redirect to={{ pathname: "/login"}} />;
     }
+    
 
     function handleEdit(e) {
         e.preventDefault();
