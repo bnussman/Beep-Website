@@ -61,6 +61,11 @@ const BeepAppBar = () => {
                                     <p>Profile</p>
                                 </div>
                             </Link>
+                            <Link to="/password/change" className="block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-4">
+                                <div className="flex">
+                                    <p>Change Password</p>
+                                </div>
+                            </Link>
                             <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-4">
                                 Logout
                             </p>
