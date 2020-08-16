@@ -1,12 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext.js';
-import { Redirect } from "react-router-dom";
+import React, { useState } from 'react';
 import BeepAppBar from './AppBar.js';
 import { config } from './utils/config';
 
 function ResetPassword({ match }) {
     const id = match.params.id;
-    const { user } = useContext(UserContext);
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState();
     
@@ -29,12 +26,6 @@ function ResetPassword({ match }) {
         .catch((error) => {
             console.error('Error:', error);
         });
-    }
-
-    //if some function tells us to redirect or a user is defined
-    //redirect to the home page
-    if(user) {
-        return <Redirect to={{ pathname: "/"}} />;
     }
     
     //Return the main login page
