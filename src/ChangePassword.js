@@ -20,6 +20,22 @@ function ChangePassword() {
 
     function handleEdit(e) {
         e.preventDefault();
+
+
+        if (password !== password2) {
+            setStatus({
+                "status": "error",
+                "message": "Your passwords do not match."
+            });
+        }
+
+        if (!password || !password2) {
+            setStatus({
+                "status": "error",
+                "message": "Please enter a new password."
+            });
+        }
+
         fetch(config.apiUrl + '/account/password', {
             method: 'POST',
             headers: {

@@ -27,6 +27,7 @@ function VerifyAccount({ match }) {
 
     useEffect(() => {
         handleVerify();
+        // eslint-disable-next-line
     }, []);
 
     
