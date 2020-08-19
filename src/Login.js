@@ -77,6 +77,7 @@ function Login() {
                     </button>
                 </form>
                 <Link to={"/password/forgot"} className="text-gray-500">Forgot Password</Link>
+                <p className="text-gray-500 pt-5 text-xs">Currently, the option to sign up is only avalible in our app (coming soon)</p>
             </div>
         </>
     );
