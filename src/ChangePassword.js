@@ -3,6 +3,7 @@ import { UserContext } from './UserContext.js';
 import { Redirect } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
 import { config } from './utils/config';
+import { Error } from "./utils/errors";
 
 function ChangePassword() {
     const {user} = useContext(UserContext);
@@ -65,16 +66,9 @@ function ChangePassword() {
                 {status && 
                     <div
                         role="alert"
-                        className={status.status === "success" ?
-                            "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                            :
-                            status.status === "warning" ?
-                                "bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative mb-4"
-                                :
-                                "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-                        }
+                        className={status.status === "success" ? "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" : "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" }
                     >
-                        {status.message}
+                        <Error error={status.message}/>
                     </div>
                 }
                 <form onSubmit={handleEdit}>

@@ -3,6 +3,7 @@ import { UserContext } from './UserContext.js';
 import { Redirect } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
 import { config } from './utils/config';
+import { Error } from "./utils/errors";
 
 function EditProfile() {
     const {user, setUser} = useContext(UserContext);
@@ -74,7 +75,7 @@ function EditProfile() {
                                 "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
                         }
                     >
-                        {status.message}
+                        <Error error={status.message}/>
                     </div>
                 }
                 <form onSubmit={handleEdit}>

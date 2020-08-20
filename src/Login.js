@@ -3,6 +3,7 @@ import { UserContext } from './UserContext.js';
 import { Redirect, Link } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
 import { config } from './utils/config';
+import { Error } from "./utils/errors";
 
 function Login() {
     const {user, setUser} = useContext(UserContext);
@@ -50,7 +51,7 @@ function Login() {
             <div className="lg:container px-4 mx-auto">
                 { error && 
                     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        {error}
+                        <Error error={error} />
                     </div>
                 }
                 <form onSubmit={handleLogin}>
