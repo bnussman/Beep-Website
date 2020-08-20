@@ -27,6 +27,7 @@ function ChangePassword() {
                 "status": "error",
                 "message": "Your passwords do not match."
             });
+            return;
         }
 
         if (!password || !password2) {
@@ -34,6 +35,7 @@ function ChangePassword() {
                 "status": "error",
                 "message": "Please enter a new password."
             });
+            return;
         }
 
         fetch(config.apiUrl + '/account/password', {
