@@ -34,6 +34,34 @@ const BeepAppBar = () => {
             console.error('Error:', error);
         });
     }
+
+    function checkVarificationStatus() {
+        fetch(config.apiUrl + '/account/status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'token': user.token
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                let tempUser = JSON.parse(JSON.stringify(user));
+                tempUser.isEmailVerified = data.message.isEmailVerified;
+                tempUser.isStudent = data.message.isStudent;
+                localStorage.setItem("user", JSON.stringify(tempUser));
+                setUser(tempUser);
+            }
+            else {
+                console.log("yikes", data);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
     
     if (user) {
         return(
@@ -56,23 +84,36 @@ const BeepAppBar = () => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="text-sm">
-                            <Link to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-4">
+                            <Link to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-8">
                                 <div className="flex">
                                     <p>Profile</p>
                                 </div>
                             </Link>
-                            <Link to="/password/change" className="block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-4">
+                            <Link to="/password/change" className="block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-8">
                                 <div className="flex">
                                     <p>Change Password</p>
                                 </div>
                             </Link>
-                            <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-4">
+                            <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-yellow-200 hover:text-white mr-8">
                                 Logout
                             </p>
                             <p className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-yellow-500 hover:bg-white mt-4 lg:mt-0">{user.first + " " + user.last}</p>
                         </div>
                     </div>
                 </nav>
+                {!user.isEmailVerified &&
+                <div className="lg:container px-4 mx-auto mb-4" onClick={checkVarificationStatus}>
+                    <div role="alert">
+                        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                            Email Varification
+                        </div>
+                        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                            <p>You need to verify your email</p>
+                            <p className="text-xs">Click this popup to refresh your email varification status.</p>
+                        </div>
+                    </div>
+                </div>
+                }
             </>
         );
     }

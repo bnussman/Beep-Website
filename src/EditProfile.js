@@ -48,6 +48,11 @@ function EditProfile() {
                 tempUser.email = email;
                 tempUser.phone = phone;
                 tempUser.venmo = venmo;
+                if (email !== user.email) {
+                    //if user changed their email
+                    tempUser.isEmailVerified = false;
+                    tempUser.isStudent = false;
+                }
                 localStorage.setItem("user", JSON.stringify(tempUser));
                 setUser(tempUser);
             }
@@ -86,7 +91,8 @@ function EditProfile() {
                     <label className="text-gray-500 font-bold" htmlFor="last">Last Name</label>
                     <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={last} id="last" type="text" autoComplete="family-name" placeholder="Last Name" onChange={(value) => setLast(value.target.value)} />
                     <label className="text-gray-500 font-bold" htmlFor="email">Email</label>
-                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={email} id="email" type="text" autoComplete="email" placeholder="Email Address" onChange={(value) => setEmail(value.target.value)} />
+                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={email} id="email" type="text" autoComplete="email" placeholder="Email Address" onChange={(value) => setEmail(value.target.value)} />
+                    <p className="mb-2 text-xs text-gray-500">{user.isEmailVerified ? user.isStudent ? "Your email is verified and you are a student" : "Your email is verified" : "Your email is not verified"}</p>
                     <label className="text-gray-500 font-bold" htmlFor="phone">Phone</label>
                     <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={phone} id="phone" type="text" autoComplete="tel" placeholder="Phone Number" onChange={(value) => setPhone(value.target.value)} />
                     <label className="text-gray-500 font-bold" htmlFor="venmo">Venmo</label>
