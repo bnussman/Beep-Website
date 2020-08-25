@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from './UserContext.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -10,6 +10,20 @@ const BeepAppBar = (props) => {
     const [resendStatus, setResendStatus] = useState();
     const [refreshStatus, setRefreshStatus] = useState();
     let history = useHistory();
+
+    useEffect(() => {
+        if (user && !user.isEmailVerified) {
+            window.addEventListener('focus', onFocus);
+            // Specify how to clean up after this effect:
+            return () => {
+                window.removeEventListener('focus', onFocus);
+            };
+        }
+    });
+
+    const onFocus = () => {
+        checkVarificationStatus();
+    };
 
     function logout () {
         fetch(config.apiUrl + '/auth/logout', {
@@ -37,7 +51,7 @@ const BeepAppBar = (props) => {
         });
     }
 
-    function checkVarificationStatus() {
+    function checkVarificationStatus(showMessage) {
         fetch(config.apiUrl + '/account/status', {
             method: 'POST',
             headers: {
@@ -60,17 +74,18 @@ const BeepAppBar = (props) => {
             else {
                 console.log("yikes", data);
             }
-
-            if (data.message.isEmailVerified) {
-                if (data.message.isStudent) {
-                    setRefreshStatus("You where successfully verified as a student!");
-                } 
-                else {
-                    setRefreshStatus("Your email was successfully verified!");
+            if (showMessage) {
+                if (data.message.isEmailVerified) {
+                    if (data.message.isStudent) {
+                        setRefreshStatus("You where successfully verified as a student!");
+                    } 
+                    else {
+                        setRefreshStatus("Your email was successfully verified!");
+                    }
                 }
-            }
-            else {
-                setRefreshStatus("Your account is still not verified");
+                else {
+                    setRefreshStatus("Your account is still not verified");
+                }
             }
         })
         .catch((error) => {
@@ -143,7 +158,7 @@ const BeepAppBar = (props) => {
                         </div>
                         <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
                             <p>You need to verify your email</p>
-                            <p className="text-sm mt-2 underline cursor-pointer" onClick={checkVarificationStatus}>Refresh my varification status</p>
+                            <p className="text-sm mt-2 underline cursor-pointer" onClick={() => checkVarificationStatus(true)}>Refresh my varification status</p>
                             <p className="text-sm mt-2 underline cursor-pointer" onClick={resendVarificationEmail}>Resend my varification email</p>
                         </div>
                     </div>
