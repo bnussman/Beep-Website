@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { config } from "./utils/config";
 
-const BeepAppBar = () => {
+const BeepAppBar = (props) => {
     const { user, setUser } = useContext(UserContext);
     const [toggle, setToggle] = useState(false);
     const [resendStatus, setResendStatus] = useState();
@@ -135,13 +135,13 @@ const BeepAppBar = () => {
                         </div>
                     </div>
                 </nav>
-                {!user.isEmailVerified &&
+                {(!user.isEmailVerified && !props.noErrors) &&
                 <div className="lg:container px-4 mx-auto mb-4" >
                     <div role="alert">
-                        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                        <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                             Email Varification
                         </div>
-                        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                        <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
                             <p>You need to verify your email</p>
                             <p className="text-sm mt-2 underline cursor-pointer" onClick={checkVarificationStatus}>Refresh my varification status</p>
                             <p className="text-sm mt-2 underline cursor-pointer" onClick={resendVarificationEmail}>Resend my varification email</p>
@@ -149,22 +149,21 @@ const BeepAppBar = () => {
                     </div>
                     {refreshStatus &&
                     <div role="alert" className="mt-4" onClick={() => { setRefreshStatus(null) }}>
-                            <div class="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+                            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Refresh Message
                             </div>
-                            <div class="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
+                            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
                                     <p>{refreshStatus}</p>
                                     <p className="text-xs">Click to dismiss</p>
                             </div>
                         </div>
                     }
-
                     {resendStatus &&
-                        <div role="alert" className="mt-4">
-                            <div class="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+                        <div role="alert" className="mt-4" onClick={() => { setResendStatus(null) }}>
+                            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Resend Email Message
                             </div>
-                            <div class="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
+                            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
                                     <p>{resendStatus}</p>
                                     <p className="text-xs">Click to dismiss</p>
                             </div>
