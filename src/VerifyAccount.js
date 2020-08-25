@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BeepAppBar from './AppBar.js';
 import { config } from './utils/config';
+import { UserContext } from './UserContext.js';
 
 function VerifyAccount({ match }) {
+    const {user, setUser} = useContext(UserContext);
     const id = match.params.id;
     const [status, setStatus] = useState();
     
@@ -19,6 +21,16 @@ function VerifyAccount({ match }) {
         .then(response => response.json())
         .then(data => {
             setStatus(data);
+            if (data.status === "success" && user) {
+                let tempUser = JSON.parse(JSON.stringify(user));
+                if (data.data.isStudent) {
+                    tempUser.isStudent = data.data.isStudent;
+                }
+                tempUser.isEmailVerified = data.data.isEmailVerified;
+                tempUser.email = data.data.email;
+                localStorage.setItem("user", JSON.stringify(tempUser));
+                setUser(tempUser);
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
