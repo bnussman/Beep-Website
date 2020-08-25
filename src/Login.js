@@ -50,8 +50,13 @@ function Login() {
         <BeepAppBar/>
             <div className="lg:container px-4 mx-auto">
                 { error && 
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        <Error error={error} />
+                    <div role="alert" className="mb-4" onClick={() => setError(null)}>
+                        <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                            Login Error
+                        </div>
+                        <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                            <Error error={error} />
+                        </div>
                     </div>
                 }
                 <form onSubmit={handleLogin}>

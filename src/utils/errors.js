@@ -8,10 +8,10 @@ export function Error(props) {
     }
 
     return (
-        <div>
+        <ul className="pl-4">
             {Object.keys(validatorError).map((item, key) => {  
-                return (<p key={key}>{validatorError[item].message}</p>);  
+                return (<li key={key} className="list-disc">{validatorError[item].message}</li>);  
             })}
-        </div>
+        </ul>
     );
 }  

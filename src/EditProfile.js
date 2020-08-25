@@ -83,6 +83,7 @@ function EditProfile() {
                         <Error error={status.message}/>
                     </div>
                 }
+
                 <form onSubmit={handleEdit}>
                     <label className="text-gray-500 font-bold" htmlFor="username">Username</label>
                     <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={username} id="username" type="username" autoComplete="username" placeholder="Username" disabled />
