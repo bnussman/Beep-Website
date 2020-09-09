@@ -69,18 +69,27 @@ function EditProfile() {
         <BeepAppBar/>
             <div className="lg:container px-4 mx-auto">
                 {status && 
-                    <div
-                        role="alert"
-                        className={status.status === "success" ?
-                            "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                            :
-                            status.status === "warning" ?
-                                "bg-orange-100 border border-orange-400 text-orange-700 px-4 py-3 rounded relative mb-4"
+                    <div role="alert" className="mb-4" onClick={() => setStatus(null)}>
+                        <div className={status.status === "success" ?
+                                "bg-green-500 text-white font-bold rounded-t px-4 py-2"
                                 :
-                                "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-                        }
-                    >
-                        <Error error={status.message}/>
+                                status.status === "warning" ?
+                                "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
+                                :
+                                "bg-red-500 text-white font-bold rounded-t px-4 py-2"
+                            }>
+                            Edit profile {status.status}
+                        </div>
+                        <div className={status.status === "success" ?
+                                "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
+                                :
+                                status.status === "warning" ?
+                                "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
+                                :
+                                "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
+                            }>
+                            <Error error={status.message}/>
+                        </div>
                     </div>
                 }
 
