@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { config } from "./utils/config";
+import socket from "./utils/Socket";
 
 const BeepAppBar = (props) => {
     const { user, setUser } = useContext(UserContext);
@@ -10,20 +11,6 @@ const BeepAppBar = (props) => {
     const [resendStatus, setResendStatus] = useState();
     const [refreshStatus, setRefreshStatus] = useState();
     let history = useHistory();
-
-    useEffect(() => {
-        if (user && !user.isEmailVerified) {
-            window.addEventListener('focus', onFocus);
-            // Specify how to clean up after this effect:
-            return () => {
-                window.removeEventListener('focus', onFocus);
-            };
-        }
-    });
-
-    const onFocus = () => {
-        checkVarificationStatus();
-    };
 
     function logout () {
         fetch(config.apiUrl + '/auth/logout', {
@@ -41,51 +28,10 @@ const BeepAppBar = (props) => {
                 localStorage.clear();
                 history.push("/");
                 setUser(null);
+                socket.emit("stopGetUser");
             }
             else {
                 console.log("yikes", data);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
-
-    function checkVarificationStatus(showMessage) {
-        fetch(config.apiUrl + '/account/status', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'token': user.token
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                let tempUser = JSON.parse(JSON.stringify(user));
-                tempUser.isEmailVerified = data.message.isEmailVerified;
-                tempUser.isStudent = data.message.isStudent;
-                tempUser.email = data.message.email;
-                localStorage.setItem("user", JSON.stringify(tempUser));
-                setUser(tempUser);
-            }
-            else {
-                console.log("yikes", data);
-            }
-            if (showMessage) {
-                if (data.message.isEmailVerified) {
-                    if (data.message.isStudent) {
-                        setRefreshStatus("You where successfully verified as a student!");
-                    } 
-                    else {
-                        setRefreshStatus("Your email was successfully verified!");
-                    }
-                }
-                else {
-                    setRefreshStatus("Your account is still not verified");
-                }
             }
         })
         .catch((error) => {
@@ -158,7 +104,6 @@ const BeepAppBar = (props) => {
                         </div>
                         <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
                             <p>You need to verify your email</p>
-                            <p className="text-sm mt-2 underline cursor-pointer" onClick={() => checkVarificationStatus(true)}>Refresh my varification status</p>
                             <p className="text-sm mt-2 underline cursor-pointer" onClick={resendVarificationEmail}>Resend my varification email</p>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ import { Redirect, Link } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
+import socket from "./utils/Socket";
 
 function Login() {
     const {user, setUser} = useContext(UserContext);
@@ -28,6 +29,7 @@ function Login() {
             if (data.status === "success") {
                 setUser(data);
                 localStorage.setItem('user', JSON.stringify(data));
+                socket.emit("getUser", data.token);
             }
             else {
                 setError(data.message);
