@@ -9,12 +9,12 @@ export default class EditProfile extends Component {
     static contextType = UserContext;
 
     state = {
-        username: this.context.user.username,
-        first: this.context.user.first,
-        last: this.context.user.last,
-        email: this.context.user.email,
-        phone: this.context.user.phone,
-        venmo: this.context.user.venmo,
+        username: this.context?.user?.username,
+        first: this.context?.user?.first,
+        last: this.context?.user?.last,
+        email: this.context?.user?.email,
+        phone: this.context?.user?.phone,
+        venmo: this.context?.user?.venmo,
         status: null
         
     };
