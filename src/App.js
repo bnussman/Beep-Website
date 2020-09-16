@@ -33,8 +33,10 @@ export default class App extends Component {
 
         socket.on('updateUser', data => {
             const updated = getUpdatedUser(this.state.user, data);
-            this.setState({ user: updated });
-            localStorage.setItem("user", JSON.stringify(updated));
+            if (updated != null) {
+                this.setState({ user: updated });
+                localStorage.setItem("user", JSON.stringify(updated));
+            }
         });
     }
 
