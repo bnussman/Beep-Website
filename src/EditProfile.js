@@ -56,21 +56,23 @@ export default class EditProfile extends Component {
         .then(response => response.json())
         .then(data => {
             if (data.status === "success") {
-                /*
-                let tempUser = JSON.parse(JSON.stringify(this.context.user));
+                //make a temporary user object
+                let tempUser = this.context.user;
+                //update values of user
                 tempUser.first = this.state.first;
-                tempUser.last = this.state.first;
-                tempUser.email = this.state.first;
-                tempUser.phone = this.state.first;
-                tempUser.venmo = this.state.first;
-                if (this.state.first !== this.context.user.email) {
-                    //if user changed their email
+                tempUser.last = this.state.last;
+                tempUser.email = this.state.email;
+                tempUser.phone = this.state.phone;
+                tempUser.venmo = this.state.venmo;
+                //if email was changed, make sure the context knows the user is no longer verified
+                if (this.state.email !== this.context.user.email) {
                     tempUser.isEmailVerified = false;
                     tempUser.isStudent = false;
                 }
-                localStorage.setItem("user", JSON.stringify(tempUser));
+                //update the context
                 this.context.setUser(tempUser);
-                */
+                //update localStorage
+                localStorage.setItem("user", JSON.stringify(tempUser));
             }
             this.setState({ status: data });
         })
