@@ -12,12 +12,9 @@ function ChangePassword() {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
 
-    //if some function tells us to redirect or a user is defined
-    //redirect to the home page
     if(!user) {
         return <Redirect to={{ pathname: "/login"}} />;
     }
-    
 
     function handleEdit(e) {
         e.preventDefault();
@@ -42,11 +39,11 @@ function ChangePassword() {
         fetch(config.apiUrl + '/account/password', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + user.token,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                'token': user.token,
-                'password': password,
+                'password': password
             }),
         })
         .then(response => response.json())

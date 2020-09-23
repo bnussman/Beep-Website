@@ -16,11 +16,9 @@ const BeepAppBar = (props) => {
         fetch(config.apiUrl + '/auth/logout', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'token': user.token
-            }),
+                "Authorization": "Bearer " + user.token,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -43,11 +41,9 @@ const BeepAppBar = (props) => {
         fetch(config.apiUrl + '/account/verify/resend', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'token': user.token
-            }),
+                "Authorization": "Bearer " + user.token,
+                "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {

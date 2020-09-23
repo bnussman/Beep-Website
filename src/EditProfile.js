@@ -42,10 +42,10 @@ export default class EditProfile extends Component {
         fetch(config.apiUrl + '/account/edit', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + this.context.user.token,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                'token': this.context.user.token,
                 'first': this.state.first,
                 'last': this.state.last,
                 'email': this.state.email,
