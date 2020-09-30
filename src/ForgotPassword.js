@@ -2,11 +2,8 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext.js';
 import { Redirect } from "react-router-dom";
 import BeepAppBar from './AppBar.js';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
 import { config } from './utils/config';
+import { Error } from "./utils/errors";
 
 function ForgotPassword() {
     const { user } = useContext(UserContext);
@@ -43,22 +40,53 @@ function ForgotPassword() {
     return (
         <>
         <BeepAppBar/>
-        <Container>
+            <div className="lg:container px-4 mx-auto">
             {status && 
-                <Alert variant={status.status === "success" ? "success" : "danger" }>
-                    {status.message}
-                </Alert>
+                <div role="alert" className="mb-4" onClick={() => setStatus(null)}>
+                    <div className={status.status === "success" ?
+                            "bg-green-500 text-white font-bold rounded-t px-4 py-2"
+                            :
+                            status.status === "warning" ?
+                            "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
+                            :
+                            "bg-red-500 text-white font-bold rounded-t px-4 py-2"
+                        }>
+                        Edit profile {status.status}
+                    </div>
+                    <div className={status.status === "success" ?
+                            "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
+                            :
+                            status.status === "warning" ?
+                            "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
+                            :
+                            "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
+                        }>
+                        <Error error={status.message}/>
+                    </div>
+                </div>
             }
-            <Form onSubmit={handleForgotPassword}>
-                <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" autoComplete="email" placeholder="example@ridebeep.app" onChange={(value) => setEmail(value.target.value)} disabled={status?.status === "success"}/>
-                </Form.Group>
-                <Button variant="primary" type="submit" disabled={status?.status === "success"}>
+            <form onSubmit={handleForgotPassword}>
+                <label className="text-gray-500 font-bold" htmlFor="email">
+                    Email
+                </label>
+                <input
+                    className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="example@ridebeep.app"
+                    onChange={(value) => setEmail(value.target.value)}
+                    disabled={status?.status === "success"}
+                />
+                <button
+                    type="submit"
+                    disabled={status?.status === "success"}
+                    className={ status?.status === "success" ? "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" }
+                >
                     Send Reset Password Email
-                </Button>
-            </Form>
-        </Container>
+                </button>
+            </form>
+            </div>
         </>
     );
 }
