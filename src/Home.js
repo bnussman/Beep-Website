@@ -21,7 +21,7 @@ function Home() {
 
                 <div className="rounded shadow-md mb-4">
                     <div className="flex flex-wrap justify-center">
-                        <img style={{width: "250px"}} className="mt-5 mb-5" src="/ios.png" alt="iOS Example" />
+                        <img style={{width: "250px", height: "500px"}} className="mt-5 mb-5" src="/ios.png" alt="iOS Example" />
                     </div>
                 </div>
             </div>
