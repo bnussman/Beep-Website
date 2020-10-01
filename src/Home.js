@@ -13,9 +13,15 @@ function Home() {
                             <div className="ml-2 text-gray-800 font-bold text-3xl mb-2">Welcome to the Beep App!</div>
                         </div>
                         <p className="text-gray-800 text-base">
-                            The Beep App is an app <b>launching soon</b> that aims to simplify the ride sharing system
+                            The Beep App is an iOS, Android, and web app <b>launching soon</b> that aims to simplify the ride sharing system
                             in Boone.
                         </p>
+                    </div>
+                </div>
+
+                <div className="rounded shadow-md mb-4">
+                    <div className="flex flex-wrap justify-center">
+                        <img style={{width: "250px"}} className="mt-5 mb-5" src="/ios.png" alt="iOS Example" />
                     </div>
                 </div>
             </div>
@@ -23,5 +29,12 @@ function Home() {
     );
 
 }
+
+/*
+                    <div className="flex flex-row ml-2">
+                        <img style={{height: "51px"}} className="m-1" alt="Download on Google Play" src="/google.png"/>
+                        <img style={{height: "50px"}} className="m-1" alt="Download on The App Store" src="/apple.svg"/>
+                    </div>
+*/
 
 export default Home;
