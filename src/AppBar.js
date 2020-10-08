@@ -22,15 +22,11 @@ const BeepAppBar = (props) => {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === "success" || (data.status === "error" && data.message === "Your auth token is not valid.")) {
-                localStorage.clear();
-                history.push("/");
-                setUser(null);
-                socket.emit("stopGetUser");
-            }
-            else {
-                console.log("yikes", data);
-            }
+            console.log(data);
+            localStorage.clear();
+            history.push("/");
+            setUser(null);
+            socket.emit("stopGetUser");
         })
         .catch((error) => {
             console.error('Error:', error);

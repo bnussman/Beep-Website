@@ -8,16 +8,19 @@ import { Error } from "./utils/errors";
 export default class EditProfile extends Component {
     static contextType = UserContext;
 
-    state = {
-        username: this.context?.user?.username,
-        first: this.context?.user?.first,
-        last: this.context?.user?.last,
-        email: this.context?.user?.email,
-        phone: this.context?.user?.phone,
-        venmo: this.context?.user?.venmo,
-        status: null
-        
-    };
+    constructor(props, context) {
+        super(props);
+        this.state = {
+            username: context.user.username,
+            first: context.user.first,
+            last: context.user.last,
+            email: context.user.email,
+            phone: context.user.phone,
+            venmo: context.user.venmo,
+            status: null
+
+        };
+    }
 
     UNSAFE_componentWillReceiveProps() {
         if (this.state.first !== this.context.user.first) {
