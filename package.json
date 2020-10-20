@@ -8,11 +8,15 @@
     "@fortawesome/free-regular-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "core-js": "^3.6.5",
+    "mobx": "^6.0.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
-    "socket.io-client": "^2.3.0"
+    "redoc": "^2.0.0-rc.40",
+    "socket.io-client": "^2.3.0",
+    "styled-components": "^5.2.0"
   },
   "scripts": {
     "start": "PORT=3002 react-scripts start",

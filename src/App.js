@@ -8,6 +8,7 @@ import ChangePassword from './ChangePassword.js';
 import VerifyAccount from './VerifyAccount.js';
 import Privacy from './Privacy.js';
 import Terms from './Terms.js';
+import { Docs } from './Docs.js';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext.js';
 import './assets/tailwind.css';
@@ -56,6 +57,7 @@ export default class App extends Component {
                         <Route path="/account/verify/:id" component={VerifyAccount} />
                         <Route path="/privacy" component={Privacy} />
                         <Route path="/terms" component={Terms} />
+                        <Route path="/docs" component={Docs} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </Router>
