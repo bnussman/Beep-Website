@@ -53,7 +53,7 @@ const BeepAppBar = (props) => {
     if (user) {
         return(
             <>
-                <nav className="flex items-center justify-between flex-wrap bg-yellow-500 p-6 mb-4">
+                <nav className="flex items-center justify-between flex-wrap bg-yellow-500 p-6">
                     <div className="flex items-center flex-shrink-0 text-white mr-6">
                         <img
                             alt=""
@@ -129,7 +129,7 @@ const BeepAppBar = (props) => {
     else {
         return(
             <>
-                <nav className="flex items-center justify-between flex-wrap bg-yellow-500 p-6 mb-4">
+                <nav className="flex items-center justify-between flex-wrap bg-yellow-500 p-6">
                     <div className="flex items-center flex-shrink-0 text-white mr-6">
                         <img
                             alt=""

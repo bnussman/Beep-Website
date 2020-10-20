@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { config } from "./utils/config";
 import { RedocStandalone } from 'redoc';
+import BeepAppBar from './AppBar.js';
 
-export function Docs() {
-    return (
-        <RedocStandalone specUrl="https://ridebeep.app/api/docs"/>
-    );
+class Docs extends Component {
+    render() {
+        return (
+            <div>
+                <BeepAppBar/>
+                <RedocStandalone
+                    specUrl={config.apiUrl + "/docs"}
+                    options={{
+                        theme: { colors: { primary: { main: '#ecc94b' } } },
+                    }}
+                />
+            </div>
+        );
+    }
 }
+
+export default Docs;
