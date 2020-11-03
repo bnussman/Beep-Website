@@ -71,27 +71,27 @@ const BeepAppBar = (props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block items-end" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="text-sm">
-                            <Link to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">
+                            <Link to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>Profile</p>
                                 </div>
                             </Link>
-                            <Link to="/password/change" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">
+                            <Link to="/password/change" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>Change Password</p>
                                 </div>
                             </Link>
-                            <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">
+                            <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Logout
                             </p>
-                            <p className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">{user.first + " " + user.last}</p>
+                            <p className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">{user.first + " " + user.last}</p>
                         </div>
                     </div>
                 </nav>
                 {(!user.isEmailVerified && !props.noErrors) &&
                 <div className="lg:container px-4 mx-auto mb-4" >
                     <div role="alert">
-                        <div className="bg-red-500 text-black font-bold rounded-t px-4 py-2">
+                        <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                             Email Varification
                         </div>
                         <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
@@ -101,7 +101,7 @@ const BeepAppBar = (props) => {
                     </div>
                     {refreshStatus &&
                     <div role="alert" className="mt-4" onClick={() => { setRefreshStatus(null) }}>
-                            <div className="bg-blue-500 text-black font-bold rounded-t px-4 py-2">
+                            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Refresh Message
                             </div>
                             <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
@@ -112,7 +112,7 @@ const BeepAppBar = (props) => {
                     }
                     {resendStatus &&
                         <div role="alert" className="mt-4" onClick={() => { setResendStatus(null) }}>
-                            <div className="bg-blue-500 text-black font-bold rounded-t px-4 py-2">
+                            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Resend Email Message
                             </div>
                             <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
@@ -147,7 +147,7 @@ const BeepAppBar = (props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="lg:flex-grow">
-                            <Link to="/login" href="#" className="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-white hover:border-transparent hover:text-yellow-500 hover:bg-white mt-4 lg:mt-0">
+                            <Link to="/login" href="#" className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Login
                             </Link>
                         </div>
