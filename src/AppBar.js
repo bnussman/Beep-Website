@@ -84,6 +84,7 @@ const BeepAppBar = (props) => {
                             <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Logout
                             </p>
+                            <img className="block mt-4 lg:inline-block lg:mt-0 mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.photoUrl}/>
                             <p className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">{user.first + " " + user.last}</p>
                         </div>
                     </div>
