@@ -6,6 +6,7 @@ import ForgotPassword from './ForgotPassword.js';
 import ResetPassword from './ResetPassword.js';
 import ChangePassword from './ChangePassword.js';
 import VerifyAccount from './VerifyAccount.js';
+import Admin from './admin/Admin.js';
 import Privacy from './Privacy.js';
 import Terms from './Terms.js';
 import Docs from './Docs.js';
@@ -58,6 +59,7 @@ export default class App extends Component {
                         <Route path="/privacy" component={Privacy} />
                         <Route path="/terms" component={Terms} />
                         <Route path="/docs" component={Docs} />
+                        <Route path="/admin" component={Admin} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </Router>

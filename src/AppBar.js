@@ -81,6 +81,13 @@ const BeepAppBar = (props) => {
                                     <p>Change Password</p>
                                 </div>
                             </Link>
+                            {user.userLevel > 0 &&
+                            <Link to="/admin" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                                <div className="flex">
+                                    <p>Admin</p>
+                                </div>
+                            </Link>
+                            }
                             <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Logout
                             </p>
