@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext.js';
+import { UserContext } from './UserContext';
 import { Redirect, Link } from "react-router-dom";
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
 import socket from "./utils/Socket";

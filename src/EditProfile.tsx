@@ -1,11 +1,28 @@
 import React, { Component } from 'react';
-import { UserContext } from './UserContext.js';
+import { UserContext } from './UserContext';
 import { Redirect } from "react-router-dom";
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
 
-export default class EditProfile extends Component {
+interface props {
+}
+interface status {
+    status: string;
+    message: string;
+}
+
+interface state {
+    first: string;
+    last: string;
+    username: string;
+    phone: string;
+    email: string;
+    venmo: string;
+    status: status | null;
+}
+
+export default class EditProfile extends Component<props, state> {
     static contextType = UserContext;
 
     constructor(props, context) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { config } from "./utils/config";
 import { RedocStandalone } from 'redoc';
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 
 class Docs extends Component {
     render() {

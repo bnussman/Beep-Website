@@ -1,5 +1,5 @@
 import React from 'react';
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 
 function Home() {
     return (

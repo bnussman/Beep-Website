@@ -1,14 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext.js';
+import { UserContext } from './UserContext';
 import { Redirect } from "react-router-dom";
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
+
+interface Status {
+    status: string;
+    message: string;
+}
 
 function ForgotPassword() {
     const { user } = useContext(UserContext);
     const [email, setEmail] = useState("");
-    const [status, setStatus] = useState();
+    const [status, setStatus]: [Status, any] = useState();
 
     function handleForgotPassword(e) {
         e.preventDefault();
@@ -41,12 +46,12 @@ function ForgotPassword() {
         <>
         <BeepAppBar/>
             <div className="lg:container px-4 mx-auto">
-            {status && 
+            {status  && 
                 <div role="alert" className="mb-4" onClick={() => setStatus(null)}>
-                    <div className={status.status === "success" ?
+                    <div className={status!.status === "success" ?
                             "bg-green-500 text-white font-bold rounded-t px-4 py-2"
                             :
-                            status.status === "warning" ?
+                            status!.status === "warning" ?
                             "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
                             :
                             "bg-red-500 text-white font-bold rounded-t px-4 py-2"

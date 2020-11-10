@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import Home from './Home.js';
-import Login from './Login.js';
-import EditProfile from './EditProfile.js';
-import ForgotPassword from './ForgotPassword.js';
-import ResetPassword from './ResetPassword.js';
-import ChangePassword from './ChangePassword.js';
-import VerifyAccount from './VerifyAccount.js';
-import Admin from './admin/Admin.js';
-import Privacy from './Privacy.js';
-import Terms from './Terms.js';
-import Docs from './Docs.js';
+import Home from './Home';
+import Login from './Login';
+import EditProfile from './EditProfile';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
+import ChangePassword from './ChangePassword';
+import VerifyAccount from './VerifyAccount';
+import Admin from './admin/Admin';
+import Privacy from './Privacy';
+import Terms from './Terms';
+import Docs from './Docs';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { UserContext } from './UserContext.js';
+import { UserContext } from './UserContext';
 import './assets/tailwind.css';
 import socket, { getUpdatedUser } from "./utils/Socket";
 
@@ -19,9 +19,12 @@ export default class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            user: JSON.parse(localStorage.getItem('user'))
-        };
+        const user = localStorage.getItem('user');
+        if (user) {
+            this.state = {
+                user: JSON.parse(user)
+            };
+        }
     }
     
     setUser = (user) => {
@@ -29,11 +32,14 @@ export default class App extends Component {
     }
     
     componentDidMount() {
+        //@ts-ignore
         if (this.state.user) {
+            //@ts-ignore
             socket.emit("getUser", this.state.user.token);
         }
 
         socket.on('updateUser', data => {
+            //@ts-ignore
             const updated = getUpdatedUser(this.state.user, data);
             if (updated != null) {
                 this.setState({ user: updated });
@@ -43,10 +49,12 @@ export default class App extends Component {
     }
 
     render() {
+        //@ts-ignore
         let user = this.state.user;
         let setUser = this.setUser;
 
         return (
+            //@ts-ignore
             <UserContext.Provider value={{user, setUser}}>
                 <Router>
                     <Switch>
