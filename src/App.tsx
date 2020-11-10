@@ -15,9 +15,21 @@ import { UserContext } from './UserContext';
 import './assets/tailwind.css';
 import socket, { getUpdatedUser } from "./utils/Socket";
 
-export default class App extends Component {
+interface props {
 
-    constructor(props) {
+}
+
+interface User {
+    token: string; 
+}
+
+interface state {
+    user: User;
+}
+
+export default class App extends Component<props, state> {
+
+    constructor(props: props) {
         super(props);
         const user = localStorage.getItem('user');
         if (user) {
@@ -27,19 +39,16 @@ export default class App extends Component {
         }
     }
     
-    setUser = (user) => {
+    setUser = (user: User) => {
         this.setState({ user: user });
     }
     
     componentDidMount() {
-        //@ts-ignore
         if (this.state.user) {
-            //@ts-ignore
             socket.emit("getUser", this.state.user.token);
         }
 
-        socket.on('updateUser', data => {
-            //@ts-ignore
+        socket.on('updateUser', (data: unknown) => {
             const updated = getUpdatedUser(this.state.user, data);
             if (updated != null) {
                 this.setState({ user: updated });
@@ -49,12 +58,10 @@ export default class App extends Component {
     }
 
     render() {
-        //@ts-ignore
         let user = this.state.user;
         let setUser = this.setUser;
 
         return (
-            //@ts-ignore
             <UserContext.Provider value={{user, setUser}}>
                 <Router>
                     <Switch>

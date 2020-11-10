@@ -6,10 +6,9 @@ import { config } from './utils/config';
 import { Error } from "./utils/errors";
 
 function ChangePassword() {
-    //@ts-ignore
-    const { user } = useContext(UserContext);
 
-    const [status, setStatus] = useState();
+    const { user } = useContext(UserContext);
+    const [status, setStatus]: [any, any] = useState();
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
 
@@ -17,13 +16,12 @@ function ChangePassword() {
         return <Redirect to={{ pathname: "/login"}} />;
     }
 
-    function handleEdit(e) {
+    function handleEdit(e: any) {
         e.preventDefault();
 
 
         if (password !== password2) {
             setStatus({
-                //@ts-ignore
                 "status": "error",
                 "message": "Your passwords do not match."
             });
@@ -32,7 +30,6 @@ function ChangePassword() {
 
         if (!password || !password2) {
             setStatus({
-                //@ts-ignore
                 "status": "error",
                 "message": "Please enter a new password."
             });
@@ -63,37 +60,29 @@ function ChangePassword() {
         <BeepAppBar/>
             <div className="lg:container px-4 mx-auto">
                 {status && 
-                    //@ts-ignore
                     <div role="alert" className="mb-4" onClick={() => setStatus(null)}>
                         <div className={
-                            //@ts-ignore
                             status.status === "success" ?
                                 "bg-green-500 text-white font-bold rounded-t px-4 py-2"
                                 :
-                            //@ts-ignore
                                 status.status === "warning" ?
                                 "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
                                 :
                                 "bg-red-500 text-white font-bold rounded-t px-4 py-2"
                             }>
                             Change password {
-                            //@ts-ignore
                             status.status}
                         </div>
                         <div className={
-                            //@ts-ignore
                             status.status === "success" ?
                                 "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
                                 :
-                            //@ts-ignore
                                 status.status === "warning" ?
                                 "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
                                 :
                                 "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
                             }>
-                            <Error error={
-                            //@ts-ignore
-                            status.message}/>
+                            <Error error={status.message}/>
                         </div>
                     </div>
                 }
