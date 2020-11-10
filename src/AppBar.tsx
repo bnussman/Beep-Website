@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext.js';
+import { UserContext } from './UserContext';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { config } from "./utils/config";
 import socket from "./utils/Socket";
 
 const BeepAppBar = (props) => {
+    //@ts-ignore
     const { user, setUser } = useContext(UserContext);
     const [toggle, setToggle] = useState(false);
     const [resendStatus, setResendStatus] = useState();
@@ -110,6 +111,7 @@ const BeepAppBar = (props) => {
                         </div>
                     </div>
                     {refreshStatus &&
+                        //@ts-ignore
                     <div role="alert" className="mt-4" onClick={() => { setRefreshStatus(null) }}>
                             <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Refresh Message
@@ -121,6 +123,7 @@ const BeepAppBar = (props) => {
                         </div>
                     }
                     {resendStatus &&
+                        //@ts-ignore
                         <div role="alert" className="mt-4" onClick={() => { setResendStatus(null) }}>
                             <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Resend Email Message

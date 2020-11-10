@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
+
+interface Status {
+    status: string;
+    message: string;
+}
 
 function ResetPassword({ match }) {
     const id = match.params.id;
     const [password, setPassword] = useState("");
-    const [status, setStatus] = useState();
+    const [status, setStatus]: [Status, any] = useState();
     
     function handleResetPassword(e) {
         e.preventDefault();

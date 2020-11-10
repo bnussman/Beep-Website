@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import BeepAppBar from './AppBar.js';
+import BeepAppBar from './AppBar';
 import { config } from './utils/config';
-import { UserContext } from './UserContext.js';
+import { UserContext } from './UserContext';
 
 function VerifyAccount({ match }) {
     const {user, setUser} = useContext(UserContext);
     const id = match.params.id;
-    const [status, setStatus] = useState();
+    const [status, setStatus]: [any, any] = useState();
     
     async function handleVerify() {
         fetch(config.apiUrl + '/account/verify', {
