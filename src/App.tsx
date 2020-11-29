@@ -37,6 +37,11 @@ export default class App extends Component<props, state> {
                 user: JSON.parse(user)
             };
         }
+        else {
+            this.state = {
+                user: null
+            };
+        }
     }
     
     setUser = (user: User) => {
