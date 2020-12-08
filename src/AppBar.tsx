@@ -76,6 +76,11 @@ const BeepAppBar = (props: props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block items-end" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="text-sm">
+                            <Link to="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                                <div className="flex">
+                                    <p>FAQ</p>
+                                </div>
+                            </Link>
                             <Link to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>Profile</p>
@@ -162,6 +167,11 @@ const BeepAppBar = (props: props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="lg:flex-grow">
+                            <Link to="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                                <div className="flex">
+                                    <p>FAQ</p>
+                                </div>
+                            </Link>
                             <Link to="/login" href="#" className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Login
                             </Link>

@@ -10,6 +10,7 @@ import Admin from './admin/Admin';
 import Privacy from './Privacy';
 import Terms from './Terms';
 import Docs from './Docs';
+import Faq from './FAQ';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
 import './assets/tailwind.css';
@@ -80,6 +81,7 @@ export default class App extends Component<props, state> {
                         <Route path="/terms" component={Terms} />
                         <Route path="/docs" component={Docs} />
                         <Route path="/admin" component={Admin} />
+                        <Route path="/faq" component={Faq} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </Router>
