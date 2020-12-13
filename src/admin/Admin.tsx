@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BeepAppBar from '../AppBar';
 import { config } from './../utils/config';
 
@@ -18,7 +18,10 @@ function Admin() {
         setBeepers(data.beeperList);
     }
 
-    fetchBeepers();
+    useEffect(() => {
+        fetchBeepers();
+    }, []);
+
 
     return (
         <>
