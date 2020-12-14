@@ -4,7 +4,8 @@ import BeepAppBar from './AppBar';
 function Faq() {
     return (
         <>
-        <BeepAppBar/>
+            <BeepAppBar/>
+            
             <div className="lg:container px-4 mx-auto">
                 <div className="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mb-4">
                     <p className="mb-4 font-semibold text-gray-800 dark:text-gray-300">

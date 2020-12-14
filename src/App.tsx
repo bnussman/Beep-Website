@@ -11,10 +11,13 @@ import Privacy from './Privacy';
 import Terms from './Terms';
 import Docs from './Docs';
 import Faq from './FAQ';
+import BeepAppBar from './AppBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
 import './assets/tailwind.css';
 import socket, { getUpdatedUser } from "./utils/Socket";
+
+
 
 interface props {
 
@@ -65,7 +68,7 @@ export default class App extends Component<props, state> {
 
     render() {
         let user = this.state.user;
-        let setUser = this.setUser;
+        let setUser = this.setUser;;
 
         return (
             <UserContext.Provider value={{user, setUser}}>
@@ -80,7 +83,7 @@ export default class App extends Component<props, state> {
                         <Route path="/privacy" component={Privacy} />
                         <Route path="/terms" component={Terms} />
                         <Route path="/docs" component={Docs} />
-                        <Route path="/admin" component={Admin} />
+                        <Route path="/admin/rides" component={Admin} />
                         <Route path="/faq" component={Faq} />
                         <Route path="/" component={Home} />
                     </Switch>
