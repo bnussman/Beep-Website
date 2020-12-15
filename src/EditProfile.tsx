@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { UserContext } from './UserContext';
 import { Redirect } from "react-router-dom";
-import BeepAppBar from './AppBar';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
 
@@ -110,53 +109,50 @@ export default class EditProfile extends Component<props, state> {
         }
 
         return (
-            <>
-            <BeepAppBar/>
-                <div className="lg:container px-4 mx-auto">
-                    {this.state.status && 
-                    <div role="alert" className="mb-4" onClick={() => this.setState({ status: null })}>
-                            <div className={this.state.status.status === "success" ?
-                                    "bg-green-500 text-white font-bold rounded-t px-4 py-2"
-                                    :
-                                    this.state.status.status === "warning" ?
-                                    "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
-                                    :
-                                    "bg-red-500 text-white font-bold rounded-t px-4 py-2"
-                                }>
-                                Edit profile {this.state.status.status}
-                            </div>
-                            <div className={this.state.status.status === "success" ?
-                                    "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
-                                    :
-                                    this.state.status.status === "warning" ?
-                                    "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
-                                    :
-                                    "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
-                                }>
-                                <Error error={this.state.status.message}/>
-                            </div>
+            <div className="lg:container px-4 mx-auto">
+                {this.state.status && 
+                <div role="alert" className="mb-4" onClick={() => this.setState({ status: null })}>
+                        <div className={this.state.status.status === "success" ?
+                                "bg-green-500 text-white font-bold rounded-t px-4 py-2"
+                                :
+                                this.state.status.status === "warning" ?
+                                "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
+                                :
+                                "bg-red-500 text-white font-bold rounded-t px-4 py-2"
+                            }>
+                            Edit profile {this.state.status.status}
                         </div>
-                    }
-                    <form onSubmit={this.handleEdit}>
-                        <label className="text-gray-500 font-bold" htmlFor="username">Username</label>
-                        <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.context.user.username} id="username" type="username" autoComplete="username" placeholder="Username" disabled />
-                        <label className="text-gray-500 font-bold" htmlFor="first">First Name</label>
-                        <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.first} id="first" type="text" autoComplete="given-name" placeholder="First Name" onChange={(value) => this.setState({ first: value.target.value })} />
-                        <label className="text-gray-500 font-bold" htmlFor="last">Last Name</label>
-                        <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.last} id="last" type="text" autoComplete="family-name" placeholder="Last Name" onChange={(value) => this.setState({ last: value.target.value })} />
-                        <label className="text-gray-500 font-bold" htmlFor="email">Email</label>
-                        <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.email} id="email" type="text" autoComplete="email" placeholder="Email Address" onChange={(value) => this.setState({ email: value.target.value })} />
-                        <p className="mb-2 text-xs text-gray-500">{this.context.user.isEmailVerified ? this.context.user.isStudent ? "Your email is verified and you are a student" : "Your email is verified" : "Your email is not verified"}</p>
-                        <label className="text-gray-500 font-bold" htmlFor="phone">Phone</label>
-                        <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.phone} id="phone" type="text" autoComplete="tel" placeholder="Phone Number" onChange={(value) => this.setState({ phone: value.target.value })} />
-                        <label className="text-gray-500 font-bold" htmlFor="venmo">Venmo</label>
-                        <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.venmo} id="venmo" type="text" autoComplete="username" placeholder="Venmo Username" onChange={(value) => this.setState({ venmo: value.target.value })} />
-                        <button type="submit" className="mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
-                            Update Profile
-                        </button>
-                    </form>
-                </div>
-            </>
+                        <div className={this.state.status.status === "success" ?
+                                "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
+                                :
+                                this.state.status.status === "warning" ?
+                                "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
+                                :
+                                "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
+                            }>
+                            <Error error={this.state.status.message}/>
+                        </div>
+                    </div>
+                }
+                <form onSubmit={this.handleEdit}>
+                    <label className="text-gray-500 font-bold" htmlFor="username">Username</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.context.user.username} id="username" type="username" autoComplete="username" placeholder="Username" disabled />
+                    <label className="text-gray-500 font-bold" htmlFor="first">First Name</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.first} id="first" type="text" autoComplete="given-name" placeholder="First Name" onChange={(value) => this.setState({ first: value.target.value })} />
+                    <label className="text-gray-500 font-bold" htmlFor="last">Last Name</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.last} id="last" type="text" autoComplete="family-name" placeholder="Last Name" onChange={(value) => this.setState({ last: value.target.value })} />
+                    <label className="text-gray-500 font-bold" htmlFor="email">Email</label>
+                    <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.email} id="email" type="text" autoComplete="email" placeholder="Email Address" onChange={(value) => this.setState({ email: value.target.value })} />
+                    <p className="mb-2 text-xs text-gray-500">{this.context.user.isEmailVerified ? this.context.user.isStudent ? "Your email is verified and you are a student" : "Your email is verified" : "Your email is not verified"}</p>
+                    <label className="text-gray-500 font-bold" htmlFor="phone">Phone</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.phone} id="phone" type="text" autoComplete="tel" placeholder="Phone Number" onChange={(value) => this.setState({ phone: value.target.value })} />
+                    <label className="text-gray-500 font-bold" htmlFor="venmo">Venmo</label>
+                    <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" value={this.state.venmo} id="venmo" type="text" autoComplete="username" placeholder="Venmo Username" onChange={(value) => this.setState({ venmo: value.target.value })} />
+                    <button type="submit" className="mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                        Update Profile
+                    </button>
+                </form>
+            </div>
         );
     }
 }

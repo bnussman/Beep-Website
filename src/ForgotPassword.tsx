@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext';
 import { Redirect } from "react-router-dom";
-import BeepAppBar from './AppBar';
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
 
@@ -43,9 +42,7 @@ function ForgotPassword() {
     
     //Return the main login page
     return (
-        <>
-        <BeepAppBar/>
-            <div className="lg:container px-4 mx-auto">
+        <div className="lg:container px-4 mx-auto">
             {status  && 
                 <div role="alert" className="mb-4" onClick={() => setStatus(null)}>
                     <div className={status!.status === "success" ?
@@ -91,8 +88,7 @@ function ForgotPassword() {
                     Send Reset Password Email
                 </button>
             </form>
-            </div>
-        </>
+        </div>
     );
 }
 

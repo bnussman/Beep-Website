@@ -73,6 +73,8 @@ export default class App extends Component<props, state> {
         return (
             <UserContext.Provider value={{user, setUser}}>
                 <Router>
+                    <BeepAppBar />
+                    
                     <Switch>
                         <Route path="/password/forgot" component={ForgotPassword} />
                         <Route path="/password/reset/:id" component={ResetPassword} />
