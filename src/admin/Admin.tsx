@@ -6,9 +6,11 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import { config } from './../utils/config';
+import { Header } from '../components/Typography';
+import { Table, THead, TH, TBody, TR, TD, TDProfile, TDText, TDBadge, TDButton } from '../components/Table';
+
 
 function Admin() {
-
 
     let [beepers, setBeepers] = useState(null);
     let match = useRouteMatch();
@@ -57,83 +59,6 @@ function Admin() {
         fetchBeepers();
     }, []);
 
-    function Table(props) {
-        return <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-                {props.children}
-            </table>
-        </div>
-    }
-
-    function THead(props) {
-        return <thead className="bg-gray-50">
-            <tr>
-                {props.children}
-            </tr>
-        </thead>
-    }
-
-    function TH(props) {
-        return <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            {props.children}
-        </th>
-    }
-
-    function TBody(props) {
-        return <tbody className="bg-white divide-y divide-gray-200">
-            {props.children}
-        </tbody>
-    }
-
-    function TR(props) {
-        return <tr>{props.children}</tr>
-    }
-
-    function TD(props) {
-        return <td className="px-6 py-4 whitespace-nowrap">
-            {props.children}
-        </td>
-    }
-
-    function TDProfile(props) {
-        return <TD>
-            <div className="flex items-center">
-                <div className="flex-shrink-0 h-10 w-10">
-                    <img className="h-10 w-10 rounded-full" src={props.photoUrl} alt="" />
-                </div>
-                <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
-                        {props.title}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                        {props.subtitle}
-                    </div>
-                </div>
-            </div>
-        </TD>
-
-    }
-
-    function TDText(props) {
-        return <TD>
-            <div className="text-sm text-gray-900">{props.children}</div>
-        </TD>
-    }
-
-    function TDBadge(props) {
-        return <TD>
-            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                {props.children}
-            </span> 
-        </TD>
-    }
-
-    function TDButton(props) {
-        return <TD>
-            <a href="#" className="whitespace-nowrap text-right text-sm font-medium">Edit</a>
-        </TD>
-    }
-
     return (
         <div className="flex flex-row">
 
@@ -163,9 +88,7 @@ function Admin() {
 
                 <Switch>
                     <Route path={`${match.path}/rides`}>
-                        <h2 className="mx-2 text-2xl font-bold leading-7 text-gray-800 sm:truncate">
-                            Active rides
-                        </h2>
+                        <Header>Active rides</Header>
 
                         <Table>
                             <THead>
@@ -178,7 +101,7 @@ function Admin() {
                                 <TH>Edit</TH>
                             </THead>
                             <TBody>
-                                { beepers && (beepers).map(function (beeper, i) {
+                                { beepers && (beepers).map(beeper => {
                                     return (
                                         <TR key={beeper.id}>
                                             <TDProfile
@@ -200,11 +123,13 @@ function Admin() {
                         </Table>
 
                     </Route>
+
                     <Route path={`${match.path}/users`}>
-                        <h3>Users</h3>
+                        <Header>Users</Header>
                     </Route>
+
                     <Route path={`${match.path}/reports`}>
-                        <h3>Reports</h3>
+                        <Header>Reports</Header>
                     </Route>
                 </Switch>
 
