@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link,
-    useRouteMatch,
-    useParams
-  } from "react-router-dom";
+    useRouteMatch
+} from "react-router-dom";
 import { config } from './../utils/config';
 
 function Admin() {
@@ -16,13 +14,42 @@ function Admin() {
     let match = useRouteMatch();
 
     const fetchBeepers = async () => {
-        const response = await fetch(config.apiUrl + '/rider/list', {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
+        // const response = await fetch(config.apiUrl + '/rider/list', {
+        //     method: 'GET',
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
+        // });
+        // const data = await response.json();
+        const data = {beeperList: [
+            {
+              "capacity": 7,
+              "first": "Dean",
+              "groupRate": "3",
+              "id": "87a09dc0-053d-44b6-9e92-d9844ee5f8e2",
+              "isStudent": true,
+              "last": "Sejdia",
+              "masksRequired": false,
+              "photoUrl": "https://ridebeepapp.s3.amazonaws.com/images/87a09dc0-053d-44b6-9e92-d9844ee5f8e2-1607571143970.jpg",
+              "queueSize": 0,
+              "singlesRate": "4",
+              "userLevel": 0
+            },
+            {
+              "capacity": 4,
+              "first": "Samantha",
+              "groupRate": "3",
+              "id": "2014062f-f74d-429f-a4a6-387504e9b3a1",
+              "isStudent": true,
+              "last": "Bunn",
+              "masksRequired": false,
+              "photoUrl": "https://ridebeepapp.s3.amazonaws.com/images/2014062f-f74d-429f-a4a6-387504e9b3a1-1607535432013.jpg",
+              "queueSize": 0,
+              "singlesRate": "5",
+              "userLevel": 0
             }
-        });
-        const data = await response.json();
+          ]};
+        
         setBeepers(data.beeperList);
     }
 
@@ -30,6 +57,82 @@ function Admin() {
         fetchBeepers();
     }, []);
 
+    function Table(props) {
+        return <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+                {props.children}
+            </table>
+        </div>
+    }
+
+    function THead(props) {
+        return <thead className="bg-gray-50">
+            <tr>
+                {props.children}
+            </tr>
+        </thead>
+    }
+
+    function TH(props) {
+        return <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {props.children}
+        </th>
+    }
+
+    function TBody(props) {
+        return <tbody className="bg-white divide-y divide-gray-200">
+            {props.children}
+        </tbody>
+    }
+
+    function TR(props) {
+        return <tr>{props.children}</tr>
+    }
+
+    function TD(props) {
+        return <td className="px-6 py-4 whitespace-nowrap">
+            {props.children}
+        </td>
+    }
+
+    function TDProfile(props) {
+        return <TD>
+            <div className="flex items-center">
+                <div className="flex-shrink-0 h-10 w-10">
+                    <img className="h-10 w-10 rounded-full" src={props.photoUrl} alt="" />
+                </div>
+                <div className="ml-4">
+                    <div className="text-sm font-medium text-gray-900">
+                        {props.title}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                        {props.subtitle}
+                    </div>
+                </div>
+            </div>
+        </TD>
+
+    }
+
+    function TDText(props) {
+        return <TD>
+            <div className="text-sm text-gray-900">{props.children}</div>
+        </TD>
+    }
+
+    function TDBadge(props) {
+        return <TD>
+            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                {props.children}
+            </span> 
+        </TD>
+    }
+
+    function TDButton(props) {
+        return <TD>
+            <a href="#" className="whitespace-nowrap text-right text-sm font-medium">Edit</a>
+        </TD>
+    }
 
     return (
         <div className="flex flex-row">
@@ -64,81 +167,38 @@ function Admin() {
                             Active rides
                         </h2>
 
-                        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Profile
-                                    </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Queue size
-                                    </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Ride capacity
-                                    </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Rate
-                                    </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Masks required?
-                                    </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            User level
-                                    </th>
-                                        <th scope="col" className="relative px-6 py-3">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {
-                                        beepers && (beepers).map(function (beeper, i) {
-                                            return (
-                                                <tr>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="flex items-center">
-                                                            <div className="flex-shrink-0 h-10 w-10">
-                                                                <img className="h-10 w-10 rounded-full" src={beeper.photoUrl} alt="" />
-                                                            </div>
-                                                            <div className="ml-4">
-                                                                <div className="text-sm font-medium text-gray-900">
-                                                                    {beeper.first} {beeper.last} {beeper.isStudent ? '🎓' : ''}
-                                                                </div>
-                                                                <div className="text-sm text-gray-500">
+                        <Table>
+                            <THead>
+                                <TH>Beepers</TH>
+                                <TH>Queue size</TH>
+                                <TH>Ride capacity</TH>
+                                <TH>Rate</TH>
+                                <TH>Masks required?</TH>
+                                <TH>User level</TH>
+                                <TH>Edit</TH>
+                            </THead>
+                            <TBody>
+                                { beepers && (beepers).map(function (beeper, i) {
+                                    return (
+                                        <TR key={beeper.id}>
+                                            <TDProfile
+                                                photoUrl={beeper.photoUrl}
+                                                title={`${beeper.first} ${beeper.last} ${beeper.isStudent ? '🎓' : ''}`}>
+                                            </TDProfile>
+                                            <TDText>{beeper.queueSize} riders</TDText>
+                                            <TDText>{beeper.capacity} riders</TDText>
+                                            <TDText>${beeper.singlesRate} / ${beeper.groupRate}</TDText>
+                                            <TDText>{beeper.masksRequired ? 'Yes' : 'No'}</TDText>
+                                            <TDBadge>
+                                                {beeper.userLevel}
+                                            </TDBadge>
+                                            <TDButton></TDButton>
+                                        </TR>
+                                    )
+                                })}
+                            </TBody>
+                        </Table>
 
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{beeper.queueSize} riders</div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{beeper.capacity} riders</div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">${beeper.singlesRate} / ${beeper.groupRate}</div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{beeper.masksRequired ? 'Yes' : 'No'}</div>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            {beeper.userLevel}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                
                     </Route>
                     <Route path={`${match.path}/users`}>
                         <h3>Users</h3>
@@ -148,9 +208,9 @@ function Admin() {
                     </Route>
                 </Switch>
 
-                </div>
+            </div>
 
-           
+
         </div>
     );
 
