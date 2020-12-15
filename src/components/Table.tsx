@@ -1,31 +1,37 @@
 import React from 'react';
 
 export function Table(props) {
-    return <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+    return (
         <table className="min-w-full divide-y divide-gray-200">
             {props.children}
         </table>
-    </div>
+    );
 }
 
 export function THead(props) {
-    return <thead className="bg-gray-50">
-        <tr>
-            {props.children}
-        </tr>
-    </thead>
+    return (
+        <thead className="bg-gray-50">
+            <tr>
+                {props.children}
+            </tr>
+        </thead>
+    );
 }
 
 export function TH(props) {
-    return <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        {props.children}
-    </th>
+    return (
+        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            {props.children}
+        </th>
+    );
 }
 
 export function TBody(props) {
-    return <tbody className="bg-white divide-y divide-gray-200">
-        {props.children}
-    </tbody>
+    return (
+        <tbody className="bg-white divide-y divide-gray-200">
+            {props.children}
+        </tbody>
+    );
 }
 
 export function TR(props) {
@@ -33,46 +39,55 @@ export function TR(props) {
 }
 
 export function TD(props) {
-    return <td className="px-6 py-4 whitespace-nowrap">
-        {props.children}
-    </td>
+    return (
+        <td className="px-6 py-4 whitespace-nowrap">
+            {props.children}
+        </td>
+    );
 }
 
 export function TDProfile(props) {
-    return <TD>
-        <div className="flex items-center">
-            <div className="flex-shrink-0 h-10 w-10">
-                <img className="h-10 w-10 rounded-full" src={props.photoUrl} alt="" />
-            </div>
-            <div className="ml-4">
-                <div className="text-sm font-medium text-gray-900">
-                    {props.title}
+    return (
+        <TD>
+            <div className="flex items-center">
+                <div className="flex-shrink-0 h-10 w-10">
+                    <img className="h-10 w-10 rounded-full" src={props.photoUrl} alt="" />
                 </div>
-                <div className="text-sm text-gray-500">
-                    {props.subtitle}
+                <div className="ml-4">
+                    <div className="text-sm font-medium text-gray-900">
+                        {props.title}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                        {props.subtitle}
+                    </div>
                 </div>
             </div>
-        </div>
-    </TD>
-
+        </TD>
+    );
 }
 
 export function TDText(props) {
-    return <TD>
-        <div className="text-sm text-gray-900">{props.children}</div>
-    </TD>
+    return (
+        <TD>
+            <div className="text-sm text-gray-900">{props.children}</div>
+        </TD>
+    )
 }
 
 export function TDBadge(props) {
-    return <TD>
-        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-            {props.children}
-        </span> 
-    </TD>
+    return (
+        <TD>
+            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                {props.children}
+            </span>
+        </TD>
+    );
 }
 
 export function TDButton(props) {
-    return <TD>
-        <a href="#" className="whitespace-nowrap text-right text-sm font-medium">Edit</a>
-    </TD>
+    return (
+        <TD>
+            <a href="#" className="whitespace-nowrap text-right text-sm font-medium">Edit</a>
+        </TD>
+    );
 }

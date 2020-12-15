@@ -6,7 +6,7 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import ChangePassword from './ChangePassword';
 import VerifyAccount from './VerifyAccount';
-import Admin from './routes/admin/Admin';
+import Admin from './routes/admin';
 import Privacy from './Privacy';
 import Terms from './Terms';
 import Docs from './Docs';
@@ -68,12 +68,12 @@ export default class App extends Component<props, state> {
 
     render() {
         let user = this.state.user;
-        let setUser = this.setUser;;
+        let setUser = this.setUser;
 
         return (
             <UserContext.Provider value={{user, setUser}}>
                 <Router>
-                    <BeepAppBar />
+                    <BeepAppBar/>
                     
                     <Switch>
                         <Route path="/password/forgot" component={ForgotPassword} />

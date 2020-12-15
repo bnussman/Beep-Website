@@ -2,9 +2,7 @@ import React from 'react';
 import {
     Switch,
     Route,
-    Link,
-    useRouteMatch,
-    NavLink
+    useRouteMatch
 } from "react-router-dom";
 
 import Rides from './Rides'
@@ -18,25 +16,13 @@ function Admin() {
 
     return (
         <div className="flex flex-row">
+            <VerticalNav title="Database">
+                <VerticalNavItem to={`${match.url}/rides`}>Rides</VerticalNavItem>
+                <VerticalNavItem to={`${match.url}/users`}>Users</VerticalNavItem>
+                <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
+            </VerticalNav>
 
-            {/* Navigation pane */}
-            <div className="px-6 mr-6">
-                <h2 className="mx-2 font-bold leading-7 text-gray-800 sm:truncate">
-                    Database
-                </h2>
-
-                <hr></hr>
-
-                <VerticalNav>
-                    <VerticalNavItem to={`${match.url}/rides`}>Rides</VerticalNavItem>
-                    <VerticalNavItem to={`${match.url}/users`}>Users</VerticalNavItem>
-                    <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
-                </VerticalNav>
-            </div>
-
-            {/* View container */}
             <div className="container mx-auto w-4/5">
-
                 <Switch>
                     <Route path={`${match.path}/rides`}>
                         <Rides></Rides>
