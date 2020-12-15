@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from './UserContext';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { config } from "./utils/config";
 import socket from "./utils/Socket";
@@ -67,7 +67,7 @@ const BeepAppBar = (props: props) => {
                             height="30"
                             className="d-inline-block align-top"
                         />
-                        <Link to="/" className="font-semibold text-xl tracking-tight pl-2">Beep App</Link>
+                        <NavLink to="/" className="font-semibold text-xl tracking-tight pl-2">Beep App</NavLink>
                     </div>
                     <div className="block lg:hidden">
                         <button onClick={() => setToggle(!toggle)} className="flex items-center px-3 py-2 border rounded text-black border-black-400 hover:text-black hover:border-white">
@@ -76,27 +76,27 @@ const BeepAppBar = (props: props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block items-end" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="text-sm">
-                            <Link to="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                            <NavLink to="/faq" activeClassName="font-semibold text-yellow-600" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>FAQ</p>
                                 </div>
-                            </Link>
-                            <Link to="/profile" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                            </NavLink>
+                            <NavLink to="/profile" activeClassName="font-semibold text-yellow-600" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>Profile</p>
                                 </div>
-                            </Link>
-                            <Link to="/password/change" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                            </NavLink>
+                            <NavLink to="/password/change" activeClassName="font-semibold text-yellow-600" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>Change Password</p>
                                 </div>
-                            </Link>
+                            </NavLink>
                             {user.userLevel > 0 &&
-                            <Link to="/admin/rides" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                            <NavLink to="/admin" activeClassName="font-semibold text-yellow-600" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>Admin</p>
                                 </div>
-                            </Link>
+                            </NavLink>
                             }
                             <p onClick={logout} className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Logout
@@ -158,7 +158,7 @@ const BeepAppBar = (props: props) => {
                             height="30"
                             className="d-inline-block align-top"
                         />
-                        <Link to="/" className="font-semibold text-xl tracking-tight pl-2">Beep App</Link>
+                        <NavLink to="/" activeClassName="font-semibold text-yellow-600" className="font-semibold text-xl tracking-tight pl-2">Beep App</NavLink>
                     </div>
                     <div className="block lg:hidden">
                         <button onClick={() => setToggle(!toggle)} className="flex items-center px-3 py-2 border rounded text-black-200 border-black-400 hover:text-black hover:border-white">
@@ -167,14 +167,14 @@ const BeepAppBar = (props: props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="lg:flex-grow">
-                            <Link to="/faq" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                            <NavLink to="/faq" activeClassName="font-semibold text-yellow-600" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>FAQ</p>
                                 </div>
-                            </Link>
-                            <Link to="/login" href="#" className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
+                            </NavLink>
+                            <NavLink to="/login" activeClassName="font-semibold text-yellow-600" href="#" className="cursor-pointer block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 Login
-                            </Link>
+                            </NavLink>
                         </div>
                     </div>
                 </nav>

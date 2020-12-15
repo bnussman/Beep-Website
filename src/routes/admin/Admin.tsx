@@ -3,7 +3,8 @@ import {
     Switch,
     Route,
     Link,
-    useRouteMatch
+    useRouteMatch,
+    NavLink
 } from "react-router-dom";
 
 import Rides from './Rides'
@@ -27,13 +28,13 @@ function Admin() {
 
                 <ul>
                     <li className="p-2">
-                        <Link to={`${match.url}/rides`}>Active rides</Link>
+                        <NavLink to={`${match.url}/rides`} activeClassName="font-semibold text-yellow-600">Active rides</NavLink>
                     </li>
                     <li className="p-2">
-                        <Link to={`${match.url}/users`}>Users</Link>
+                        <NavLink to={`${match.url}/users`} activeClassName="font-semibold text-yellow-600">Users</NavLink>
                     </li>
                     <li className="p-2">
-                        <Link to={`${match.url}/reports`}>Reports</Link>
+                        <NavLink to={`${match.url}/reports`} activeClassName="font-semibold text-yellow-600">Reports</NavLink>
                     </li>
                 </ul>
             </div>
