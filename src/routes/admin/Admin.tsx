@@ -10,6 +10,7 @@ import {
 import Rides from './Rides'
 import Users from './Users'
 import Reports from './Reports'
+import { VerticalNav, VerticalNavItem } from '../../components/Nav'
 
 function Admin() {
 
@@ -26,17 +27,11 @@ function Admin() {
 
                 <hr></hr>
 
-                <ul>
-                    <li className="p-2">
-                        <NavLink to={`${match.url}/rides`} activeClassName="font-semibold text-yellow-600">Active rides</NavLink>
-                    </li>
-                    <li className="p-2">
-                        <NavLink to={`${match.url}/users`} activeClassName="font-semibold text-yellow-600">Users</NavLink>
-                    </li>
-                    <li className="p-2">
-                        <NavLink to={`${match.url}/reports`} activeClassName="font-semibold text-yellow-600">Reports</NavLink>
-                    </li>
-                </ul>
+                <VerticalNav>
+                    <VerticalNavItem to={`${match.url}/rides`}>Rides</VerticalNavItem>
+                    <VerticalNavItem to={`${match.url}/users`}>Users</VerticalNavItem>
+                    <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
+                </VerticalNav>
             </div>
 
             {/* View container */}
