@@ -6,7 +6,7 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import ChangePassword from './ChangePassword';
 import VerifyAccount from './VerifyAccount';
-import Admin from './admin/Admin';
+import Admin from './routes/admin/Admin';
 import Privacy from './Privacy';
 import Terms from './Terms';
 import Docs from './Docs';
