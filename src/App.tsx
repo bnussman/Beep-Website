@@ -85,7 +85,7 @@ export default class App extends Component<props, state> {
                         <Route path="/privacy" component={Privacy} />
                         <Route path="/terms" component={Terms} />
                         <Route path="/docs" component={Docs} />
-                        <Route path="/admin/rides" component={Admin} />
+                        <Route path="/admin" component={Admin} />
                         <Route path="/faq" component={Faq} />
                         <Route path="/" component={Home} />
                     </Switch>
