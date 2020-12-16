@@ -4,10 +4,11 @@ import {
     Route,
     useRouteMatch
 } from "react-router-dom";
-import Beepers from './Beepers'
-import Users from './Users'
-import Reports from './Reports'
-import { VerticalNav, VerticalNavItem } from '../../components/Nav'
+import Beepers from './Beepers';
+import Users from './users';
+import User from './users/User';
+import Reports from './Reports';
+import { VerticalNav, VerticalNavItem } from '../../components/Nav';
 
 function Admin() {
 
@@ -23,16 +24,20 @@ function Admin() {
 
             <div className="container mx-auto w-4/5 mb-4">
                 <Switch>
-                    <Route path={`${match.path}/beepers`}>
-                        <Beepers />
+                    <Route exact path={`${match.path}/beepers`}>
+                        <Beepers/>
                     </Route>
 
-                    <Route path={`${match.path}/users`}>
-                        <Users />
+                    <Route exact path={`${match.path}/users`}>
+                        <Users/>
                     </Route>
 
-                    <Route path={`${match.path}/reports`}>
-                        <Reports />
+                    <Route exact path={`${match.path}/users/:userId`}>
+                        <User/>
+                    </Route>
+
+                    <Route exact path={`${match.path}/reports`}>
+                        <Reports/>
                     </Route>
                 </Switch>
             </div>

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
-import { usersSelector, fetchUsers } from '../../store/slices/users';
+import { usersSelector, fetchUsers } from '../../../store/slices/users';
 
-import { Header } from '../../components/Typography';
-import { Card } from '../../components/Card';
-import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../components/Table';
+import { Header } from '../../../components/Typography';
+import { Card } from '../../../components/Card';
+import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
 
 function Users() {
     
