@@ -5,7 +5,7 @@ import {
     useRouteMatch
 } from "react-router-dom";
 
-import Rides from './Rides'
+import Beepers from './Beepers'
 import Users from './Users'
 import Reports from './Reports'
 import { VerticalNav, VerticalNavItem } from '../../components/Nav'
@@ -17,15 +17,15 @@ function Admin() {
     return (
         <div className="flex flex-row">
             <VerticalNav title="Database">
-                <VerticalNavItem to={`${match.url}/rides`}>Rides</VerticalNavItem>
+                <VerticalNavItem to={`${match.url}/beepers`}>Beepers</VerticalNavItem>
                 <VerticalNavItem to={`${match.url}/users`}>Users</VerticalNavItem>
                 <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
             </VerticalNav>
 
             <div className="container mx-auto w-4/5">
                 <Switch>
-                    <Route path={`${match.path}/rides`}>
-                        <Rides></Rides>
+                    <Route path={`${match.path}/beepers`}>
+                        <Beepers></Beepers>
                     </Route>
 
                     <Route path={`${match.path}/users`}>
