@@ -7,7 +7,7 @@ import { Header } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../components/Table';
 
-function Rides() {
+function Beepers() {
 
     const dispatch = useDispatch();
     const { rides, loading, hasErrors } = useSelector(ridesSelector);
@@ -17,12 +17,12 @@ function Rides() {
     }, [dispatch]);
 
     return <>
-        <Header>Active rides</Header>
+        <Header>Active Beepers</Header>
 
         <Card>
             <Table>
                 <THead>
-                    <TH>Beepers</TH>
+                    <TH>Beeper</TH>
                     <TH>Queue size</TH>
                     <TH>Ride capacity</TH>
                     <TH>Rate</TH>
@@ -55,4 +55,4 @@ function Rides() {
     </>;
 }
 
-export default Rides;
+export default Beepers;
