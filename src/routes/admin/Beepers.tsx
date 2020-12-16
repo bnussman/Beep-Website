@@ -5,6 +5,7 @@ import { ridesSelector, fetchRides } from '../../store/slices/rides';
 
 import { Header } from '../../components/Typography';
 import { Card } from '../../components/Card';
+import { Pagination } from '../../components/Pagination';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../components/Table';
 
 function Beepers() {
@@ -52,6 +53,8 @@ function Beepers() {
                 </TBody>
             </Table>
         </Card>
+
+        <Pagination pageNum={3} resultsCount={96}></Pagination>
     </>;
 }
 
