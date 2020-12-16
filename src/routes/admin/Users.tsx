@@ -26,7 +26,7 @@ function Users() {
 
     return <>
         <Header>Users</Header>
-        <p className="mx-2 mb-4 text-gray-600">Total: {users.length}</p>
+        {users && <p className="mx-2 mb-4 text-gray-600">Total: {users.length}</p>}
 
         <Card>
             <Table>
