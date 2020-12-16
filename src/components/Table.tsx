@@ -57,6 +57,11 @@ export function TDProfile(props) {
                     <div className="text-sm font-medium text-gray-900">
                         {props.title}
                     </div>
+                    {props.subtitle2 &&
+                    <div className="text-xs text-gray-500">
+                        {props.subtitle2}
+                    </div>
+                    }
                     <div className="text-sm text-gray-500">
                         {props.subtitle}
                     </div>
