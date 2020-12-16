@@ -10,7 +10,7 @@ import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } fro
 function Users() {
     
     const dispatch = useDispatch();
-    const { users, loading, hasErrors } = useSelector(usersSelector);
+    const { users, hasErrors } = useSelector(usersSelector);
 
     useEffect(() => {
         dispatch(fetchUsers());
