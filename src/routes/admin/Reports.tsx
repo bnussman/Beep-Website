@@ -18,7 +18,6 @@ function Reports() {
 
     return <>
         <Header>Reports</Header>
-        {reports && <p className="mx-2 mb-4 text-gray-600">Total: {reports.length}</p>}
 
         <Card>
             <Table>
