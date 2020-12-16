@@ -23,7 +23,6 @@ function Users() {
     const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
     const No = () => <div className="rounded-full bg-red-500 h-3 shadow w-3 shadow flex items-center justify-center..."> </div>;
 
-
     return <>
         <Header>Users</Header>
         {users && <p className="mx-2 mb-4 text-gray-600">Total: {users.length}</p>}

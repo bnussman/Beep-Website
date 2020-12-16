@@ -38,6 +38,11 @@ const api = {
             return await GET('user');
         }
     },
+    report: {
+        get: async function() {
+            return await GET('report');
+        }
+    },
     ride: {
         list: async function() {
             return await GET('rider/list');
