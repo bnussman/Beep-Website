@@ -20,8 +20,8 @@ function Users() {
         return `(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`;
     }
 
-    const Yes = () => <div className="rounded-full bg-green-500 h-4 w-4 flex items-center justify-center..."></div>;
-    const No = () => <div className="rounded-full bg-red-500 h-4 w-4 flex items-center justify-center..."> </div>;
+    const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
+    const No = () => <div className="rounded-full bg-red-500 h-3 shadow w-3 shadow flex items-center justify-center..."> </div>;
 
 
     return <>
@@ -47,7 +47,7 @@ function Users() {
                                     title={`${user.first} ${user.last} ${user.isStudent ? '🎓' : ''}`}
                                     subtitle={`@${user.username}`}>
                                 </TDProfile>
-                                <TDText>{user.email}</TDText>
+                                <TDText><a href={`mailto:${user.email}`} target="_blank">{user.email}</a></TDText>
                                 <TDText>{formatPhone(user.phone)}</TDText>
                                 <TDText>{user.isStudent ? <Yes/> : <No/>}</TDText>
                                 <TDText>{user.isEmailVerified ? <Yes/> : <No/>}</TDText>
