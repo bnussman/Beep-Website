@@ -4,7 +4,6 @@ import {
     Route,
     useRouteMatch
 } from "react-router-dom";
-
 import Beepers from './Beepers'
 import Users from './Users'
 import Reports from './Reports'
@@ -25,15 +24,15 @@ function Admin() {
             <div className="container mx-auto w-4/5">
                 <Switch>
                     <Route path={`${match.path}/beepers`}>
-                        <Beepers></Beepers>
+                        <Beepers />
                     </Route>
 
                     <Route path={`${match.path}/users`}>
-                        <Users></Users>
+                        <Users />
                     </Route>
 
                     <Route path={`${match.path}/reports`}>
-                        <Reports></Reports>
+                        <Reports />
                     </Route>
                 </Switch>
             </div>
