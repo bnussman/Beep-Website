@@ -21,7 +21,7 @@ function Admin() {
                 <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
             </VerticalNav>
 
-            <div className="container mx-auto w-4/5">
+            <div className="container mx-auto w-4/5 mb-4">
                 <Switch>
                     <Route path={`${match.path}/beepers`}>
                         <Beepers />
