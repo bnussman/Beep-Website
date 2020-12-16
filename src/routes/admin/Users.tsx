@@ -45,7 +45,8 @@ function Users() {
                                 <TDProfile
                                     photoUrl={user.photoUrl}
                                     title={`${user.first} ${user.last} ${user.isStudent ? '🎓' : ''}`}
-                                    subtitle={`@${user.username}`}>
+                                    subtitle={`@${user.username}`}
+                                    subtitle2={`${user.id}`}>
                                 </TDProfile>
                                 <TDText>{user.email}</TDText>
                                 <TDText>{formatPhone(user.phone)}</TDText>
