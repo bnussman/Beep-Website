@@ -7,10 +7,13 @@ import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../components/Table';
 import { Header } from '../../components/Typography';
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 function Reports() {
     const dispatch = useDispatch();
-    const { reports, loading, hasErrors } = useSelector(reportsSelector);
+    const { reports, hasErrors } = useSelector(reportsSelector);
 
     useEffect(() => {
         dispatch(fetchReports());
@@ -34,7 +37,9 @@ function Reports() {
                                 <TDText>{report.reporterId}</TDText>
                                 <TDText>{report.reportedId}</TDText>
                                 <TDText>{report.reason}</TDText>
-                                <TDText>{new Date(report.timestamp).toLocaleString()}</TDText>
+                                <TDText>
+                                    <p>{dayjs().to(report.timestamp)}</p>
+                                </TDText>
                             </TR>
                         )
                     })}
