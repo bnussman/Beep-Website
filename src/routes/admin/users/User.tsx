@@ -7,7 +7,7 @@ import { Header } from '../../../components/Typography';
 // import { Card } from '../../../components/Card';
 // import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
 
-function Users() {
+function User() {
     
     // const dispatch = useDispatch();
     // const { users, hasErrors } = useSelector(usersSelector);
@@ -28,4 +28,4 @@ function Users() {
     </>;
 }
 
-export default Users;
+export default User;
