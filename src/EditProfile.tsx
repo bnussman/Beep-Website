@@ -58,8 +58,8 @@ export default class EditProfile extends Component<props, state> {
 
     handleEdit = (e) => {
         e.preventDefault();
-        fetch(config.apiUrl + '/account/edit', {
-            method: 'POST',
+        fetch(config.apiUrl + '/account', {
+            method: 'PATCH',
             headers: {
                 "Authorization": "Bearer " + this.context.user.token,
                 "Content-Type": "application/json"
