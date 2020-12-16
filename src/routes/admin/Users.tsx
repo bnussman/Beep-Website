@@ -45,7 +45,7 @@ function Users() {
                             <TR key={user.id}>
                                 <TDProfile
                                     photoUrl={user.photoUrl}
-                                    title={`${user.first} ${user.last} ${user.isStudent ? '🎓' : ''}`}
+                                    title={`${user.first} ${user.last}`}
                                     subtitle={`@${user.username}`}
                                     subtitle2={`${user.id}`}>
                                 </TDProfile>
