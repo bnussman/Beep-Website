@@ -35,12 +35,12 @@ async function DELETE(url: string, headers?: object, body?: object) {
 const api = {
     user: {
         get: async function() {
-            return await GET('user');
+            return await GET('users');
         }
     },
     report: {
         get: async function() {
-            return await GET('report');
+            return await GET('reports');
         }
     },
     ride: {
