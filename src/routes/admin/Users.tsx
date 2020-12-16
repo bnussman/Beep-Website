@@ -20,6 +20,10 @@ function Users() {
         return `(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`;
     }
 
+    const Yes = () => <div className="rounded-full bg-green-500 h-4 w-4 flex items-center justify-center..."></div>;
+    const No = () => <div className="rounded-full bg-red-500 h-4 w-4 flex items-center justify-center..."> </div>;
+
+
     return <>
         <Header>Users</Header>
 
@@ -29,7 +33,8 @@ function Users() {
                     <TH>User</TH>
                     <TH>Email</TH>
                     <TH>Phone</TH>
-                    <TH>Verified?</TH>
+                    <TH>Is Student?</TH>
+                    <TH>Is Email Verified?</TH>
                     <TH>Is beeping?</TH>
                     <TH>User level</TH>
                 </THead>
@@ -44,8 +49,9 @@ function Users() {
                                 </TDProfile>
                                 <TDText>{user.email}</TDText>
                                 <TDText>{formatPhone(user.phone)}</TDText>
-                                <TDText>{user.verified ? 'Yes' : 'No'}</TDText>
-                                <TDText>{user.isBeeping ? 'Yes' : 'No'}</TDText>
+                                <TDText>{user.isStudent ? <Yes/> : <No/>}</TDText>
+                                <TDText>{user.isEmailVerified ? <Yes/> : <No/>}</TDText>
+                                <TDText>{user.isBeeping ? <Yes/> : <No/>}</TDText>
                                 <TDBadge>
                                     {user.userLevel}
                                 </TDBadge>
