@@ -1,17 +1,16 @@
 import { config } from './utils/config';
-// import { useContext } from 'react';
-// import { UserContext } from './UserContext';
-
-// const { user, setUser } = useContext(UserContext);
 
 // Some HTTP helper methods
 async function http(url: string, method: string, headers?: object, body?: object) {
+    
+    const { token } = JSON.parse(localStorage.getItem('user'));
+
     const response = await fetch(`${config.apiUrl}/${url}`, {
         method,
         headers: {
             ...headers,
             'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${user.token}`
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(body)
     });
