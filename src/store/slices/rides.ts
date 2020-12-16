@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { config } from '../../utils/config';
+import api from '../../api';
 
 export const initialState = {
     loading: false,
@@ -24,7 +24,7 @@ const ridesSlice = createSlice({
             state.loading = false
             state.hasErrors = true
         },
-    },
+    }, 
 });
 
 export const { getRides, getRidesSuccess, getRidesFailure } = ridesSlice.actions;
@@ -38,14 +38,7 @@ export function fetchRides() {
         dispatch(getRides());
 
         try {
-            const response = await fetch(config.apiUrl + '/rider/list', {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            const { beeperList } = await response.json();
-            
+            const { beeperList } = await api.ride.list();
             dispatch(getRidesSuccess(beeperList));
         }
         catch (error) {
