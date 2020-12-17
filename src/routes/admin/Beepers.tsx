@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { ridesSelector, fetchRides } from '../../store/slices/rides';
 
-import { Header } from '../../components/Typography';
+import { Heading1 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Pagination } from '../../components/Pagination';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../components/Table';
@@ -18,7 +18,7 @@ function Beepers() {
     }, [dispatch]);
 
     return <>
-        <Header>Active Beepers</Header>
+        <Heading1>Active Beepers</Heading1>
 
         <Card>
             <Table>
@@ -36,6 +36,7 @@ function Beepers() {
                         return (
                             <TR key={ride.id}>
                                 <TDProfile
+                                    to={`users/${ride.id}`}
                                     photoUrl={ride.photoUrl}
                                     title={`${ride.first} ${ride.last} ${ride.isStudent ? '🎓' : ''}`}>
                                 </TDProfile>

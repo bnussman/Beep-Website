@@ -5,7 +5,7 @@ import { reportsSelector, fetchReports } from '../../../store/slices/reports';
 
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
-import { Header } from '../../../components/Typography';
+import { Heading1 } from '../../../components/Typography';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -20,7 +20,7 @@ function Reports() {
     }, []);
 
     return <>
-        <Header>Reports</Header>
+        <Heading1>Reports</Heading1>
 
         <Card>
             <Table>

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { usersSelector, fetchUsers } from '../../../store/slices/users';
 
-import { Header } from '../../../components/Typography';
+import { Heading1 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
 
@@ -24,7 +24,7 @@ function Users() {
     const No = () => <div className="rounded-full bg-red-500 h-3 shadow w-3 shadow flex items-center justify-center..."> </div>;
 
     return <>
-        <Header>Users</Header>
+        <Heading1>Users</Heading1>
 
         <Card>
             <Table>
@@ -45,8 +45,7 @@ function Users() {
                                     to={`users/${user.id}`}
                                     photoUrl={user.photoUrl}
                                     title={`${user.first} ${user.last}`}
-                                    subtitle={`@${user.username}`}
-                                    subtitle2={`${user.id}`}>
+                                    subtitle={`@${user.username}`}>
                                 </TDProfile>
                                 <TDText><a href={`mailto:${user.email}`} target="_blank">{user.email}</a></TDText>
                                 <TDText>{formatPhone(user.phone)}</TDText>

@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Header } from '../../../components/Typography';
+import { Heading1 } from '../../../components/Typography';
 
 function Report() {
     
     return <>
-        <Header>Report</Header>
+        <Heading1>Report</Heading1>
     </>;
 }
 

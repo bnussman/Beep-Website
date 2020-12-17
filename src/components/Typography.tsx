@@ -1,9 +1,61 @@
 import React from 'react';
 
-export function Header(props) {
+export function Heading1(props) {
     return (
-        <h2 className="mx-2 text-2xl font-bold leading-7 text-gray-800 sm:truncate">
-            {props.children}
-        </h2>
-    );
+        <h1 className="py-6 text-5xl font-bold leading-7 text-gray-800 ">{props.children}</h1>
+    )
+}
+
+export function Heading2(props) {
+    return (
+        <h2 className="py-6 text-4xl font-bold leading-7 text-gray-800">{props.children}</h2>
+    )
+}
+
+export function Heading3(props) {
+    return (
+        <h3 className="py-3 text-3xl font-bold leading-7 text-gray-800">{props.children}</h3>
+    )
+}
+
+export function Heading4(props) {
+    return (
+        <h4 className="py-2 text-2xl font-bold leading-7 text-gray-800">{props.children}</h4>
+    )
+}
+
+export function Heading5(props) {
+    return (
+        <h5 className="py-1 text-xl font-bold leading-7 text-gray-800">{props.children}</h5>
+    )
+}
+
+export function Heading6(props) {
+    return (
+        <h6 className="py-1 text-l font-bold leading-7 text-gray-800">{props.children}</h6>
+    )
+}
+
+export function Subtitle(props) {
+    return (
+        <p className="font-medium text-gray-800">{props.children}</p>
+    )
+}
+
+export function Body1(props) {
+    return (
+        <p className="text-gray-800">{props.children}</p>
+    )
+}
+
+export function Body2(props) {
+    return (
+        <p className="font-semibold text-gray-800">{props.children}</p>
+    )
+}
+
+export function Caption(props) {
+    return (
+        <p className="text-sm font-medium text-gray-800">{props.children}</p>
+    )
 }
