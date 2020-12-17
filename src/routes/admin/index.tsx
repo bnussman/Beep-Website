@@ -7,7 +7,7 @@ import {
 import Beepers from './Beepers';
 import Users from './users';
 import User from './users/User';
-import Reports from './Reports';
+import Reports from './reports';
 import { VerticalNav, VerticalNavItem } from '../../components/Nav';
 
 function Admin() {
