@@ -88,7 +88,9 @@ export function TDBadge(props) {
 export function TDButton(props) {
     return (
         <TD>
-            <a href="#" className="whitespace-nowrap text-right text-sm font-medium">Edit</a>
+            <NavLink to={props.to || '/'} className="whitespace-nowrap text-right text-sm font-medium">
+                {props.children}
+            </NavLink>
         </TD>
     );
 }

@@ -8,6 +8,7 @@ import Beepers from './Beepers';
 import Users from './users';
 import User from './users/User';
 import Reports from './reports';
+import Report from './reports/Report';
 import { VerticalNav, VerticalNavItem } from '../../components/Nav';
 
 function Admin() {
@@ -25,19 +26,23 @@ function Admin() {
             <div className="container mx-auto w-4/5 mb-4">
                 <Switch>
                     <Route exact path={`${match.path}/beepers`}>
-                        <Beepers/>
+                        <Beepers />
                     </Route>
 
                     <Route exact path={`${match.path}/users`}>
-                        <Users/>
+                        <Users />
                     </Route>
 
                     <Route exact path={`${match.path}/users/:userId`}>
-                        <User/>
+                        <User />
                     </Route>
 
                     <Route exact path={`${match.path}/reports`}>
-                        <Reports/>
+                        <Reports />
+                    </Route>
+
+                    <Route exact path={`${match.path}/reports/:reportId`}>
+                        <Report />
                     </Route>
                 </Switch>
             </div>

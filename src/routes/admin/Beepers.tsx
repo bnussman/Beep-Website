@@ -29,7 +29,6 @@ function Beepers() {
                     <TH>Rate</TH>
                     <TH>Masks required?</TH>
                     <TH>User level</TH>
-                    <TH>Edit</TH>
                 </THead>
                 <TBody>
                     {rides && (rides).map(ride => {
@@ -47,7 +46,6 @@ function Beepers() {
                                 <TDBadge>
                                     {ride.userLevel}
                                 </TDBadge>
-                                <TDButton></TDButton>
                             </TR>
                         )
                     })}
