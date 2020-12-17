@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { usersSelector, fetchUsers } from '../../../store/slices/users';
 
-import { Heading1 } from '../../../components/Typography';
+import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
+
+import { formatPhone } from '../../../utils/formatters';
 
 function Users() {
     
@@ -16,15 +18,11 @@ function Users() {
         dispatch(fetchUsers());
     }, []);
 
-    function formatPhone(phone) {
-        return `(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`;
-    }
-
     const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
     const No = () => <div className="rounded-full bg-red-500 h-3 shadow w-3 shadow flex items-center justify-center..."> </div>;
 
     return <>
-        <Heading1>Users</Heading1>
+        <Heading3>Users</Heading3>
 
         <Card>
             <Table>
