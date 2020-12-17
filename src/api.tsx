@@ -46,6 +46,11 @@ const api = {
             return await GET('reports');
         }
     },
+    beeps: {
+        get: async function() {
+            return await GET('beeps');
+        }
+    },
     rides: {
         list: async function() {
             return await GET('rider/list');
