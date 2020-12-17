@@ -8,9 +8,9 @@ import { Table, THead, TH, TBody, TR, TDText, TDButton } from '../../../componen
 import { Heading3 } from '../../../components/Typography';
 
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import duration from 'dayjs/plugin/duration';
 import { NavLink } from 'react-router-dom';
-dayjs.extend(relativeTime);
+dayjs.extend(duration);
 
 function Beeps() {
     const dispatch = useDispatch();
@@ -45,9 +45,9 @@ function Beeps() {
                                 <TDText>{beep.origin}</TDText>
                                 <TDText>{beep.destination}</TDText>
                                 <TDText>{beep.groupSize}</TDText>
-                                <TDText>{beep.timeEnteredQueue}</TDText>
-                                <TDText>{beep.doneTime}</TDText>
-                                <TDText>{beep.doneTime - beep.timeEnteredQueue}</TDText>
+                                <TDText>{dayjs().to(beep.timeEnteredQueue)}</TDText>
+                                <TDText>{dayjs().to(beep.doneTime)}</TDText>
+                                <TDText>{dayjs.duration(beep.doneTime - beep.timeEnteredQueue).humanize()}</TDText>
                                 <TDButton to={`beeps/${beep.id}`}>View</TDButton>
                             </TR>
                         )

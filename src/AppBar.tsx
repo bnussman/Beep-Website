@@ -76,6 +76,13 @@ const BeepAppBar = (props: props) => {
                     </div>
                     <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block items-end" : "w-full lg:items-center lg:w-auto lg:block" }>
                         <div className="text-sm">
+                            {user.isBeeping &&
+                                <div className="block mt-4 lg:inline-block lg:mt-0 text-black-200 ">
+                                    <div className="flex">
+                                        <p className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">You are beeping!</p>
+                                    </div>
+                                </div>
+                            }
                             <NavLink to="/faq" activeClassName="font-semibold text-yellow-600" className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-gray-500 mr-8">
                                 <div className="flex">
                                     <p>FAQ</p>
