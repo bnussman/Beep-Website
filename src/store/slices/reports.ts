@@ -30,7 +30,7 @@ export default reportsSlice.reducer;
 export function fetchReports() {
     return async dispatch => {
         try {
-            const { reports } = await api.report.get();
+            const { reports } = await api.reports.get();
             dispatch(getReportsSuccess(reports));
         }
         catch (error) {

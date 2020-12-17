@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 
 export function Table(props) {
     return (
@@ -49,7 +50,7 @@ export function TD(props) {
 export function TDProfile(props) {
     return (
         <TD>
-            <div className="flex items-center">
+            <NavLink to={props.to || '/'} className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10">
                     {props.photoUrl && <img className="h-10 w-10 rounded-full" src={props.photoUrl} alt="" />}
                 </div>
@@ -66,7 +67,7 @@ export function TDProfile(props) {
                         {props.subtitle}
                     </div>
                 </div>
-            </div>
+            </NavLink>
         </TD>
     );
 }

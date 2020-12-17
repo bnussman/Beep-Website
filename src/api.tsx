@@ -33,17 +33,20 @@ async function DELETE(url: string, headers?: object, body?: object) {
 }
 
 const api = {
-    user: {
-        get: async function() {
+    users: {
+        list: async function() {
             return await GET('users');
+        },
+        get: async function(userId) {
+            return await GET(`users/${userId}`);
         }
     },
-    report: {
+    reports: {
         get: async function() {
             return await GET('reports');
         }
     },
-    ride: {
+    rides: {
         list: async function() {
             return await GET('rider/list');
         }

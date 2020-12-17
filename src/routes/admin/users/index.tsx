@@ -10,11 +10,11 @@ import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } fro
 function Users() {
     
     const dispatch = useDispatch();
-    const { users, hasErrors } = useSelector(usersSelector);
+    const { users } = useSelector(usersSelector);
 
     useEffect(() => {
         dispatch(fetchUsers());
-    }, [dispatch]);
+    }, []);
 
     function formatPhone(phone) {
         return `(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`;
@@ -42,6 +42,7 @@ function Users() {
                         return (
                             <TR key={user.id}>
                                 <TDProfile
+                                    to={`users/${user.id}`}
                                     photoUrl={user.photoUrl}
                                     title={`${user.first} ${user.last}`}
                                     subtitle={`@${user.username}`}

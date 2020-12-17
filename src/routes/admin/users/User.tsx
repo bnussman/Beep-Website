@@ -1,30 +1,30 @@
 import React, { useEffect } from 'react'
-// import { useSelector, useDispatch } from 'react-redux';
-
-// import { usersSelector, fetchUsers } from '../../../store/slices/users';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { userSelector, fetchUser } from '../../../store/slices/users';
 
 import { Header } from '../../../components/Typography';
-// import { Card } from '../../../components/Card';
-// import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
 
-function User() {
-    
-    // const dispatch = useDispatch();
-    // const { users, hasErrors } = useSelector(usersSelector);
+function User(props) {
 
-    // useEffect(() => {
-    //     dispatch(fetchUsers());
-    // }, [dispatch]);
+    const { userId } = useParams<{userId: string}>();
 
-    // function formatPhone(phone) {
-    //     return `(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`;
-    // }
+    const dispatch = useDispatch();
+    const user = useSelector(userSelector(userId));
 
-    // const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
-    // const No = () => <div className="rounded-full bg-red-500 h-3 shadow w-3 shadow flex items-center justify-center..."> </div>;
+    useEffect(() => {
+        dispatch(fetchUser(userId));
+    }, []);
 
     return <>
         <Header>User</Header>
+
+        {user && (
+            <>
+                <p>{user.id}</p>
+                <p>{user.first} {user.last}</p>
+            </>
+        )}
     </>;
 }
 

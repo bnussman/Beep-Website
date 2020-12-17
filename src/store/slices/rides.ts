@@ -38,7 +38,7 @@ export function fetchRides() {
         dispatch(getRides());
 
         try {
-            const { beeperList } = await api.ride.list();
+            const { beeperList } = await api.rides.list();
             dispatch(getRidesSuccess(beeperList));
         }
         catch (error) {
