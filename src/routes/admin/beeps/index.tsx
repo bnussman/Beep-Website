@@ -46,8 +46,8 @@ function Beeps() {
                                 <TDText>{beep.destination}</TDText>
                                 <TDText>{beep.groupSize}</TDText>
                                 <TDText>{beep.timeEnteredQueue}</TDText>
-                                <TDText>{beep.timeDone}</TDText>
-                                <TDText>{beep.timeDone - beep.timeEnteredQueue}</TDText>
+                                <TDText>{beep.doneTime}</TDText>
+                                <TDText>{beep.doneTime - beep.timeEnteredQueue}</TDText>
                                 <TDButton to={`beeps/${beep.id}`}>View</TDButton>
                             </TR>
                         )
