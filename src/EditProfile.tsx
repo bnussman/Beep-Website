@@ -150,6 +150,7 @@ export default class EditProfile extends Component<props, state> {
                         id="first"
                         label="First name"
                         value={this.state.first}
+                        placeholder={this.state.first}
                         onChange={(value) => this.setState({ first: value.target.value })}
                     />
 
@@ -158,6 +159,7 @@ export default class EditProfile extends Component<props, state> {
                         id="last"
                         label="Last name"
                         value={this.state.last}
+                        placeholder={this.state.last}
                         onChange={(value) => this.setState({ last: value.target.value })}
                     />
 
@@ -166,6 +168,7 @@ export default class EditProfile extends Component<props, state> {
                         label="Email"
                         type="email"
                         value={this.state.email}
+                        placeholder={this.state.email}
                         onChange={(value) => this.setState({ email: value.target.value })}
                     />
                     <Caption className="mb-2">
@@ -184,6 +187,7 @@ export default class EditProfile extends Component<props, state> {
                         label="Phone"
                         type="tel"
                         value={this.state.phone}
+                        placeholder={this.state.phone}
                         onChange={(value) => this.setState({ phone: value.target.value })}
                     />
 
@@ -192,6 +196,7 @@ export default class EditProfile extends Component<props, state> {
                         id="venmo"
                         label="Venmo username"
                         value={this.state.venmo}
+                        placeholder={this.state.venmo}
                         onChange={(value) => this.setState({ venmo: value.target.value })}
                     />
 

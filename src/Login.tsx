@@ -4,9 +4,11 @@ import { Redirect, Link } from "react-router-dom";
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
 import socket from "./utils/Socket";
+import { TextInput } from './components/Input';
+import { Caption } from './components/Typography';
 
 function Login() {
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState();
@@ -23,32 +25,32 @@ function Login() {
                 'password': password
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === "success") {
-                setUser(data);
-                localStorage.setItem('user', JSON.stringify(data));
-                socket.emit("getUser", data.token);
-            }
-            else {
-                setError(data.message);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    setUser(data);
+                    localStorage.setItem('user', JSON.stringify(data));
+                    socket.emit("getUser", data.token);
+                }
+                else {
+                    setError(data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     //if some function tells us to redirect or a user is defined
     //redirect to the home page
-    if(user) {
-        return <Redirect to={{ pathname: "/"}} />;
+    if (user) {
+        return <Redirect to={{ pathname: "/" }} />;
     }
-    
+
     //Return the main login page
     return (
         <div className="lg:container px-4 mx-auto">
-            { error && 
+            { error &&
                 <div role="alert" className="mb-4" onClick={() => setError(null)}>
                     <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                         Login Error
@@ -59,30 +61,28 @@ function Login() {
                 </div>
             }
             <form onSubmit={handleLogin}>
-                <label className="text-gray-500 font-bold" htmlFor="username">
-                    Username
-                </label>
-                <input
+                <TextInput
+                    className="mb-4"
                     id="username"
+                    label="Username"
                     onChange={(value) => setUsername(value.target.value)}
-                    className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"
-                    type="text"
                 />
-                <label className="text-gray-500 font-bold" htmlFor="password">
-                    Password
-                </label>
-                <input
+
+                <TextInput
+                    className="mb-4"
                     id="password"
-                    onChange={(value) => setPassword(value.target.value)}
-                    className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"
                     type="password"
+                    label="Password"
+                    onChange={(value) => setPassword(value.target.value)}
                 />
+
                 <button type="submit" className="mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                     Login
                 </button>
             </form>
+
             <Link to={"/password/forgot"} className="text-gray-500">Forgot Password</Link>
-            <p className="text-gray-500 pt-5 text-xs">Currently, the option to sign up is only avalible in our app (coming soon)</p>
+            <Caption className="mt-4">Currently, the option to sign up is only avalible in our app (coming soon)</Caption>
         </div>
     );
 }

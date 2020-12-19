@@ -21,7 +21,7 @@ export function TextInput(props) {
                 id={props.id}
                 value={props.value}
                 type={props.type}
-                placeholder={props.placeholder || props.label}
+                placeholder={props.placeholder}
                 disabled={props.disabled}
                 onChange={props.onChange}
             />
