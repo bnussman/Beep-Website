@@ -56,6 +56,6 @@ export function Body2(props) {
 
 export function Caption(props) {
     return (
-        <p className="text-sm font-medium text-gray-800">{props.children}</p>
+        <p className={`text-xs font-medium text-gray-500 ${props.className}`}>{props.children}</p>
     )
 }

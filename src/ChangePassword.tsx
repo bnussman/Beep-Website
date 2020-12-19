@@ -3,6 +3,7 @@ import { UserContext } from './UserContext';
 import { Redirect } from "react-router-dom";
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
+import { Button } from './components/Input';
 
 function ChangePassword() {
 
@@ -88,9 +89,7 @@ function ChangePassword() {
                 <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" id="password" type="password" autoComplete="new-password" placeholder="Password" onChange={(value) => setPassword(value.target.value)} />
                 <label className="text-gray-500 font-bold" htmlFor="venmo">Repeat Password</label>
                 <input className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500" id="password2" type="password" autoComplete="new-password" placeholder="Password" onChange={(value) => setPassword2(value.target.value)} />
-                <button type="submit" className="mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
-                    Update Password
-                </button>
+                <Button raised type="submit">Update password</Button>
             </form>
         </div>
     );

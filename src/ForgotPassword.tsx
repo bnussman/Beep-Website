@@ -3,6 +3,7 @@ import { UserContext } from './UserContext';
 import { Redirect } from "react-router-dom";
 import { config } from './utils/config';
 import { Error } from "./utils/errors";
+import { Button } from './components/Input';
 
 interface Status {
     status: string;
@@ -80,13 +81,9 @@ function ForgotPassword() {
                     onChange={(value) => setEmail(value.target.value)}
                     disabled={status?.status === "success"}
                 />
-                <button
-                    type="submit"
-                    disabled={status?.status === "success"}
-                    className={ status?.status === "success" ? "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" }
-                >
+                <Button className={status?.status !== 'success' ? 'opacity-50 cursor-not-allowed' : ''}>
                     Send Reset Password Email
-                </button>
+                </Button>
             </form>
         </div>
     );
