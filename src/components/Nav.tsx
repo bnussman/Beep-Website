@@ -1,12 +1,11 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
+import { Heading6 } from './Typography';
 
 export function VerticalNav(props) {
     return (
         <div className="px-6 mr-6">
-            <h2 className="mx-2 font-bold leading-7 text-gray-800 sm:truncate">
-                {props.title}
-            </h2>
+            <Heading6>{props.title}</Heading6>
 
             <hr></hr>
 

@@ -2,37 +2,37 @@ import React from 'react';
 
 export function Heading1(props) {
     return (
-        <h1 className="py-6 text-5xl font-bold leading-7 text-gray-800 ">{props.children}</h1>
+        <h1 className="pb-4 text-5xl font-bold leading-7 text-gray-800 ">{props.children}</h1>
     )
 }
 
 export function Heading2(props) {
     return (
-        <h2 className="py-6 text-4xl font-bold leading-7 text-gray-800">{props.children}</h2>
+        <h2 className="pb-3 text-4xl font-bold leading-7 text-gray-800">{props.children}</h2>
     )
 }
 
 export function Heading3(props) {
     return (
-        <h3 className="py-3 text-3xl font-bold leading-7 text-gray-800">{props.children}</h3>
+        <h3 className="pb-3 text-3xl font-bold leading-7 text-gray-800">{props.children}</h3>
     )
 }
 
 export function Heading4(props) {
     return (
-        <h4 className="py-2 text-2xl font-bold leading-7 text-gray-800">{props.children}</h4>
+        <h4 className="pb-1 text-2xl font-bold leading-7 text-gray-800">{props.children}</h4>
     )
 }
 
 export function Heading5(props) {
     return (
-        <h5 className="py-1 text-xl font-bold leading-7 text-gray-800">{props.children}</h5>
+        <h5 className="pb-1 text-xl font-bold leading-7 text-gray-800">{props.children}</h5>
     )
 }
 
 export function Heading6(props) {
     return (
-        <h6 className="py-1 text-l font-bold leading-7 text-gray-800">{props.children}</h6>
+        <h6 className="pb-1 text-l font-bold leading-7 text-gray-800">{props.children}</h6>
     )
 }
 

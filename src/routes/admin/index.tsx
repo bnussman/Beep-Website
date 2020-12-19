@@ -21,15 +21,23 @@ function Admin() {
         <div className="flex flex-row">
             <VerticalNav title="Database">
                 <VerticalNavItem to={`${match.url}/beepers`}>Beepers</VerticalNavItem>
+                <VerticalNavItem to={`${match.url}/beeps`}>Beeps</VerticalNavItem>
                 <VerticalNavItem to={`${match.url}/users`}>Users</VerticalNavItem>
                 <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
-                <VerticalNavItem to={`${match.url}/beeps`}>Beeps</VerticalNavItem>
             </VerticalNav>
 
             <div className="container mx-auto w-4/5 mb-4">
                 <Switch>
                     <Route exact path={`${match.path}/beepers`}>
                         <Beepers />
+                    </Route>
+
+                    <Route exact path={`${match.path}/beeps`}>
+                        <Beeps />
+                    </Route>
+
+                    <Route exact path={`${match.path}/beeps/:beepId`}>
+                        <Beep />
                     </Route>
 
                     <Route exact path={`${match.path}/users`}>
@@ -46,14 +54,6 @@ function Admin() {
 
                     <Route exact path={`${match.path}/reports/:reportId`}>
                         <Report />
-                    </Route>
-
-                    <Route exact path={`${match.path}/beeps`}>
-                        <Beeps />
-                    </Route>
-
-                    <Route exact path={`${match.path}/beeps/:beepId`}>
-                        <Beep />
                     </Route>
                 </Switch>
             </div>

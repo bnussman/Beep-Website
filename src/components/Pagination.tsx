@@ -78,7 +78,6 @@ export function Pagination(props) {
 							<PagButton>{i + 1 + pageCount - cutoff}</PagButton>
 						))
 					}
-					<PagRight/>
 				</nav>
 			</div>
 		</div>
