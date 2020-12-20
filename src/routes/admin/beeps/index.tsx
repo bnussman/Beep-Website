@@ -8,7 +8,7 @@ import duration from 'dayjs/plugin/duration';
 
 import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
-import { Table, THead, TH, TBody, TR, TDText, TDButton } from '../../../components/Table';
+import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
 
 dayjs.extend(duration);
@@ -47,8 +47,18 @@ function Beeps() {
                         return (
                             
                             <TR key={beepEntry.beep.id}>
-                                <TDText><NavLink to={`users/${beepEntry.rider.id}`}>{beepEntry.rider.first} {beepEntry.rider.last}</NavLink></TDText>
-                                <TDText><NavLink to={`users/${beepEntry.beeper.id}`}>{beepEntry.beeper.first} {beepEntry.beeper.last}</NavLink></TDText>
+                                <TDProfile
+                                    to={`users/${beepEntry.rider.id}`}
+                                    photoUrl={beepEntry.rider.photoUrl}
+                                    title={`${beepEntry.rider.first} ${beepEntry.rider.last}`}
+                                    subtitle={`@${beepEntry.rider.username}`}>
+                                </TDProfile>
+                                <TDProfile
+                                    to={`users/${beepEntry.beeper.id}`}
+                                    photoUrl={beepEntry.beeper.photoUrl}
+                                    title={`${beepEntry.beeper.first} ${beepEntry.beeper.last}`}
+                                    subtitle={`@${beepEntry.beeper.username}`}>
+                                </TDProfile>
                                 <TDText>{beepEntry.beep.origin}</TDText>
                                 <TDText>{beepEntry.beep.destination}</TDText>
                                 <TDText>{beepEntry.beep.groupSize}</TDText>

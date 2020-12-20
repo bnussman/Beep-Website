@@ -5,7 +5,7 @@ import { ReportData } from '../../../types/Report';
 
 import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
-import { Table, THead, TH, TBody, TR, TDText, TDButton } from '../../../components/Table';
+import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
 
 import dayjs from 'dayjs';
@@ -47,8 +47,18 @@ function Reports() {
                     {reports && (reports).map(reportEntry => {
                         return (
                             <TR key={reportEntry.report.id}>
-                                <TDText><NavLink to={`users/${reportEntry.reporter.id}`}>{reportEntry.reporter.first} {reportEntry.reporter.last}</NavLink></TDText>
-                                <TDText><NavLink to={`users/${reportEntry.reported.id}`}>{reportEntry.reported.first} {reportEntry.reported.last}</NavLink></TDText>
+                                <TDProfile
+                                    to={`users/${reportEntry.reporter.id}`}
+                                    photoUrl={reportEntry.reporter.photoUrl}
+                                    title={`${reportEntry.reporter.first} ${reportEntry.reporter.last}`}
+                                    subtitle={`@${reportEntry.reporter.username}`}>
+                                </TDProfile>
+                                <TDProfile
+                                    to={`users/${reportEntry.reported.id}`}
+                                    photoUrl={reportEntry.reported.photoUrl}
+                                    title={`${reportEntry.reported.first} ${reportEntry.reported.last}`}
+                                    subtitle={`@${reportEntry.reported.username}`}>
+                                </TDProfile>
                                 <TDText>{reportEntry.report.reason}</TDText>
                                 <TDText>{dayjs().to(reportEntry.report.timestamp)}</TDText>
                                 <TDText>{reportEntry.report.handled ? <Yes/> : <No/>}</TDText>

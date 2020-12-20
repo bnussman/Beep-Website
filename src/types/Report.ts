@@ -19,4 +19,5 @@ export interface User {
     first: string;
     last: string;
     username: string;
+    photoUrl: string;
 }
