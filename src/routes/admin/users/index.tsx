@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import api from '../../../api';
+import User from '../../../types/User';
 
 import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
@@ -10,7 +11,7 @@ import { formatPhone } from '../../../utils/formatters';
 
 function Users() {
     
-    const [ users, setUsers ] = useState<any>([]);
+    const [ users, setUsers ] = useState<User[]>([]);
 
     async function fetchUsers() {
         const { users } = await api.users.list();

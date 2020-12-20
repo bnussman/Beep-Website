@@ -11,7 +11,7 @@ import Privacy from './routes/Privacy';
 import Terms from './routes/Terms';
 import Docs from './routes/Docs';
 import Faq from './routes/FAQ';
-import BeepAppBar from './AppBar';
+import BeepAppBar from './components/AppBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
 import './assets/tailwind.css';

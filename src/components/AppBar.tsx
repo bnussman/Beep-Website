@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import { config } from "./utils/config";
-import socket from "./utils/Socket";
+import { config } from "../utils/config";
+import socket from "../utils/Socket";
 
 interface props {
     noErrors?: boolean;

@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
+
 import api from '../../../api';
+import Beep from '../../../types/Beep';
 
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -13,7 +15,7 @@ dayjs.extend(duration);
 
 function Beeps() {
 
-    const [ beeps, setBeeps ] = useState<any>([]);
+    const [ beeps, setBeeps ] = useState<Beep[]>([]);
 
     async function fetchBeeps(page, limit) {
         const { beeps } = await api.beeps.list();

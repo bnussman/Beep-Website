@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import api from '../../../api';
+import Report from '../../../types/Report';
 
 import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
@@ -14,7 +15,7 @@ dayjs.extend(relativeTime);
 
 function Reports() {
 
-    const [ reports, setReports ] = useState<any>([]);
+    const [ reports, setReports ] = useState<Report[]>([]);
 
     async function fetchReports() {
         const { reports } = await api.reports.list();

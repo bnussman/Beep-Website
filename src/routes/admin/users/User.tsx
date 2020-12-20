@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
+
 import api from '../../../api';
+import User from '../../../types/User';
 
 import { Heading3, Heading4, Heading5, Subtitle, Body1 } from '../../../components/Typography';
 
 import { formatPhone } from '../../../utils/formatters';
 
-function User(props) {
+function UserPage(props) {
 
     const { userId } = useParams<{ userId: string }>();
-    const [ user, setUser ] = useState<any>({});
+    const [ user, setUser ] = useState<User>(null);
 
     async function fetchUser(userId) {
         const { user } = await api.users.get(userId);
@@ -57,4 +59,4 @@ function User(props) {
     </>;
 }
 
-export default User;
+export default UserPage;

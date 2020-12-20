@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import api from '../../api';
+import Beeper from '../../types/Beeper';
 
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
@@ -9,7 +10,7 @@ import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } fro
 
 function Beepers() {
 
-    const [ beepers, setBeepers ] = useState<any>([]);
+    const [ beepers, setBeepers ] = useState<Beeper[]>([]);
 
     async function fetchRides() {
         const { beeperList } = await api.beepers.list();
