@@ -34,10 +34,10 @@ export const {
     getUsersFailure
 } = usersSlice.actions;
 
-export const usersSelector = state => state.users;
 export const userSelector = userId => state => {
     return state.users.users.find(user => user.id === userId);
 }
+export const usersSelector = state => state.users;
 
 export default usersSlice.reducer;
 

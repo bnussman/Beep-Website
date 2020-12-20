@@ -39,6 +39,7 @@ function Beeps() {
                 <TBody>
                     {beeps && (beeps).map(beep => {
                         return (
+                            
                             <TR key={beep.id}>
                                 <TDText><NavLink to={`users/${beep.riderid}`}>{beep.riderid}</NavLink></TDText>
                                 <TDText><NavLink to={`users/${beep.beepersid}`}>{beep.beepersid}</NavLink></TDText>

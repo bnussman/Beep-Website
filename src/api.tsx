@@ -42,13 +42,16 @@ const api = {
         }
     },
     reports: {
-        get: async function() {
+        list: async function() {
             return await GET('reports');
         }
     },
     beeps: {
-        get: async function() {
+        list: async function() {
             return await GET('beeps');
+        },
+        get: async function(beepId) {
+            return await GET(`beeps/${beepId}`);
         }
     },
     rides: {
