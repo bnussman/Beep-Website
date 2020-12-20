@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
 import { Redirect, Link } from "react-router-dom";
-import { config } from './utils/config';
-import { Error } from "./utils/errors";
-import socket from "./utils/Socket";
-import { TextInput } from './components/Input';
-import { Caption } from './components/Typography';
+import { config } from '../utils/config';
+import { Error } from "../utils/errors";
+import socket from "../utils/Socket";
+import { TextInput } from '../components/Input';
+import { Caption } from '../components/Typography';
 
 function Login() {
     const { user, setUser } = useContext(UserContext);

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
 import { Redirect } from "react-router-dom";
-import { config } from './utils/config';
-import { Error } from "./utils/errors";
-import { Button, TextInput } from './components/Input';
+import { config } from '../utils/config';
+import { Error } from "../utils/errors";
+import { Button, TextInput } from '../components/Input';
 
 function ChangePassword() {
 

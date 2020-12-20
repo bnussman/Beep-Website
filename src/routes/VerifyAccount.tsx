@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { config } from './utils/config';
-import { UserContext } from './UserContext';
+import { config } from '../utils/config';
+import { UserContext } from '../UserContext';
 
 function VerifyAccount({ match }) {
     const {user, setUser} = useContext(UserContext);

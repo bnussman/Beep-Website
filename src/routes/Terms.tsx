@@ -1,5 +1,5 @@
 import React from 'react';
-import "./assets/doc.css";
+import "../assets/doc.css";
 
 function Privacy() {
     return (

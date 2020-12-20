@@ -1,23 +1,28 @@
-import React, {useEffect} from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react'
 
-import { reportsSelector, fetchReports } from '../../../store/slices/reports';
+import api from '../../../api';
 
+import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDText, TDButton } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { NavLink } from 'react-router-dom';
+
 dayjs.extend(relativeTime);
 
 function Reports() {
-    const dispatch = useDispatch();
-    const { reports } = useSelector(reportsSelector);
+
+    const [ reports, setReports ] = useState<any>([]);
+
+    async function fetchReports() {
+        const { reports } = await api.reports.list();
+        setReports(reports);
+    }
 
     useEffect(() => {
-        dispatch(fetchReports());
+        fetchReports();
     }, []);
 
     return <>

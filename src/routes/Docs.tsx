@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { config } from "./utils/config";
+import { config } from "../utils/config";
 import { RedocStandalone } from 'redoc';
 
 class Docs extends Component {

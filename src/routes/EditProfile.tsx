@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
 import { Redirect } from "react-router-dom";
-import { config } from './utils/config';
-import { Error } from "./utils/errors";
-import { Button, TextInput } from './components/Input';
-import { Caption } from './components/Typography';
+import { config } from '../utils/config';
+import { Error } from "../utils/errors";
+import { Button, TextInput } from '../components/Input';
+import { Caption } from '../components/Typography';
 
 interface props {
 }

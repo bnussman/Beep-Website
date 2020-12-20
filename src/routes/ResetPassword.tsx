@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { config } from './utils/config';
-import { Error } from "./utils/errors";
+import { config } from '../utils/config';
+import { Error } from "../utils/errors";
 
 interface Status {
     status: string;
