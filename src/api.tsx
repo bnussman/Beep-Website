@@ -43,7 +43,20 @@ const api = {
     },
     reports: {
         list: async function() {
-            return await GET('reports');
+            const res = await GET('reports');
+            
+            // TODO: Reduce data on server side
+            res.reports = res.reports.map(r => {
+                return {
+                    ...r.report,
+                    reported: r.reported,
+                    reporter: r.reporter
+                };
+            });
+            return res;
+        },
+        get: async function(reportId) {
+            return await GET(`reports/${reportId}`);
         }
     },
     beeps: {

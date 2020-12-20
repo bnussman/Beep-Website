@@ -1,5 +1,4 @@
-import { User } from '../types/Report';
-
+import User from '../types/User';
 export interface BeepEntry {
     beep: Beep;
     rider: User;

@@ -6,12 +6,13 @@ import User from '../../../types/User';
 import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge } from '../../../components/Table';
+import { Indicator } from '../../../components/Indicator';
 
 import { formatPhone } from '../../../utils/formatters';
 
 function Users() {
-    
-    const [ users, setUsers ] = useState<User[]>([]);
+
+    const [users, setUsers] = useState<User[]>([]);
 
     async function fetchUsers() {
         const { users } = await api.users.list();
@@ -51,9 +52,24 @@ function Users() {
                                 </TDProfile>
                                 <TDText><a href={`mailto:${user.email}`} target="_blank">{user.email}</a></TDText>
                                 <TDText>{formatPhone(user.phone)}</TDText>
-                                <TDText>{user.isStudent ? <Yes/> : <No/>}</TDText>
-                                <TDText>{user.isEmailVerified ? <Yes/> : <No/>}</TDText>
-                                <TDText>{user.isBeeping ? <Yes/> : <No/>}</TDText>
+                                <TDText>
+                                    {user.isStudent
+                                        ? <Indicator color='green' />
+                                        : <Indicator color='red' />
+                                    }
+                                </TDText>
+                                <TDText>
+                                    {user.isEmailVerified
+                                        ? <Indicator color='green' />
+                                        : <Indicator color='red' />
+                                    }
+                                </TDText>
+                                <TDText>
+                                    {user.isBeeping
+                                        ? <Indicator color='green' />
+                                        : <Indicator color='red' />
+                                    }
+                                </TDText>
                                 <TDBadge>
                                     {user.userLevel}
                                 </TDBadge>
