@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import api from '../../../api';
-import Beep from '../../../types/Beep';
+import { BeepEntry } from '../../../types/Beep';
 
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -15,7 +15,7 @@ dayjs.extend(duration);
 
 function Beeps() {
 
-    const [ beeps, setBeeps ] = useState<Beep[]>([]);
+    const [ beeps, setBeeps ] = useState<BeepEntry[]>([]);
 
     async function fetchBeeps(page, limit) {
         const { beeps } = await api.beeps.list();
@@ -43,19 +43,19 @@ function Beeps() {
                     <TH></TH>
                 </THead>
                 <TBody>
-                    {beeps && (beeps).map(beep => {
+                    {beeps && (beeps).map(beepEntry => {
                         return (
                             
-                            <TR key={beep.id}>
-                                <TDText><NavLink to={`users/${beep.riderid}`}>{beep.riderid}</NavLink></TDText>
-                                <TDText><NavLink to={`users/${beep.beepersid}`}>{beep.beepersid}</NavLink></TDText>
-                                <TDText>{beep.origin}</TDText>
-                                <TDText>{beep.destination}</TDText>
-                                <TDText>{beep.groupSize}</TDText>
-                                <TDText>{dayjs().to(beep.timeEnteredQueue)}</TDText>
-                                <TDText>{dayjs().to(beep.doneTime)}</TDText>
-                                <TDText>{dayjs.duration(beep.doneTime - beep.timeEnteredQueue).humanize()}</TDText>
-                                <TDButton to={`beeps/${beep.id}`}>View</TDButton>
+                            <TR key={beepEntry.beep.id}>
+                                <TDText><NavLink to={`users/${beepEntry.rider.id}`}>{beepEntry.rider.first} {beepEntry.rider.last}</NavLink></TDText>
+                                <TDText><NavLink to={`users/${beepEntry.beeper.id}`}>{beepEntry.beeper.first} {beepEntry.beeper.last}</NavLink></TDText>
+                                <TDText>{beepEntry.beep.origin}</TDText>
+                                <TDText>{beepEntry.beep.destination}</TDText>
+                                <TDText>{beepEntry.beep.groupSize}</TDText>
+                                <TDText>{dayjs().to(beepEntry.beep.timeEnteredQueue)}</TDText>
+                                <TDText>{dayjs().to(beepEntry.beep.doneTime)}</TDText>
+                                <TDText>{dayjs.duration(beepEntry.beep.doneTime - beepEntry.beep.timeEnteredQueue).humanize()}</TDText>
+                                <TDButton to={`beeps/${beepEntry.beep.id}`}>View</TDButton>
                             </TR>
                         )
                     })}

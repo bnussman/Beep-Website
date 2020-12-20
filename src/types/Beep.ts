@@ -1,4 +1,12 @@
-interface Beep {
+import { User } from '../types/Report';
+
+export interface BeepEntry {
+    beep: Beep;
+    rider: User;
+    beeper: User;
+}
+
+export interface Beep {
     id: string,
     beepersid: string,
     riderid: string,
@@ -10,5 +18,3 @@ interface Beep {
     timeEnteredQueue: number
     doneTime: number,
 }
-
-export default Beep;

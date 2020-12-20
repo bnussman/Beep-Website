@@ -1,4 +1,4 @@
-interface Report {
+export interface Report {
     id: string,
     reason: string,
     reportedId: string,
@@ -8,4 +8,15 @@ interface Report {
     handled: boolean
 }
 
-export default Report;
+export interface ReportData {
+    report: Report;
+    reported: User;
+    reporter: User;
+}
+
+export interface User {
+    id: string;
+    first: string;
+    last: string;
+    username: string;
+}

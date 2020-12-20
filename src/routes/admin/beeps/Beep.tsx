@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 
 import api from '../../../api'
-import Beep from '../../../types/Beep';
+import { Beep } from '../../../types/Beep';
 
 import { Heading3 } from '../../../components/Typography';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
 import api from '../../../api';
-import Report from '../../../types/Report';
+import { ReportData } from '../../../types/Report';
 
 import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
@@ -15,7 +15,7 @@ dayjs.extend(relativeTime);
 
 function Reports() {
 
-    const [ reports, setReports ] = useState<Report[]>([]);
+    const [ reports, setReports ] = useState<ReportData[]>([]);
 
     async function fetchReports() {
         const { reports } = await api.reports.list();
@@ -39,14 +39,14 @@ function Reports() {
                     <TH></TH>
                 </THead>
                 <TBody>
-                    {reports && (reports).map(report => {
+                    {reports && (reports).map(reportEntry => {
                         return (
-                            <TR key={report.id}>
-                                <TDText><NavLink to={`users/${report.reporterId}`}>{report.reporterId}</NavLink></TDText>
-                                <TDText><NavLink to={`users/${report.reportedId}`}>{report.reportedId}</NavLink></TDText>
-                                <TDText>{report.reason}</TDText>
-                                <TDText>{dayjs().to(report.timestamp)}</TDText>
-                                <TDButton to={`reports/${report.id}`}>View</TDButton>
+                            <TR key={reportEntry.report.id}>
+                                <TDText><NavLink to={`users/${reportEntry.reporter.id}`}>{reportEntry.reporter.first} {reportEntry.reporter.last}</NavLink></TDText>
+                                <TDText><NavLink to={`users/${reportEntry.reported.id}`}>{reportEntry.reported.first} {reportEntry.reported.last}</NavLink></TDText>
+                                <TDText>{reportEntry.report.reason}</TDText>
+                                <TDText>{dayjs().to(reportEntry.report.timestamp)}</TDText>
+                                <TDButton to={`reports/${reportEntry.report.id}`}>View</TDButton>
                             </TR>
                         )
                     })}
