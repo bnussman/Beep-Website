@@ -14,7 +14,7 @@ function Report(props) {
 
     useEffect(() => {
         // dispatch(fetchUser(userId));
-    }, []);
+    }, [reportId]);
 
     return <>
         <Heading3>Report</Heading3>        

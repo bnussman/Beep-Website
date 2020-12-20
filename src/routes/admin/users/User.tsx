@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
-import { userSelector, fetchUser } from '../../../store/slices/users';
+import api from '../../../api';
 
 import { Heading3, Heading4, Heading5, Subtitle, Body1 } from '../../../components/Typography';
 
@@ -10,13 +9,17 @@ import { formatPhone } from '../../../utils/formatters';
 function User(props) {
 
     const { userId } = useParams<{ userId: string }>();
+    const [ user, setUser ] = useState<any>({});
 
-    const dispatch = useDispatch();
-    const user = useSelector(userSelector(userId));
+    async function fetchUser(userId) {
+        const { user } = await api.users.get(userId);
+        console.log(user)
+        setUser(user);
+    }
 
     useEffect(() => {
-        dispatch(fetchUser(userId));
-    }, []);
+        fetchUser(userId);
+    }, [userId]);
 
     return <>
         {user && (
@@ -35,7 +38,7 @@ function User(props) {
                         
                         <Subtitle>@{user.username}</Subtitle>
                         <Subtitle><a href={`mailto:${user.email}`}>{user.email}</a></Subtitle>
-                        <Subtitle>{formatPhone(user.phone)}</Subtitle>
+                        <Subtitle>{formatPhone(user.phone || '')}</Subtitle>
                         <Body1>{user.id}</Body1>
                     </div>
                 </div>

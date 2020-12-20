@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
 
-import { ridesSelector, fetchRides } from '../../store/slices/rides';
+import api from '../../api';
 
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
@@ -10,12 +9,16 @@ import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } fro
 
 function Beepers() {
 
-    const dispatch = useDispatch();
-    const { rides, loading, hasErrors } = useSelector(ridesSelector);
+    const [ beepers, setBeepers ] = useState<any>([]);
+
+    async function fetchRides() {
+        const { beeperList } = await api.beepers.list();
+        setBeepers(beeperList);
+    }
 
     useEffect(() => {
-        dispatch(fetchRides());
-    }, [dispatch]);
+        fetchRides();
+    }, []);
 
     return <>
         <Heading3>Active Beepers</Heading3>
@@ -31,20 +34,20 @@ function Beepers() {
                     <TH>User level</TH>
                 </THead>
                 <TBody>
-                    {rides && (rides).map(ride => {
+                    {beepers && (beepers).map(beeper => {
                         return (
-                            <TR key={ride.id}>
+                            <TR key={beeper.id}>
                                 <TDProfile
-                                    to={`users/${ride.id}`}
-                                    photoUrl={ride.photoUrl}
-                                    title={`${ride.first} ${ride.last} ${ride.isStudent ? '🎓' : ''}`}>
+                                    to={`users/${beeper.id}`}
+                                    photoUrl={beeper.photoUrl}
+                                    title={`${beeper.first} ${beeper.last} ${beeper.isStudent ? '🎓' : ''}`}>
                                 </TDProfile>
-                                <TDText>{ride.queueSize} riders</TDText>
-                                <TDText>{ride.capacity} riders</TDText>
-                                <TDText>${ride.singlesRate} / ${ride.groupRate}</TDText>
-                                <TDText>{ride.masksRequired ? 'Yes' : 'No'}</TDText>
+                                <TDText>{beeper.queueSize} riders</TDText>
+                                <TDText>{beeper.capacity} riders</TDText>
+                                <TDText>${beeper.singlesRate} / ${beeper.groupRate}</TDText>
+                                <TDText>{beeper.masksRequired ? 'Yes' : 'No'}</TDText>
                                 <TDBadge>
-                                    {ride.userLevel}
+                                    {beeper.userLevel}
                                 </TDBadge>
                             </TR>
                         )

@@ -1,23 +1,27 @@
-import React, {useEffect} from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react'
+import api from '../../../api';
 
-import { beepsSelector, fetchBeeps } from '../../../store/slices/beeps';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
+import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDText, TDButton } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
 
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import { NavLink } from 'react-router-dom';
 dayjs.extend(duration);
 
 function Beeps() {
-    const dispatch = useDispatch();
-    const { beeps } = useSelector(beepsSelector);
+
+    const [ beeps, setBeeps ] = useState<any>([]);
+
+    async function fetchBeeps(page, limit) {
+        const { beeps } = await api.beeps.list();
+        setBeeps(beeps);
+    }
 
     useEffect(() => {
-        dispatch(fetchBeeps());
+        fetchBeeps(0, 25);
     }, []);
 
     return <>

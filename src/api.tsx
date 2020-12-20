@@ -54,7 +54,7 @@ const api = {
             return await GET(`beeps/${beepId}`);
         }
     },
-    rides: {
+    beepers: {
         list: async function() {
             return await GET('rider/list');
         }

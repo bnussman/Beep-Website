@@ -1,21 +1,24 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
 
-import { usersSelector, fetchUsers } from '../../../store/slices/users';
+import api from '../../../api';
 
 import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
-import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../../components/Table';
+import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge } from '../../../components/Table';
 
 import { formatPhone } from '../../../utils/formatters';
 
 function Users() {
     
-    const dispatch = useDispatch();
-    const { users } = useSelector(usersSelector);
+    const [ users, setUsers ] = useState<any>([]);
+
+    async function fetchUsers() {
+        const { users } = await api.users.list();
+        setUsers(users);
+    }
 
     useEffect(() => {
-        dispatch(fetchUsers());
+        fetchUsers();
     }, []);
 
     const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
