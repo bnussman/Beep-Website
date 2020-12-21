@@ -17,21 +17,22 @@ export function Nav(props) {
 
     return (
         <ul
-            className={`px-6 flex flex-row flex-${props.direction || 'row'}`}>
-            { children }
+            className={`px-6 flex flex-row flex-${props.direction || 'row'} ${props.className}`}>
+            { children}
         </ul>
     )
 }
 
 export function NavItem(props) {
     return (
-        <li className={`${props.direction === 'col' ? 'py-2' : 'px-2'} mr-3 flex items-center ${props.className}`}>
-            { props.to 
+        <li className={`${props.direction === 'col' ? 'py-2' : 'px-2'} mr-3 flex items-center`}>
+            { props.to
                 ?
                 // Navigation link
                 <NavLink
                     to={props.to}
-                    className="hover:text-yellow-500"
+                    onClick={props.onClick}
+                    className={`hover:text-yellow-500 ${props.className}`}
                     activeClassName="font-semibold text-yellow-600">
                     {props.children}
                 </NavLink>
@@ -39,7 +40,7 @@ export function NavItem(props) {
                 // Button with action
                 <button
                     onClick={props.onClick}
-                    className="hover:text-yellow-500 focus:outline-none">
+                    className={`hover:text-yellow-500 focus:outline-none ${props.className}`}>
                     {props.children}
                 </button>
             }

@@ -13,10 +13,15 @@ interface props {
 const BeepAppBar = (props: props) => {
 
     const { user, setUser } = useContext(UserContext);
-    const [toggle, setToggle] = useState(false);
+    const [toggleNav, setToggle] = useState(false);
     const [resendStatus, setResendStatus] = useState();
     const [refreshStatus, setRefreshStatus] = useState();
     let history = useHistory();
+
+    // Collapse nav on route change
+    history.listen((location, action) => {
+        setToggle(false);
+    })
 
     function logout() {
         fetch(config.apiUrl + '/auth/logout', {
@@ -72,16 +77,16 @@ const BeepAppBar = (props: props) => {
 
             {/* Menu button */}
             <div className="block lg:hidden">
-                <button onClick={() => setToggle(!toggle)} className="flex items-center px-3 py-2 border rounded text-black border-black-400 hover:text-black hover:border-white">
+                <button onClick={() => setToggle(!toggleNav)} className="flex items-center px-3 py-2 border rounded text-black border-black-400 hover:text-black hover:border-white">
                     <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
                 </button>
             </div>
 
             {/* Nav items */}
-            <div className={!toggle ? "hidden w-full lg:items-center lg:w-auto lg:block items-end" : "w-full lg:items-center lg:w-auto lg:block"}>
+            <div className={!toggleNav ? "hidden w-full lg:items-center lg:w-auto lg:block items-end" : "w-full lg:items-center lg:w-auto lg:block"}>
 
 
-                <Nav direction={toggle ? 'col' : 'row'}>
+                <Nav direction={toggleNav ? 'col' : 'row'} className={toggleNav ? 'pl-0 pt-4' : ''}>
                     {user && user.isBeeping &&
                         <div className="block mt-4 lg:inline-block lg:mt-0 text-black-200 ">
                             <div className="flex">
@@ -89,26 +94,26 @@ const BeepAppBar = (props: props) => {
                             </div>
                         </div>
                     }
-                    
+
                     <NavItem to="/faq">FAQ</NavItem>
-                    { user && <NavItem to="/profile">Profile</NavItem> }
-                    { user && <NavItem to="/password/change">Change Password</NavItem> }
+                    {user && <NavItem to="/profile">Profile</NavItem>}
+                    {user && <NavItem to="/password/change">Change Password</NavItem>}
                     {user && user.userLevel > 0 &&
                         <NavItem to="/admin">Admin</NavItem>
                     }
 
-                    { user 
+                    {user
                         ? <NavItem onClick={logout}>Logout</NavItem>
                         : <NavItem to="/login">Login</NavItem>
                     }
-                    
+
 
                     {user &&
-                        <NavItem to="/profile" className="mt-1">
+                        <NavItem to="/profile" className="mt-1 flex flex-row items-center">
                             {user.photoUrl &&
-                                <img className="block mt-4 lg:inline-block lg:mt-0 mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.photoUrl} />
+                                <img className="block lg:inline-block mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.photoUrl} />
                             }
-                            {user.first + " " + user.last}
+                            <span className="mb-1">{user.first + " " + user.last}</span>
                         </NavItem>
                     }
                 </Nav>
