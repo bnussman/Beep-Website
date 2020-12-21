@@ -14,6 +14,7 @@ import Faq from './routes/FAQ';
 import BeepAppBar from './components/AppBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
+import './assets/style.css'
 import './assets/tailwind.css';
 import '../node_modules/leaflet/dist/leaflet.css';
 import socket, { getUpdatedUser } from "./utils/Socket";

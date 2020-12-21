@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import api from '../../../api';
 import { BeepEntry } from '../../../types/Beep';
@@ -15,7 +15,7 @@ dayjs.extend(duration);
 
 function Beeps() {
 
-    const [ beeps, setBeeps ] = useState<BeepEntry[]>([]);
+    const [beeps, setBeeps] = useState<BeepEntry[]>([]);
 
     async function fetchBeeps(page, limit) {
         const { beeps } = await api.beeps.list();
@@ -32,8 +32,8 @@ function Beeps() {
         <Card>
             <Table>
                 <THead>
-                    <TH>Rider</TH>
                     <TH>Beeper</TH>
+                    <TH>Rider</TH>
                     <TH>Origin</TH>
                     <TH>Destination</TH>
                     <TH>Group Size</TH>
@@ -45,19 +45,19 @@ function Beeps() {
                 <TBody>
                     {beeps && (beeps).map(beepEntry => {
                         return (
-                            
+
                             <TR key={beepEntry.beep.id}>
-                                <TDProfile
-                                    to={`users/${beepEntry.rider.id}`}
-                                    photoUrl={beepEntry.rider.photoUrl}
-                                    title={`${beepEntry.rider.first} ${beepEntry.rider.last}`}
-                                    subtitle={`@${beepEntry.rider.username}`}>
-                                </TDProfile>
                                 <TDProfile
                                     to={`users/${beepEntry.beeper.id}`}
                                     photoUrl={beepEntry.beeper.photoUrl}
                                     title={`${beepEntry.beeper.first} ${beepEntry.beeper.last}`}
                                     subtitle={`@${beepEntry.beeper.username}`}>
+                                </TDProfile>
+                                <TDProfile
+                                    to={`users/${beepEntry.rider.id}`}
+                                    photoUrl={beepEntry.rider.photoUrl}
+                                    title={`${beepEntry.rider.first} ${beepEntry.rider.last}`}
+                                    subtitle={`@${beepEntry.rider.username}`}>
                                 </TDProfile>
                                 <TDText>{beepEntry.beep.origin}</TDText>
                                 <TDText>{beepEntry.beep.destination}</TDText>

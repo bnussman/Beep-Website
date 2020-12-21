@@ -1,25 +1,48 @@
+import { action } from 'mobx';
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { Heading6 } from './Typography';
 
-export function VerticalNav(props) {
+export function Nav(props) {
+
+    // Pass direction prop to children
+    const children = React.Children.map(props.children, child => {
+        if (React.isValidElement(child)) {
+            return React.cloneElement(child as React.ReactElement<any>, {
+                direction: props.direction
+            });
+        }
+        return child;
+    });
+
     return (
-        <div className="px-6 mr-6">
-            <Heading6>{props.title}</Heading6>
-
-            <hr></hr>
-
-            <ul>
-                {props.children}
-            </ul>
-        </div>
+        <ul
+            className={`px-6 flex flex-row flex-${props.direction || 'row'}`}>
+            { children }
+        </ul>
     )
 }
 
-export function VerticalNavItem(props) {
+export function NavItem(props) {
     return (
-        <li className="p-2">
-            <NavLink to={props.to} activeClassName="font-semibold text-yellow-600">{props.children}</NavLink>
+        <li className={`${props.direction === 'col' ? 'py-2' : 'px-2'} mr-3 flex items-center ${props.className}`}>
+            { props.to 
+                ?
+                // Navigation link
+                <NavLink
+                    to={props.to}
+                    className="hover:text-yellow-500"
+                    activeClassName="font-semibold text-yellow-600">
+                    {props.children}
+                </NavLink>
+                :
+                // Button with action
+                <button
+                    onClick={props.onClick}
+                    className="hover:text-yellow-500 focus:outline-none">
+                    {props.children}
+                </button>
+            }
         </li>
     )
 }

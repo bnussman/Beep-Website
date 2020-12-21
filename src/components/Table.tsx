@@ -75,16 +75,6 @@ export function TDText(props) {
     )
 }
 
-export function TDBadge(props) {
-    return (
-        <TD>
-            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full shadow bg-yellow-100 text-green-800">
-                {props.children}
-            </span>
-        </TD>
-    );
-}
-
 export function TDButton(props) {
     return (
         <TD>

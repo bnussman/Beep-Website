@@ -6,7 +6,8 @@ import Beeper from '../../types/Beeper';
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Pagination } from '../../components/Pagination';
-import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge, TDButton } from '../../components/Table';
+import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
+import { Badge } from '../../components/Indicator';
 
 function Beepers() {
 
@@ -47,9 +48,9 @@ function Beepers() {
                                 <TDText>{beeper.capacity} riders</TDText>
                                 <TDText>${beeper.singlesRate} / ${beeper.groupRate}</TDText>
                                 <TDText>{beeper.masksRequired ? 'Yes' : 'No'}</TDText>
-                                <TDBadge>
-                                    {beeper.userLevel}
-                                </TDBadge>
+                                <TDText>
+                                    <Badge>{beeper.userLevel === 0 ? 'normal' : 'admin'}</Badge>
+                                </TDText>
                             </TR>
                         )
                     })}

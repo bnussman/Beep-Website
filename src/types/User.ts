@@ -1,3 +1,7 @@
+enum UserLevel {
+    Normal = 0,
+    Admin = 1
+}
 interface User {
     id?: string,
     first: string,
@@ -6,8 +10,8 @@ interface User {
     email?: string,
     isEmailVerified?: boolean,
     phone?: string,
-    userLevel: number,
-    capcity: number,
+    userLevel: UserLevel,
+    capacity: number,
     isStudent: boolean,
     masksRequired: boolean,
     queueSize: number

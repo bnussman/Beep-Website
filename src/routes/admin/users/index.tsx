@@ -5,8 +5,8 @@ import User from '../../../types/User';
 
 import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
-import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDBadge } from '../../../components/Table';
-import { Indicator } from '../../../components/Indicator';
+import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../../components/Table';
+import { Badge, Indicator } from '../../../components/Indicator';
 
 import { formatPhone } from '../../../utils/formatters';
 
@@ -70,9 +70,9 @@ function Users() {
                                         : <Indicator color='red' />
                                     }
                                 </TDText>
-                                <TDBadge>
-                                    {user.userLevel}
-                                </TDBadge>
+                                <TDText>
+                                    <Badge>{user.userLevel === 0 ? 'normal' : 'admin'}</Badge>
+                                </TDText>
                             </TR>
                         )
                     })}

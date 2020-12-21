@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Heading3, Body1, Body2 } from '../../../components/Typography';
+import { Indicator } from '../../../components/Indicator';
 
 dayjs.extend(relativeTime);
 
@@ -45,7 +46,19 @@ function ReportPage(props) {
                     {report.reported.first} {report.reported.last}
                 </NavLink>
             </Body1>
-            <Body1>{report.handled ? '✔ Handled' : '❗ Not handled'}</Body1>
+            <Body1>
+                { report.handled ?
+                    <>
+                        <Indicator color='green' className="mr-2"/>
+                        <span>Handled</span>
+                    </>
+                    :
+                    <>
+                        <Indicator color='red' className="mr-2"/>
+                        <span>Not handled</span>
+                    </>
+                }
+            </Body1>
         </>
     );
 }

@@ -11,7 +11,9 @@ import Reports from './reports';
 import Report from './reports/Report';
 import Beeps from './beeps';
 import Beep from './beeps/Beep';
-import { VerticalNav, VerticalNavItem } from '../../components/Nav';
+
+import { Nav, NavItem } from '../../components/Nav';
+import { Heading6 } from '../../components/Typography';
 
 function Admin() {
 
@@ -19,12 +21,14 @@ function Admin() {
 
     return (
         <div className="flex flex-row">
-            <VerticalNav title="Database">
-                <VerticalNavItem to={`${match.url}/beepers`}>Beepers</VerticalNavItem>
-                <VerticalNavItem to={`${match.url}/beeps`}>Beeps</VerticalNavItem>
-                <VerticalNavItem to={`${match.url}/users`}>Users</VerticalNavItem>
-                <VerticalNavItem to={`${match.url}/reports`}>Reports</VerticalNavItem>
-            </VerticalNav>
+            <Nav title="Database" direction="col">
+                <Heading6>Database</Heading6>
+                <hr/>
+                <NavItem to={`${match.url}/beepers`}>Beepers</NavItem>
+                <NavItem to={`${match.url}/beeps`}>Beeps</NavItem>
+                <NavItem to={`${match.url}/users`}>Users</NavItem>
+                <NavItem to={`${match.url}/reports`}>Reports</NavItem>
+            </Nav>
 
             <div className="container mx-auto w-4/5 mb-4">
                 <Switch>
