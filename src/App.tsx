@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Home from './routes/Home';
 import Login from './routes/Login';
+import Profile from './routes/Profile';
 import EditProfile from './routes/EditProfile';
 import ForgotPassword from './routes/ForgotPassword';
 import ResetPassword from './routes/ResetPassword';
@@ -26,6 +27,7 @@ interface props {
 }
 
 interface User {
+    id: any;
     token: string; 
 }
 
@@ -81,7 +83,8 @@ export default class App extends Component<props, state> {
                         <Route path="/password/forgot" component={ForgotPassword} />
                         <Route path="/password/reset/:id" component={ResetPassword} />
                         <Route path="/login" component={Login} />
-                        <Route path="/profile" component={EditProfile} />
+                        <Route exact path="/profile" component={Profile}/>
+                        <Route path="/profile/edit/:id" component={EditProfile}/>
                         <Route path="/password/change" component={ChangePassword} />
                         <Route path="/account/verify/:id" component={VerifyAccount} />
                         <Route path="/privacy" component={Privacy} />

@@ -9,8 +9,8 @@ export function Indicator(props) {
 
 export function Badge(props) {
     return (
-        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full shadow bg-yellow-100 ${props.className}`}>
+        <p className={`px-2 mx-1 inline-flex text-xs font-semibold rounded-full shadow bg-yellow-100 ${props.className}`}>
             {props.children}
-        </span>
+        </p>
     )
 }

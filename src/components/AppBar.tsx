@@ -97,10 +97,8 @@ const BeepAppBar = (props: props) => {
                         }
 
                         <NavItem to="/faq">FAQ</NavItem>
-                        {user && <NavItem to="/profile">Profile</NavItem>}
-                        {user && <NavItem to="/password/change">Change Password</NavItem>}
                         {user && user.userLevel > 0 &&
-                            <NavItem to="/admin">Admin</NavItem>
+                            <NavItem to="/admin/beepers">Admin</NavItem>
                         }
 
                         {user
@@ -127,7 +125,7 @@ const BeepAppBar = (props: props) => {
                     <div role="alert">
                         <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                             Email Varification
-                </div>
+                        </div>
                         <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
                             <p>You need to verify your email</p>
                             <p className="text-sm mt-2 underline cursor-pointer" onClick={resendVarificationEmail}>Resend my varification email</p>
@@ -137,7 +135,7 @@ const BeepAppBar = (props: props) => {
                         <div role="alert" className="mt-4" onClick={() => { setRefreshStatus(null) }}>
                             <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Refresh Message
-                    </div>
+                            </div>
                             <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
                                 <p>{refreshStatus}</p>
                                 <p className="text-xs">Click to dismiss</p>
@@ -148,7 +146,7 @@ const BeepAppBar = (props: props) => {
                         <div role="alert" className="mt-4" onClick={() => { setResendStatus(null) }}>
                             <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
                                 Resend Email Message
-                    </div>
+                            </div>
                             <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
                                 <p>{resendStatus}</p>
                                 <p className="text-xs">Click to dismiss</p>
