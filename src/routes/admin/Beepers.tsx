@@ -58,7 +58,7 @@ function Beepers() {
             </Table>
         </Card>
 
-        <Pagination pageNum={3} resultsCount={96}></Pagination>
+        <Pagination resultCount={252}></Pagination>
     </>;
 }
 

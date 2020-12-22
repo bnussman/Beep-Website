@@ -78,8 +78,15 @@ export function Pagination(props) {
 
 	let [currentPage, setCurrentPage] = useState<number>(1);
 
-	let resultCount = 182, limit = 25, cutoff = 3, neighbors = 1,
-		pages = [], numButtons = ((cutoff * 2) + 1), pageCount = Math.ceil(resultCount / limit);
+	let {
+		resultCount = 0,
+		limit = 25,
+		cutoff = 3,
+		neighbors = 1
+	} = props,
+	pages = [],
+	numButtons = ((cutoff * 2) + 1),
+	pageCount = Math.ceil(resultCount / limit);
 
 	function increment() {
 		if (currentPage < pageCount) {
@@ -96,7 +103,12 @@ export function Pagination(props) {
 	}
 
 	// Beginning of sequence
-	if (currentPage <= cutoff) {
+	if (pageCount < numButtons) {
+		for (let pageNum = 1; pageNum <= pageCount; pageNum++) {
+			pages.push(pageNum);
+		}
+	}
+	else if (currentPage <= cutoff) {
 		for (let pageNum = 1; pageNum <= numButtons - 2; pageNum++) {
 			pages.push(pageNum);
 		}
