@@ -6,37 +6,31 @@ import api from '../../../api'
 import { Beep } from '../../../types/Beep';
 
 import { Heading3 } from '../../../components/Typography';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
-function BeepPage(props) {
+function BeepPage() {
 
     const { beepId } = useParams<{ beepId: string }>();
     const [ beep, setBeep ] = useState<Beep>(null);
 
-    async function fetchBeep(beepId) {
-        // const { beep } = await api.beeps.get(beepId);
-        // setBeep(beep);
+    async function fetchBeep(beepId: string) {
+        const { beep } = await api.beeps.get(beepId);
+        setBeep(beep);
+        console.log(beep);
     }
 
     useEffect(() => {
-        // fetchBeep(beepId);
+        fetchBeep(beepId);
     }, [beepId]);
 
     return (
         <>
             <Heading3>Beep</Heading3>
-
-            <MapContainer center={[36.2145799,-81.6806805]} zoom={17} scrollWheelZoom className="h-screen">
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {/* <Marker position={[]}>
-                    <Popup>
-                        Origin
-                    </Popup>
-                </Marker> */}
-            </MapContainer>
+            <iframe
+                title="Map"
+                width="100%"
+                height="450"
+                src={`https://www.google.com/maps/embed/v1/directions?key=AIzaSyBgabJrpu7-ELWiUIKJlpBz2mL6GYjwCVI&origin=${beep?.origin}&destination=${beep?.destination}`}>
+            </iframe>
         </>
     )
 }
