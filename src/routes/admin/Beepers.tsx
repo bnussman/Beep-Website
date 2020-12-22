@@ -5,7 +5,6 @@ import Beeper from '../../types/Beeper';
 
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
-import { Pagination } from '../../components/Pagination';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
 import { Badge } from '../../components/Indicator';
 
@@ -57,8 +56,6 @@ function Beepers() {
                 </TBody>
             </Table>
         </Card>
-
-        <Pagination resultCount={252}></Pagination>
     </>;
 }
 

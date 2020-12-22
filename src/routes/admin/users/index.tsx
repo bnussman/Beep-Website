@@ -3,24 +3,29 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../api';
 import User from '../../../types/User';
 
+import { formatPhone } from '../../../utils/formatters';
+
 import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../../components/Table';
 import { Badge, Indicator } from '../../../components/Indicator';
+import Pagination from '../../../components/Pagination';
 
-import { formatPhone } from '../../../utils/formatters';
 
 function Users() {
 
     const [users, setUsers] = useState<User[]>([]);
+    const [resultCount, setResultCount] = useState<number>(0);
+    const pageLimit = 25;
 
-    async function fetchUsers() {
-        const { users } = await api.users.list();
+    async function fetchUsers(page) {
+        const { users, total } = await api.users.list(page, pageLimit);
         setUsers(users);
+        setResultCount(total);
     }
 
     useEffect(() => {
-        fetchUsers();
+        fetchUsers(1);
     }, []);
 
     const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
@@ -28,6 +33,8 @@ function Users() {
 
     return <>
         <Heading3>Users</Heading3>
+
+        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchUsers}></Pagination>
 
         <Card>
             <Table>
@@ -79,6 +86,8 @@ function Users() {
                 </TBody>
             </Table>
         </Card>
+
+        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchUsers}></Pagination>
     </>;
 }
 

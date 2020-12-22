@@ -27,8 +27,8 @@ function PagLeft(props) {
 			className={`relative inline-flex items-center px-2 py-2 focus:outline-none \
 						rounded-l-md border border-gray-300 text-sm font-medium text-gray-500 \
 						${props.className}`}>
-			
-			<svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+
+			<svg className={`h-5 w-5 ${props.disabled ? 'opacity-50' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
 				<path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
 			</svg>
 		</button>
@@ -43,38 +43,16 @@ function PagRight(props) {
 			className={`relative inline-flex items-center px-2 py-2 focus:outline-none \
 						rounded-r-md border border-gray-300 text-sm font-medium text-gray-500 \
 						${props.className}`}>
-			
-			<span className="sr-only">Next</span>
+
 			{/* Heroicon name: chevron-right */}
-			<svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+			<svg className={`h-5 w-5 ${props.disabled ? 'opacity-50' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
 				<path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
 			</svg>
 		</button>
 	)
 }
 
-export function Pagination(props) {
-
-	/* 
-	   [1]  2   3    4     5     6     7     ...   184   >
-	<   1  [2]  3    4     5     6     7     ...   184   >
-	<   1   2  [3]   4     5     6     7     ...   184   >
-	<   1   2   3   [4]    5     6     7     ...   184   >
-	
-	<   1  ...  3    4    [5]    6     7     ...   184   >
-	<   1  ...  4    5    [6]    7     8     ...   184   >
-	<   1  ...  5    6    [7]    8     9     ...   184   >    
-	<   1  ...  6    7    [8]    9     10    ...   184   >
-	<   1  ...  7    8    [9]    10    11    ...   184   >
-	<   1  ...  8    9    [10]   11    12    ...   184   >
-	<   1  ...  177  178  [179]  180   181   ...   184   >
-
-	<   1  ...  178  179  [180]  181   182   183   184   >
-	<   1  ...  178  179  180   [181]   182   183   184   >
-	<   1  ...  178  179  180    182  [182]  183   184   >
-	<   1  ...  178  179  180    182   182  [183]  184   >
-	<   1  ...  178  179  180    182   182   183  [184]   >
-	*/
+export default function Pagination(props) {
 
 	let [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -84,30 +62,34 @@ export function Pagination(props) {
 		cutoff = 3,
 		neighbors = 1
 	} = props,
-	pages = [],
-	numButtons = ((cutoff * 2) + 1),
-	pageCount = Math.ceil(resultCount / limit);
+		pages = [],
+		numButtons = ((cutoff * 2) + 1),
+		pageCount = Math.ceil(resultCount / limit);
 
 	function increment() {
 		if (currentPage < pageCount) {
-			setCurrentPage(++currentPage);
+			setCurrentPage(currentPage + 1);
+			props.onPageChange(currentPage + 1);
 		}
 	}
 	function decrement() {
 		if (currentPage > 0) {
-			setCurrentPage(--currentPage);
+			setCurrentPage(currentPage - 1);
+			props.onPageChange(currentPage - 1);
 		}
 	}
 	function navigateTo(pageNum: number) {
+		props.onPageChange(pageNum);
 		setCurrentPage(pageNum);
 	}
 
-	// Beginning of sequence
+	// Small page count - show all numbers
 	if (pageCount < numButtons) {
 		for (let pageNum = 1; pageNum <= pageCount; pageNum++) {
 			pages.push(pageNum);
 		}
 	}
+	// Beginning of sequence
 	else if (currentPage <= cutoff) {
 		for (let pageNum = 1; pageNum <= numButtons - 2; pageNum++) {
 			pages.push(pageNum);
@@ -136,7 +118,7 @@ export function Pagination(props) {
 
 	return (
 		<div className="flex-1 py-3 sm:flex sm:items-center sm:justify-between">
-			<div>
+			{ !!props.resultCount &&
 				<p className="text-sm text-gray-700 mb-3">
 					Showing
 					<span className="font-medium mx-1">{(currentPage - 1) * limit + 1}</span>
@@ -146,20 +128,19 @@ export function Pagination(props) {
 					<span className="font-medium mx-1">{resultCount}</span>
 					results
 				</p>
-			</div>
-
+			}
 			<nav className="relative z-0 inline-flex -space-x-px" aria-label="Pagination">
-				<PagLeft disabled={currentPage === 1} onClick={decrement}/>
+				<PagLeft disabled={currentPage === 1} onClick={decrement} />
 				{
 					pages.map(page => {
 						return page
-								? <PagButton active={currentPage === page} onClick={() => navigateTo(page)}>
-									{page}
-								</PagButton>
-								: <PagElement>...</PagElement>
+							? <PagButton active={currentPage === page} onClick={() => navigateTo(page)}>
+								{page}
+							</PagButton>
+							: <PagElement>...</PagElement>
 					})
 				}
-				<PagRight disabled={currentPage === pageCount} onClick={increment}/>
+				<PagRight disabled={currentPage === pageCount} onClick={increment} />
 			</nav>
 		</div>
 	);
