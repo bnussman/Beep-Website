@@ -52,34 +52,35 @@ function PagRight(props) {
 	)
 }
 
-export default function Pagination(props) {
+export default function Pagination({
+	resultCount = 0,
+	limit = 25,
+	cutoff = 3,
+	neighbors = 1,
+	currentPage,
+	setCurrentPage,
+	onPageChange
+}) {
 
-	let [currentPage, setCurrentPage] = useState<number>(1);
-
-	let {
-		resultCount = 0,
-		limit = 25,
-		cutoff = 3,
-		neighbors = 1
-	} = props,
-		pages = [],
+	let pages = [],
 		numButtons = ((cutoff * 2) + 1),
 		pageCount = Math.ceil(resultCount / limit);
+
 
 	function increment() {
 		if (currentPage < pageCount) {
 			setCurrentPage(currentPage + 1);
-			props.onPageChange(currentPage + 1);
+			onPageChange(currentPage + 1);
 		}
 	}
 	function decrement() {
 		if (currentPage > 0) {
 			setCurrentPage(currentPage - 1);
-			props.onPageChange(currentPage - 1);
+			onPageChange(currentPage - 1);
 		}
 	}
 	function navigateTo(pageNum: number) {
-		props.onPageChange(pageNum);
+		onPageChange(pageNum);
 		setCurrentPage(pageNum);
 	}
 
@@ -118,7 +119,7 @@ export default function Pagination(props) {
 
 	return (
 		<div className="flex-1 py-3 sm:flex sm:items-center sm:justify-between">
-			{ !!props.resultCount &&
+			{ !!resultCount &&
 				<p className="text-sm text-gray-700 mb-3">
 					Showing
 					<span className="font-medium mx-1">{(currentPage - 1) * limit + 1}</span>

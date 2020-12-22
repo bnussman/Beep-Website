@@ -15,6 +15,7 @@ import Pagination from '../../../components/Pagination';
 function Users() {
 
     const [users, setUsers] = useState<User[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [resultCount, setResultCount] = useState<number>(0);
     const pageLimit = 25;
 
@@ -28,13 +29,15 @@ function Users() {
         fetchUsers(1);
     }, []);
 
-    const Yes = () => <div className="rounded-full bg-green-500 h-3 shadow w-3 shadow flex items-center justify-center..."></div>;
-    const No = () => <div className="rounded-full bg-red-500 h-3 shadow w-3 shadow flex items-center justify-center..."> </div>;
-
     return <>
         <Heading3>Users</Heading3>
 
-        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchUsers}></Pagination>
+        <Pagination
+            resultCount={resultCount}
+            limit={pageLimit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onPageChange={fetchUsers}/>
 
         <Card>
             <Table>
@@ -87,7 +90,12 @@ function Users() {
             </Table>
         </Card>
 
-        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchUsers}></Pagination>
+        <Pagination
+            resultCount={resultCount}
+            limit={pageLimit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onPageChange={fetchUsers}/>
     </>;
 }
 

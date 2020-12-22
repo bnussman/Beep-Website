@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import api from '../../../api';
 import { Report } from '../../../types/Report';
@@ -16,9 +16,12 @@ dayjs.extend(relativeTime);
 
 function Reports() {
 
-    const [ reports, setReports ] = useState<Report[]>([]);
+    const [reports, setReports] = useState<Report[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [resultCount, setResultCount] = useState<number>(0);
     const pageLimit = 25;
+
+    console.log(currentPage, setCurrentPage);
 
     async function fetchReports(page) {
         const { reports, total } = await api.reports.list(page, pageLimit);
@@ -33,7 +36,12 @@ function Reports() {
     return <>
         <Heading3>Reports</Heading3>
 
-        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchReports}></Pagination>
+        <Pagination
+            resultCount={resultCount}
+            limit={pageLimit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onPageChange={fetchReports}/>
 
         <Card>
             <Table>
@@ -64,9 +72,9 @@ function Reports() {
                                 <TDText>{report.reason}</TDText>
                                 <TDText>{dayjs().to(report.timestamp)}</TDText>
                                 <TDText>
-                                    { report.handled
-                                        ? <Indicator color='green'/>
-                                        : <Indicator color='red'/>
+                                    {report.handled
+                                        ? <Indicator color='green' />
+                                        : <Indicator color='red' />
                                     }
                                 </TDText>
                                 <TDButton to={`reports/${report.id}`}>View</TDButton>
@@ -77,7 +85,12 @@ function Reports() {
             </Table>
         </Card>
 
-        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchReports}></Pagination>
+        <Pagination
+            resultCount={resultCount}
+            limit={pageLimit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onPageChange={fetchReports}/>
     </>;
 }
 
