@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 
 import api from '../../../api';
 import User from '../../../types/User';
+
 import UserProfile from '../../../components/UserProfile';
+import { Heading3 } from '../../../components/Typography';
 
 function UserPage(props) {
     const { userId } = useParams<{ userId: string }>();
@@ -19,7 +21,12 @@ function UserPage(props) {
         fetchUser(userId);
     }, [userId]);
 
-    return <UserProfile user={user} admin/>;
+    return (
+        <>
+            <Heading3>User</Heading3>
+            <UserProfile user={user} admin />
+        </>
+    );
 }
 
 export default UserPage;

@@ -31,8 +31,8 @@ function ReportPage(props) {
     }, [reportId]);
 
     return report && (
-        <>
-            <Heading3>Report</Heading3>    
+        <> 
+            <Heading3>Report</Heading3>
             <Body2>{report.reason}</Body2>  
             <Body2>{report.adminNotes}</Body2>  
             <Body1>{dayjs().to(report.timestamp)}</Body1>  
