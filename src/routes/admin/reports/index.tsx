@@ -3,32 +3,37 @@ import React, {useEffect, useState} from 'react'
 import api from '../../../api';
 import { Report } from '../../../types/Report';
 
-import { NavLink } from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
 import { Indicator } from '../../../components/Indicator';
-
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import Pagination from '../../../components/Pagination';
 
 dayjs.extend(relativeTime);
 
 function Reports() {
 
     const [ reports, setReports ] = useState<Report[]>([]);
+    const [resultCount, setResultCount] = useState<number>(0);
+    const pageLimit = 25;
 
-    async function fetchReports() {
-        const { reports } = await api.reports.list();
+    async function fetchReports(page) {
+        const { reports, total } = await api.reports.list(page, pageLimit);
         setReports(reports);
+        setResultCount(total);
     }
 
     useEffect(() => {
-        fetchReports();
+        fetchReports(1);
     }, []);
 
     return <>
         <Heading3>Reports</Heading3>
+
+        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchReports}></Pagination>
 
         <Card>
             <Table>
@@ -71,6 +76,8 @@ function Reports() {
                 </TBody>
             </Table>
         </Card>
+
+        <Pagination resultCount={resultCount} limit={pageLimit} onPageChange={fetchReports}></Pagination>
     </>;
 }
 

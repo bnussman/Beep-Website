@@ -1,5 +1,7 @@
 import { config } from './utils/config';
 
+const DEFAULT_LIMIT = 25;
+
 // Some HTTP helper methods
 async function http(url: string, method: string, headers?: object, body?: object) {
     
@@ -34,7 +36,7 @@ async function DELETE(url: string, headers?: object, body?: object) {
 
 const api = {
     users: {
-        list: async function(offset = 1, show = 25) {
+        list: async function(offset = 1, show = DEFAULT_LIMIT) {
             return await GET(`users?show=${show}&offset=${offset}`);
         },
         get: async function(userId) {
@@ -42,8 +44,8 @@ const api = {
         }
     },
     reports: {
-        list: async function() {
-            const res = await GET('reports');
+        list: async function(offset = 1, show = DEFAULT_LIMIT) {
+            const res = await GET(`reports?show=${show}&offset=${offset}`);
             
             // TODO: Reduce data on server side
             res.reports = res.reports.map(r => {
