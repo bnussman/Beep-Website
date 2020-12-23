@@ -52,7 +52,7 @@ export function TDProfile(props) {
         <TD>
             <NavLink to={props.to || '/'} className="flex items-center">
                 <div className="flex-shrink-0 h-10 w-10">
-                    {props.photoUrl && <img className="h-10 w-10 rounded-full" src={props.photoUrl} alt="" />}
+                    <img className="h-10 w-10 rounded-full" src={props.photoUrl || 'https://i.imgur.com/IJVpfBXs.png'} alt={props.title} />
                 </div>
                 <div className="ml-4">
                     <div className="text-sm font-medium text-gray-900">

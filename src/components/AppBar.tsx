@@ -119,7 +119,7 @@ const BeepAppBar = (props: props) => {
                 </div>
             </nav>
 
-            {(!user.isEmailVerified && !props.noErrors) &&
+            {(user && !user.isEmailVerified && !props.noErrors) &&
 
                 <div className="lg:container px-4 mx-auto mb-4" >
                     <div role="alert">

@@ -46,7 +46,7 @@ const api = {
     reports: {
         list: async function(offset = 1, show = DEFAULT_LIMIT) {
             const res = await GET(`reports?show=${show}&offset=${offset}`);
-            
+            console.log(res)
             // TODO: Reduce data on server side
             res.reports = res.reports.map(r => {
                 return {

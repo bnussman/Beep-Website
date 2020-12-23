@@ -14,10 +14,10 @@ import Pagination from '../../../components/Pagination';
 
 function Users() {
 
-    const [users, setUsers] = useState<User[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [resultCount, setResultCount] = useState<number>(0);
-    const pageLimit = 25;
+    const [users, setUsers] = useState<User[]>([]),
+          [currentPage, setCurrentPage] = useState<number>(1),
+          [resultCount, setResultCount] = useState<number>(0),
+          pageLimit = 25;
 
     async function fetchUsers(page) {
         const { users, total } = await api.users.list(page, pageLimit);
@@ -64,20 +64,20 @@ function Users() {
                                 <TDText>{formatPhone(user.phone)}</TDText>
                                 <TDText>
                                     {user.isStudent
-                                        ? <Indicator color='green' />
-                                        : <Indicator color='red' />
+                                        ? <Indicator color="green" />
+                                        : <Indicator color="red" />
                                     }
                                 </TDText>
                                 <TDText>
                                     {user.isEmailVerified
-                                        ? <Indicator color='green' />
-                                        : <Indicator color='red' />
+                                        ? <Indicator color="green" />
+                                        : <Indicator color="red" />
                                     }
                                 </TDText>
                                 <TDText>
                                     {user.isBeeping
-                                        ? <Indicator color='green' />
-                                        : <Indicator color='red' />
+                                        ? <Indicator color="green" className="animate-pulse" />
+                                        : <Indicator color="red" />
                                     }
                                 </TDText>
                                 <TDText>

@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import ChevronLeft from '../assets/icons/chevron_left.svg';
-import ChevronRight from '../assets/icons/chevron_right.svg';
+import React from 'react';
 
 function PagElement(props) {
 	return (
@@ -62,9 +60,9 @@ export default function Pagination({
 	onPageChange
 }) {
 
-	let pages = [],
-		numButtons = ((cutoff * 2) + 1),
-		pageCount = Math.ceil(resultCount / limit);
+	const pages = [],
+		  numButtons = ((cutoff * 2) + 1),
+		  pageCount = Math.ceil(resultCount / limit);
 
 
 	function increment() {
@@ -120,7 +118,7 @@ export default function Pagination({
 	return (
 		<div className="flex-1 py-3 sm:flex sm:items-center sm:justify-between">
 			{ !!resultCount &&
-				<p className="text-sm text-gray-700 mb-3">
+				<p className="text-sm text-gray-700">
 					Showing
 					<span className="font-medium mx-1">{(currentPage - 1) * limit + 1}</span>
 					to
@@ -145,4 +143,4 @@ export default function Pagination({
 			</nav>
 		</div>
 	);
-};
+}
