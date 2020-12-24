@@ -6,6 +6,8 @@ import { Badge, Indicator } from './Indicator';
 import { Button } from './Input';
 
 import { formatPhone } from '../utils/formatters';
+import RideHistoryTable from './RideHistoryTable';
+import BeepHistoryTable from './BeepHistoryTable';
 
 function UserProfile(props) {
 
@@ -69,10 +71,12 @@ function UserProfile(props) {
                 <div className="flex flex-row p-6">
                     <div className="flex-grow">
                         <Heading5>Beep history</Heading5>
+                        <BeepHistoryTable />
                     </div>
 
                     <div className="flex-grow">
                         <Heading5>Ride history</Heading5>
+                        <RideHistoryTable />
                     </div>
                 </div>
             </>

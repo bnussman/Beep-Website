@@ -41,7 +41,13 @@ const api = {
         },
         get: async function(userId) {
             return await GET(`users/${userId}`);
-        }
+        },
+        getRideHistory: async function(userId) {
+            return await GET(`users/${userId}/history/rider`);
+        },
+        getBeepHistory: async function(userId) {
+            return await GET(`users/${userId}/history/beeper`);
+        },
     },
     reports: {
         list: async function(offset = 1, show = DEFAULT_LIMIT) {
