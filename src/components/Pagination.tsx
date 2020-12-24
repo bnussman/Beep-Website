@@ -133,9 +133,9 @@ export default function Pagination({
 			<nav className="relative z-0 inline-flex -space-x-px" aria-label="Pagination">
 				<PagLeft disabled={currentPage === 1} onClick={decrement} />
 				{
-					pages.map(page => {
+					pages.map((page, index) => {
 						return page
-							? <PagButton active={currentPage === page} onClick={() => navigateTo(page)}>
+							? <PagButton key={index} active={currentPage === page} onClick={() => navigateTo(page)}>
 								{page}
 							</PagButton>
 							: <PagElement>...</PagElement>

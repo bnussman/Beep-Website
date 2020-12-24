@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-import { Heading3, Heading4, Heading5, Subtitle, Body1, Heading6 } from './Typography';
+import { Heading4, Heading5, Subtitle, Body1, Heading6 } from './Typography';
 import { Badge, Indicator } from './Indicator';
 import { Button } from './Input';
 
@@ -30,7 +30,6 @@ function UserProfile(props) {
                         </div>
                         <Subtitle>
                             <span>⭐⭐⭐⭐⭐</span>
-                            <hr className="mt-3 mb-2" />
                         </Subtitle>
 
 
