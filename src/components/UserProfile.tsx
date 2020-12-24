@@ -68,13 +68,12 @@ function UserProfile(props) {
                     </div>
                 </div>
 
-                <div className="flex flex-row p-6">
-                    <div className="flex-grow">
+                <div className="lg:flex flex-row">
+                    <div>
                         <Heading5>Beep history</Heading5>
                         <BeepHistoryTable />
                     </div>
-
-                    <div className="flex-grow">
+                    <div>
                         <Heading5>Ride history</Heading5>
                         <RideHistoryTable />
                     </div>
