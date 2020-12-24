@@ -68,17 +68,19 @@ export default function Pagination({
 	function increment() {
 		if (currentPage < pageCount) {
 			setCurrentPage(currentPage + 1);
-			onPageChange(currentPage + 1);
+			//onPageChange(currentPage + 1);
+			onPageChange(currentPage + pageCount);
 		}
 	}
 	function decrement() {
 		if (currentPage > 0) {
 			setCurrentPage(currentPage - 1);
 			onPageChange(currentPage - 1);
+			//onPageChange(currentPage - limit);
 		}
 	}
 	function navigateTo(pageNum: number) {
-		onPageChange(pageNum);
+		onPageChange((pageNum - 1) * limit);
 		setCurrentPage(pageNum);
 	}
 
