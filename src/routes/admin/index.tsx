@@ -20,7 +20,7 @@ function Admin() {
     let match = useRouteMatch();
 
     return (
-        <div className="flex flex-row">
+        <div className="sm:flex flex-row">
             <Nav title="Database" direction="col">
                 <Heading6>Database</Heading6>
                 <hr/>
