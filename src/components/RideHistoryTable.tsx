@@ -42,7 +42,6 @@ function RideHistoryTable() {
 
                             <TR key={ride.beep.id}>
                                 <TDProfile
-                                    to={`users/${ride.beeper.id}`}
                                     photoUrl={ride.beeper.photoUrl}
                                     title={`${ride.beeper.first} ${ride.beeper.last}`}
                                     subtitle={`@${ride.beeper.username}`}>

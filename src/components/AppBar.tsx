@@ -88,14 +88,6 @@ const BeepAppBar = (props: props) => {
 
 
                     <Nav direction={toggleNav ? 'col' : 'row'} className={toggleNav ? 'pl-0 pt-4' : ''}>
-                        {user && user.isBeeping &&
-                            <div className="block mt-4 lg:inline-block lg:mt-0 text-black-200 ">
-                                <div className="flex">
-                                    <p className="block mt-4 lg:inline-block lg:mt-0 text-black-200 hover:text-black mr-8">You are beeping!</p>
-                                </div>
-                            </div>
-                        }
-
                         <NavItem to="/faq">FAQ</NavItem>
                         {user && user.userLevel > 0 &&
                             <NavItem to="/admin/beepers">Admin</NavItem>
