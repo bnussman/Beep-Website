@@ -3,7 +3,7 @@ import api from '../api';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Card } from './Card';
-import { Table, THead, TH, TBody, TR, TDProfile, TDText, TDButton } from './Table';
+import { Table, THead, TH, TBody, TR, TDProfile, TDText } from './Table';
 import { UserContext } from '../UserContext';
 
 dayjs.extend(duration);
@@ -21,7 +21,7 @@ function RideHistoryTable() {
 
     useEffect(() => {
         fetchRideHistory();
-    }, []);
+    }, [fetchRideHistory]);
 
     return <>
         <div className="m-4">

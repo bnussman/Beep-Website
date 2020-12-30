@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react'
-
 import api from '../../../api';
 import { BeepEntry } from '../../../types/Beep';
-
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-
-import { NavLink } from 'react-router-dom';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
@@ -17,13 +13,14 @@ function Beeps() {
 
     const [beeps, setBeeps] = useState<BeepEntry[]>([]);
 
-    async function fetchBeeps(page, limit) {
+    //async function fetchBeeps(page: number, limit: number) {
+    async function fetchBeeps() {
         const { beeps } = await api.beeps.list();
         setBeeps(beeps);
     }
 
     useEffect(() => {
-        fetchBeeps(0, 25);
+        fetchBeeps();
     }, []);
 
     return <>

@@ -60,7 +60,7 @@ function Users() {
                                     title={`${user.first} ${user.last}`}
                                     subtitle={`@${user.username}`}>
                                 </TDProfile>
-                                <TDText><a href={`mailto:${user.email}`} target="_blank">{user.email}</a></TDText>
+                                <TDText><a href={`mailto:${user.email}`} rel="noreferrer" target="_blank">{user.email}</a></TDText>
                                 <TDText>{formatPhone(user.phone)}</TDText>
                                 <TDText>
                                     {user.isStudent
