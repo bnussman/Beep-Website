@@ -1,26 +1,33 @@
 import React, { Component } from 'react';
-import Home from './Home';
-import Login from './Login';
-import EditProfile from './EditProfile';
-import ForgotPassword from './ForgotPassword';
-import ResetPassword from './ResetPassword';
-import ChangePassword from './ChangePassword';
-import VerifyAccount from './VerifyAccount';
-import Admin from './admin/Admin';
-import Privacy from './Privacy';
-import Terms from './Terms';
-import Docs from './Docs';
-import Faq from './FAQ';
+import Home from './routes/Home';
+import Login from './routes/Login';
+import Profile from './routes/Profile';
+import EditProfile from './routes/EditProfile';
+import ForgotPassword from './routes/ForgotPassword';
+import ResetPassword from './routes/ResetPassword';
+import ChangePassword from './routes/ChangePassword';
+import VerifyAccount from './routes/VerifyAccount';
+import Admin from './routes/admin';
+import Privacy from './routes/Privacy';
+import Terms from './routes/Terms';
+import Docs from './routes/Docs';
+import Faq from './routes/FAQ';
+import BeepAppBar from './components/AppBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
+import './assets/style.css'
 import './assets/tailwind.css';
+import '../node_modules/leaflet/dist/leaflet.css';
 import socket, { getUpdatedUser } from "./utils/Socket";
+
+
 
 interface props {
 
 }
 
 interface User {
+    id: any;
     token: string; 
 }
 
@@ -70,11 +77,14 @@ export default class App extends Component<props, state> {
         return (
             <UserContext.Provider value={{user, setUser}}>
                 <Router>
+                    <BeepAppBar/>
+                    
                     <Switch>
                         <Route path="/password/forgot" component={ForgotPassword} />
                         <Route path="/password/reset/:id" component={ResetPassword} />
                         <Route path="/login" component={Login} />
-                        <Route path="/profile" component={EditProfile} />
+                        <Route exact path="/profile" component={Profile}/>
+                        <Route path="/profile/edit/:id" component={EditProfile}/>
                         <Route path="/password/change" component={ChangePassword} />
                         <Route path="/account/verify/:id" component={VerifyAccount} />
                         <Route path="/privacy" component={Privacy} />

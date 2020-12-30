@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from '../UserContext';
 import { Redirect } from "react-router-dom";
-import BeepAppBar from './AppBar';
-import { config } from './utils/config';
-import { Error } from "./utils/errors";
+import { config } from '../utils/config';
+import { Error } from "../utils/errors";
+import { Button, TextInput } from '../components/Input';
 
 interface Status {
     status: string;
@@ -43,9 +43,7 @@ function ForgotPassword() {
     
     //Return the main login page
     return (
-        <>
-        <BeepAppBar/>
-            <div className="lg:container px-4 mx-auto">
+        <div className="lg:container px-4 mx-auto">
             {status  && 
                 <div role="alert" className="mb-4" onClick={() => setStatus(null)}>
                     <div className={status!.status === "success" ?
@@ -71,28 +69,21 @@ function ForgotPassword() {
                 </div>
             }
             <form onSubmit={handleForgotPassword}>
-                <label className="text-gray-500 font-bold" htmlFor="email">
-                    Email
-                </label>
-                <input
-                    className="mb-4 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"
+                <TextInput
+                    className="mb-4"
                     id="email"
                     type="email"
-                    autoComplete="email"
+                    label="Email"
                     placeholder="example@ridebeep.app"
                     onChange={(value) => setEmail(value.target.value)}
                     disabled={status?.status === "success"}
                 />
-                <button
-                    type="submit"
-                    disabled={status?.status === "success"}
-                    className={ status?.status === "success" ? "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" }
-                >
+                
+                <Button raised className={status?.status !== 'success' ? 'opacity-50 cursor-not-allowed' : ''}>
                     Send Reset Password Email
-                </button>
+                </Button>
             </form>
-            </div>
-        </>
+        </div>
     );
 }
 
