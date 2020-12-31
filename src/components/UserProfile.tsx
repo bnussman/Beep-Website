@@ -1,15 +1,21 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-
+import { useHistory } from "react-router-dom";
 import { Heading4, Heading5, Subtitle, Body1, Heading6 } from './Typography';
 import { Badge, Indicator } from './Indicator';
 import { Button } from './Input';
-
 import { formatPhone } from '../utils/formatters';
 import RideHistoryTable from './RideHistoryTable';
 import BeepHistoryTable from './BeepHistoryTable';
+import api from '../api';
 
 function UserProfile(props) {
+    const history = useHistory();
+
+    async function deleteUser(id: string) {
+        await api.users.delete(id);
+        history.goBack();
+    }
 
     const { user } = props;
 
@@ -59,6 +65,8 @@ function UserProfile(props) {
                         <NavLink to={`/profile/edit/${user.id}`}>
                             <Button>Edit {props.admin ? 'user' : 'profile'}</Button>
                         </NavLink>
+
+                        {props.admin && <Button onClick={() => deleteUser(user.id)}>Delete User</Button>}
 
                         { !props.admin &&
                             <NavLink to={'password/change'}>

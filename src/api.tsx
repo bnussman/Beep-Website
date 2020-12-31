@@ -48,6 +48,9 @@ const api = {
         getBeepHistory: async function(userId) {
             return await GET(`users/${userId}/history/beeper`);
         },
+        delete: async function(userId) {
+            return await DELETE(`users/${userId}`);
+        },
     },
     reports: {
         list: async function(offset = 1, show = DEFAULT_LIMIT) {
