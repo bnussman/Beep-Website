@@ -21,7 +21,7 @@ function RideHistoryTable() {
 
     useEffect(() => {
         fetchRideHistory();
-    }, [fetchRideHistory]);
+    }, []);
 
     return <>
         <div className="m-4">
