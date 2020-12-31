@@ -21,8 +21,6 @@ function Reports() {
     const [resultCount, setResultCount] = useState<number>(0);
     const pageLimit = 25;
 
-    console.log(currentPage, setCurrentPage);
-
     async function fetchReports(page) {
         const { reports, total } = await api.reports.list(page, pageLimit);
         setReports(reports);

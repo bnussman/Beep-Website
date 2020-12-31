@@ -68,7 +68,10 @@ const api = {
         },
         get: async function(reportId) {
             return await GET(`reports/${reportId}`);
-        }
+        },
+        delete: async function(reportId) {
+            return await DELETE(`reports/${reportId}`);
+        },
     },
     beeps: {
         list: async function() {

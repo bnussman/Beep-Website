@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import api from '../../../api';
 import { Report } from '../../../types/Report';
@@ -9,6 +10,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { Heading3, Body1, Body2 } from '../../../components/Typography';
 import { Indicator } from '../../../components/Indicator';
+import { Button } from '../../../components/Input';
 
 dayjs.extend(relativeTime);
 
@@ -16,6 +18,12 @@ function ReportPage(props) {
 
     const { reportId } = useParams<{reportId: string}>();
     const [ report, setReport ] = useState<Report>(null);
+    const history = useHistory();
+
+    async function deleteReport(id: string) {
+        await api.reports.delete(id);
+        history.goBack();
+    }
 
     async function fetchReport(reportId) {
         const { report } = await api.reports.get(reportId);
@@ -58,6 +66,8 @@ function ReportPage(props) {
                         <span>Not handled</span>
                     </>
                 }
+
+                <Button onClick={() => deleteReport(reportId)}>Delete Report</Button>
             </Body1>
         </>
     );
