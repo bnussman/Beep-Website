@@ -8,14 +8,17 @@ import { UserContext } from '../UserContext';
 
 dayjs.extend(duration);
 
+interface Props {
+    userId: string;
+}
 
-function RideHistoryTable() {
+function RideHistoryTable(props: Props) {
 
     const { user } = useContext(UserContext);
     const [rides, setRides] = useState([]);
 
     async function fetchRideHistory() {
-        const { data } = await api.users.getRideHistory(user.id);
+        const { data } = await api.users.getRideHistory(props.userId);
         setRides(data);
     }
 

@@ -8,13 +8,17 @@ import { UserContext } from '../UserContext';
 
 dayjs.extend(duration);
 
-function BeepHistoryTable() {
+interface Props {
+    userId: string;
+}
+
+function BeepHistoryTable(props: Props) {
 
     const { user } = useContext(UserContext);
     const [beeps, setBeeps] = useState([]);
 
     async function fetchBeepHistory() {
-        const { data } = await api.users.getBeepHistory(user.id);
+        const { data } = await api.users.getBeepHistory(props.userId);
         setBeeps(data);
     }
 

@@ -71,11 +71,11 @@ function UserProfile(props) {
                 <div className="lg:flex flex-row">
                     <div>
                         <Heading5>Beep history</Heading5>
-                        <BeepHistoryTable />
+                        <BeepHistoryTable userId={user.id} />
                     </div>
                     <div>
                         <Heading5>Ride history</Heading5>
-                        <RideHistoryTable />
+                        <RideHistoryTable userId={user.id} />
                     </div>
                 </div>
             </>
