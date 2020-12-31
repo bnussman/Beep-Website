@@ -30,7 +30,7 @@ function Reports() {
     }
 
     useEffect(() => {
-        fetchReports(1);
+        fetchReports(0);
     }, []);
 
     return <>

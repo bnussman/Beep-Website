@@ -26,7 +26,7 @@ function Users() {
     }
 
     useEffect(() => {
-        fetchUsers(1);
+        fetchUsers(0);
     }, []);
 
     return <>

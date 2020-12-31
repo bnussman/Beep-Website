@@ -36,7 +36,7 @@ async function DELETE(url: string, headers?: object, body?: object) {
 
 const api = {
     users: {
-        list: async function(offset = 1, show = DEFAULT_LIMIT) {
+        list: async function(offset = 0, show = DEFAULT_LIMIT) {
             return await GET(`users?show=${show}&offset=${offset}`);
         },
         get: async function(userId) {
@@ -53,7 +53,7 @@ const api = {
         },
     },
     reports: {
-        list: async function(offset = 1, show = DEFAULT_LIMIT) {
+        list: async function(offset = 0, show = DEFAULT_LIMIT) {
             const res = await GET(`reports?show=${show}&offset=${offset}`);
             console.log(res)
             // TODO: Reduce data on server side
