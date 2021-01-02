@@ -7,6 +7,7 @@ import { Button } from './Input';
 import { formatPhone } from '../utils/formatters';
 import RideHistoryTable from './RideHistoryTable';
 import BeepHistoryTable from './BeepHistoryTable';
+import QueueTable from './QueueTable';
 import api from '../api';
 
 function UserProfile(props) {
@@ -75,6 +76,12 @@ function UserProfile(props) {
                         }
                     </div>
                 </div>
+
+                {props.admin &&
+                    <div>
+                        <QueueTable userId={user.id}/>
+                    </div>
+                }
 
                 <div className="lg:flex flex-row">
                     <div>

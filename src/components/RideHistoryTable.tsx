@@ -47,7 +47,9 @@ function RideHistoryTable(props: Props) {
                                 <TDProfile
                                     photoUrl={ride.beeper.photoUrl}
                                     title={`${ride.beeper.first} ${ride.beeper.last}`}
-                                    subtitle={`@${ride.beeper.username}`}>
+                                    subtitle={`@${ride.beeper.username}`}
+                                    to={`/admin/users/${ride.beeper.id}`}
+                                >
                                 </TDProfile>
                                 <TDText>{ride.beep.origin}</TDText>
                                 <TDText>{ride.beep.destination}</TDText>

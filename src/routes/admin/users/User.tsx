@@ -13,7 +13,6 @@ function UserPage(props) {
 
     async function fetchUser(userId) {
         const { user } = await api.users.get(userId);
-        console.log(user)
         setUser(user);
     }
 
@@ -24,7 +23,7 @@ function UserPage(props) {
     return (
         <>
             <Heading3>User</Heading3>
-            <UserProfile user={user} admin />
+            <UserProfile user={user} admin userId={userId} />
         </>
     );
 }

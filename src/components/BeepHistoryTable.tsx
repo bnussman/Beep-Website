@@ -47,7 +47,9 @@ function BeepHistoryTable(props: Props) {
                                 <TDProfile
                                     photoUrl={beep.rider.photoUrl}
                                     title={`${beep.rider.first} ${beep.rider.last}`}
-                                    subtitle={`@${beep.rider.username}`}>
+                                    subtitle={`@${beep.rider.username}`}
+                                    to={`/admin/users/${beep.rider.id}`}
+                                >
                                 </TDProfile>
                                 <TDText>{beep.beep.origin}</TDText>
                                 <TDText>{beep.beep.destination}</TDText>
