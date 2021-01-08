@@ -3,10 +3,10 @@ import api from '../api';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Card } from './Card';
-import { Table, THead, TH, TBody, TR, TDProfile, TDText } from './Table';
+import { Table, THead, TH, TBody, TR, TDText } from './Table';
 import { UserContext } from '../UserContext';
-import {Indicator} from './Indicator';
 import {Heading5} from './Typography';
+import Pagination from './Pagination';
 
 dayjs.extend(duration);
 
@@ -18,14 +18,18 @@ function LocationTable(props: Props) {
 
     const { user } = useContext(UserContext);
     const [locations, setLocations] = useState([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [resultCount, setResultCount] = useState<number>(0);
+    const pageLimit = 5;
 
-    async function fetchLocation() {
-        const { locations } = await api.users.getLocation(props.userId);
+    async function fetchLocation(page: number) {
+        const { locations, total } = await api.users.getLocation(props.userId, page, pageLimit);
         setLocations(locations);
+        setResultCount(total);
     }
 
     useEffect(() => {
-        fetchLocation();
+        fetchLocation(0);
     }, []);
 
     if (!locations || locations.length <= 0) {
@@ -40,9 +44,15 @@ function LocationTable(props: Props) {
         <iframe
             title="Map"
             width="100%"
-            height="450"
+            height="250"
             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBgabJrpu7-ELWiUIKJlpBz2mL6GYjwCVI&q=${locations[0].latitude},${locations[0].longitude}`}>
         </iframe>
+        <Pagination
+            resultCount={resultCount}
+            limit={pageLimit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onPageChange={fetchLocation}/>
         <Card>
             <Table>
                 <THead>
@@ -70,6 +80,12 @@ function LocationTable(props: Props) {
                 </TBody>
             </Table>
         </Card>
+        <Pagination
+            resultCount={resultCount}
+            limit={pageLimit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onPageChange={fetchLocation}/>
         </div>
     </>;
 }

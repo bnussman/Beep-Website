@@ -78,17 +78,13 @@ function UserProfile(props) {
                     </div>
                 </div>
 
-                {props.admin &&
-                    <div>
-                        <QueueTable userId={user.id}/>
-                    </div>
-                }
+                <div>
+                    <QueueTable userId={user.id}/>
+                </div>
 
-                {props.admin &&
-                    <div>
-                        <LocationTable userId={user.id}/>
-                    </div>
-                }
+                <div>
+                    <LocationTable userId={user.id}/>
+                </div>
 
                 <div className="lg:flex flex-row">
                     <div>
