@@ -9,6 +9,7 @@ import RideHistoryTable from './RideHistoryTable';
 import BeepHistoryTable from './BeepHistoryTable';
 import QueueTable from './QueueTable';
 import api from '../api';
+import LocationTable from './LocationTable';
 
 function UserProfile(props) {
     const history = useHistory();
@@ -80,6 +81,12 @@ function UserProfile(props) {
                 {props.admin &&
                     <div>
                         <QueueTable userId={user.id}/>
+                    </div>
+                }
+
+                {props.admin &&
+                    <div>
+                        <LocationTable userId={user.id}/>
                     </div>
                 }
 

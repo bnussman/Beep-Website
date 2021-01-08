@@ -51,6 +51,9 @@ const api = {
         getQueue: async function(userId) {
             return await GET(`users/${userId}/queue`);
         },
+        getLocation: async function(userId) {
+            return await GET(`users/${userId}/location`);
+        },
         delete: async function(userId) {
             return await DELETE(`users/${userId}`);
         },
