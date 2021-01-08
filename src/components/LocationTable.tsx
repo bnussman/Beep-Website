@@ -28,7 +28,7 @@ function LocationTable(props: Props) {
         fetchLocation();
     }, []);
 
-    if (locations.length <= 0) {
+    if (!locations || locations.length <= 0) {
         return null;
     }
 
@@ -37,6 +37,12 @@ function LocationTable(props: Props) {
         <Heading5>
             User's Location Data
         </Heading5>
+        <iframe
+            title="Map"
+            width="100%"
+            height="450"
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBgabJrpu7-ELWiUIKJlpBz2mL6GYjwCVI&q=${locations[0].latitude},${locations[0].longitude}`}>
+        </iframe>
         <Card>
             <Table>
                 <THead>
