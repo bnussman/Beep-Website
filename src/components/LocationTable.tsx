@@ -68,11 +68,11 @@ function LocationTable(props: Props) {
                         return (
 
                             <TR key={location.id}>
-                                <TDText>{location.accuracy}</TDText>
-                                <TDText>{location.heading}</TDText>
+                                <TDText>{location.accuracy} meters</TDText>
+                                <TDText>{location.heading}°</TDText>
                                 <TDText>{location.latitude}</TDText>
                                 <TDText>{location.longitude}</TDText>
-                                <TDText>{location.speed}</TDText>
+                                <TDText>{Math.round(location.speed * 2.237)} mph</TDText>
                                 <TDText>{dayjs().to(location.timestamp)}</TDText>
                             </TR>
                         )
