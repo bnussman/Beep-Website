@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { config } from '../utils/config';
 import { UserContext } from '../UserContext';
+import {Heading1} from '../components/Typography';
 
 function VerifyAccount({ match }) {
     const {user, setUser} = useContext(UserContext);
@@ -45,10 +46,12 @@ function VerifyAccount({ match }) {
     //Return the main login page
     return (
         <div className="lg:container px-4 mx-auto">
-            {status && 
+            {status ? 
                 <div role="alert" className={status.status === "success" ? "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" : "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" }>
                     {status.message}
                 </div>
+                :
+                <Heading1>Loading</Heading1>
             }
         </div>
     );

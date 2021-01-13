@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import api from '../../../api';
 import User from '../../../types/User';
-import { Heading3, Heading5 } from '../../../components/Typography';
+import { Heading1, Heading3, Heading5 } from '../../../components/Typography';
 import { Formik, Form, Field } from 'formik';
 import APIResultBanner from '../../../components/APIResultBanner';
 
@@ -27,7 +27,7 @@ function EditUserPage(props) {
     }, [userId]);
 
     if (!user) {
-        return <p>Loading</p>;
+        return <Heading1>Loading</Heading1>;
     }
 
     return (
@@ -45,12 +45,28 @@ function EditUserPage(props) {
                 {({ isSubmitting }) => (
                     <Form>
                         {Object.keys(user).map((key) => {
-                            return (
-                                <div key={key}>
-                                    <Heading5>{key}</Heading5>
-                                    <Field type="text" name={key} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"/>
-                                </div>
-                            );
+                            const type = typeof user[key];
+                            if (type === "number") {
+
+                                return (
+                                    <div key={key}>
+                                        <Heading5>{key}</Heading5>
+                                        <Field type="number" name={key} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"/>
+                                    </div>
+                                );
+                            }
+                            else {
+                                return (
+                                    <div key={key}>
+                                        <Heading5>{key}</Heading5>
+                                        {type === "boolean" ?
+                                        <Field type="checkbox" name={key}/>
+                                        :
+                                        <Field type="text" name={key} className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"/>
+                                        }
+                                    </div>
+                                );
+                            }
                         })}
                         <button
                             type="submit"
