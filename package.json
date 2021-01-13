@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "dayjs": "^1.9.7",
+    "formik": "^2.2.6",
+    "mobx": "^5.15.7",
+    "mobx-react": "^6.3.1",
+    "mobx-state-tree": "^3.17.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-leaflet": "^3.0.5",
@@ -11,10 +15,7 @@
     "react-scripts": "^4.0.0",
     "redoc": "^2.0.0-rc.40",
     "socket.io-client": "^3.0.3",
-    "styled-components": "^5.2.0",
-    "mobx": "^5.15.7",
-    "mobx-react": "^6.3.1",
-    "mobx-state-tree": "^3.17.2"
+    "styled-components": "^5.2.0"
   },
   "scripts": {
     "start": "cross-env PORT=3002 react-scripts start",

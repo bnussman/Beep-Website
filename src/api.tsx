@@ -42,6 +42,9 @@ const api = {
         get: async function(userId) {
             return await GET(`users/${userId}`);
         },
+        editUser: async function(userId, data) {
+            return await PATCH(`users/${userId}`, {}, data);
+        },
         getRideHistory: async function(userId) {
             return await GET(`users/${userId}/history/rider`);
         },

@@ -64,7 +64,7 @@ function UserProfile(props) {
                     </div>
                     <div className="flex-grow"></div>
                     <div>
-                        <NavLink to={`/profile/edit/${user.id}`}>
+                        <NavLink to={props.admin ? `/admin/users/${user.id}/edit` : `/profile/edit/${user.id}`}>
                             <Button>Edit {props.admin ? 'user' : 'profile'}</Button>
                         </NavLink>
 

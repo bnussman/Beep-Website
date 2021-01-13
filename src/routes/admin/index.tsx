@@ -7,6 +7,7 @@ import {
 import Beepers from './Beepers';
 import Users from './users';
 import User from './users/User';
+import EditUserPage from './users/Edit';
 import Reports from './reports';
 import Report from './reports/Report';
 import Beeps from './beeps';
@@ -50,6 +51,10 @@ function Admin() {
 
                     <Route exact path={`${match.path}/users/:userId`}>
                         <User />
+                    </Route>
+
+                    <Route exact path={`${match.path}/users/:userId/edit`}>
+                        <EditUserPage />
                     </Route>
 
                     <Route exact path={`${match.path}/reports`}>
