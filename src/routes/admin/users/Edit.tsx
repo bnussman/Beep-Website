@@ -4,7 +4,7 @@ import api from '../../../api';
 import User from '../../../types/User';
 import { Heading3, Heading5 } from '../../../components/Typography';
 import { Formik, Form, Field } from 'formik';
-import { Error } from "../../../utils/errors";
+import APIResultBanner from '../../../components/APIResultBanner';
 
 function EditUserPage(props) {
     const { userId } = useParams<{ userId: string }>();
@@ -33,30 +33,7 @@ function EditUserPage(props) {
     return (
         <>
             <Heading3>Edit User</Heading3>
-            {response &&
-            <div role="alert" className="mb-4" onClick={() => setResponse(null)}>
-                <div className={response.status === "success" ?
-                    "bg-green-500 text-white font-bold rounded-t px-4 py-2"
-                    :
-                        response.status === "warning" ?
-                        "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
-                        :
-                            "bg-red-500 text-white font-bold rounded-t px-4 py-2"
-                    }>
-                    Edit profile {response.status}
-                </div>
-                <div className={response.status === "success" ?
-                    "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
-                    :
-                        response.status === "warning" ?
-                        "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
-                        :
-                            "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
-                    }>
-                    <Error error={response.message} />
-                </div>
-            </div>
-            }
+            {response && <APIResultBanner response={response} setResponse={setResponse}/>}
 
             <Formik
                 initialValues={user}

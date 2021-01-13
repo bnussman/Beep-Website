@@ -12,7 +12,7 @@ import { Heading3, Body1, Body2, Heading5 } from '../../../components/Typography
 import { Indicator } from '../../../components/Indicator';
 import { Button } from '../../../components/Input';
 import { Formik, Form, Field } from 'formik';
-import { Error } from "../../../utils/errors";
+import APIResultBanner from '../../../components/APIResultBanner';
 
 dayjs.extend(relativeTime);
 
@@ -52,30 +52,9 @@ function ReportPage(props) {
     return report && (
         <> 
             <Heading3>Report</Heading3>
-            {response &&
-            <div role="alert" className="mb-4" onClick={() => setResponse(null)}>
-                <div className={response.status === "success" ?
-                    "bg-green-500 text-white font-bold rounded-t px-4 py-2"
-                    :
-                        response.status === "warning" ?
-                        "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
-                        :
-                            "bg-red-500 text-white font-bold rounded-t px-4 py-2"
-                    }>
-                    Edit profile {response.status}
-                </div>
-                <div className={response.status === "success" ?
-                    "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
-                    :
-                        response.status === "warning" ?
-                        "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
-                        :
-                            "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
-                    }>
-                    <Error error={response.message} />
-                </div>
-            </div>
-            }
+
+            {response && <APIResultBanner response={response} setResponse={setResponse}/>}
+
             <div className="flex flex-row">
                 <div className="w-6/12">
                     <Heading5>Reporter</Heading5>

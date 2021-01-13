@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { UserContext } from '../UserContext';
 import { Redirect } from "react-router-dom";
 import { config } from '../utils/config';
-import { Error } from "../utils/errors";
 import { Button, TextInput } from '../components/Input';
 import { Caption } from '../components/Typography';
+import APIResultBanner from '../components/APIResultBanner';
 
 interface props {
 }
@@ -36,7 +36,6 @@ export default class EditProfile extends Component<props, state> {
             phone: context.user.phone,
             venmo: context.user.venmo,
             status: null
-
         };
     }
 
@@ -67,11 +66,11 @@ export default class EditProfile extends Component<props, state> {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                'first': this.state.first,
-                'last': this.state.last,
-                'email': this.state.email,
-                'phone': this.state.phone,
-                'venmo': this.state.venmo
+                first: this.state.first,
+                last: this.state.last,
+                email: this.state.email,
+                phone: this.state.phone,
+                venmo: this.state.venmo
             }),
         })
             .then(response => response.json())
@@ -112,30 +111,8 @@ export default class EditProfile extends Component<props, state> {
 
         return (
             <div className="lg:container px-4 mx-auto">
-                {this.state.status &&
-                    <div role="alert" className="mb-4" onClick={() => this.setState({ status: null })}>
-                        <div className={this.state.status.status === "success" ?
-                            "bg-green-500 text-white font-bold rounded-t px-4 py-2"
-                            :
-                            this.state.status.status === "warning" ?
-                                "bg-yellow-500 text-white font-bold rounded-t px-4 py-2"
-                                :
-                                "bg-red-500 text-white font-bold rounded-t px-4 py-2"
-                        }>
-                            Edit profile {this.state.status.status}
-                        </div>
-                        <div className={this.state.status.status === "success" ?
-                            "border border-t-0 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700"
-                            :
-                            this.state.status.status === "warning" ?
-                                "border border-t-0 border-yellow-400 rounded-b bg-yellow-100 px-4 py-3 text-yellow-700"
-                                :
-                                "border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
-                        }>
-                            <Error error={this.state.status.message} />
-                        </div>
-                    </div>
-                }
+                {this.state.status && <APIResultBanner response={this.state.status} setResponse={(val) => this.setState({status: val})}/>}
+
                 <form onSubmit={this.handleEdit}>
                     <TextInput
                         className="mb-4"
