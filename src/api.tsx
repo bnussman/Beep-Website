@@ -78,6 +78,9 @@ const api = {
         get: async function(reportId) {
             return await GET(`reports/${reportId}`);
         },
+        updateReport: async function(reportId, data) {
+            return await PATCH(`reports/${reportId}`, {}, data);
+        },
         delete: async function(reportId) {
             return await DELETE(`reports/${reportId}`);
         },

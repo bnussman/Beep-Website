@@ -137,7 +137,7 @@ export default function Pagination({
 							? <PagButton key={index} active={currentPage === page} onClick={() => navigateTo(page)}>
 								{page}
 							</PagButton>
-							: <PagElement>...</PagElement>
+							: <PagElement key={index}>...</PagElement>
 					})
 				}
 				<PagRight disabled={currentPage === pageCount} onClick={increment} />
