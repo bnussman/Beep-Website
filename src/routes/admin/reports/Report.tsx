@@ -84,13 +84,17 @@ function ReportPage(props) {
                 </div>
             </div>
             <Heading5>Reason</Heading5>
-            <Body2>{report.reason}</Body2>  
+            <Body1>{report.reason}</Body1>  
             {/*
             <Heading5>Admin's Notes</Heading5>
             <Body2>{report.adminNotes || "N/A"}</Body2>  
               */}
             <Heading5>Created</Heading5>
             <Body1>{dayjs().to(report.timestamp)}</Body1>  
+            <Heading5>Beep event associated with report</Heading5>
+            <NavLink to={`/admin/beeps/${report.beepEventId}`}>
+                {report.beepEventId}  
+            </NavLink>
             <Heading5>Status</Heading5>
             { report.handled ?
                 <>
