@@ -5,9 +5,9 @@ import { formatPhone } from '../../../utils/formatters';
 import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../../components/Table';
-import { Badge, Indicator } from '../../../components/Indicator';
+import { Indicator } from '../../../components/Indicator';
 import Pagination from '../../../components/Pagination';
-
+import { TextInput } from '../../../components/Input';
 
 function Users() {
 
@@ -16,8 +16,8 @@ function Users() {
           [resultCount, setResultCount] = useState<number>(0),
           pageLimit = 25;
 
-    async function fetchUsers(page) {
-        const { users, total } = await api.users.list(page, pageLimit);
+    async function fetchUsers(page: number, search?: string) {
+        const { users, total } = await api.users.list(page, pageLimit, search);
         setUsers(users);
         setResultCount(total);
     }
@@ -34,8 +34,13 @@ function Users() {
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            onPageChange={fetchUsers}/>
-
+            onPageChange={fetchUsers}
+        />
+        <TextInput
+            className="mb-4"
+            placeholder="Search"
+            onChange={(value) => fetchUsers(0, value.target.value)} 
+        />
         <Card>
             <Table>
                 <THead>

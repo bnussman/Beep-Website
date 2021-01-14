@@ -36,8 +36,13 @@ async function DELETE(url: string, headers?: object, body?: object) {
 
 const api = {
     users: {
-        list: async function(offset = 0, show = DEFAULT_LIMIT) {
-            return await GET(`users?show=${show}&offset=${offset}`);
+        list: async function(offset = 0, show = DEFAULT_LIMIT, search?: string) {
+            if (search) {
+                return await GET(`users?show=${show}&offset=${offset}&search=${search}`);
+            }
+            else {
+                return await GET(`users?show=${show}&offset=${offset}`);
+            }
         },
         get: async function(userId) {
             return await GET(`users/${userId}`);
