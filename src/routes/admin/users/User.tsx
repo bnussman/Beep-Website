@@ -5,7 +5,7 @@ import api from '../../../api';
 import User from '../../../types/User';
 
 import UserProfile from '../../../components/UserProfile';
-import { Heading3 } from '../../../components/Typography';
+import { Heading1, Heading3 } from '../../../components/Typography';
 
 function UserPage(props) {
     const { userId } = useParams<{ userId: string }>();
@@ -18,12 +18,18 @@ function UserPage(props) {
 
     useEffect(() => {
         fetchUser(userId);
+
+        //TODO: open socket to listen for user changes
+
+        return function cleanup() {
+            //TODO: close socket connection
+        }
     }, [userId]);
 
     return (
         <>
             <Heading3>User</Heading3>
-            <UserProfile user={user} admin userId={userId} />
+            {!user ? <Heading1>Loading</Heading1> : <UserProfile user={user} admin />}
         </>
     );
 }

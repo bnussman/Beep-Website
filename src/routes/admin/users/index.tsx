@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../api';
 import User from '../../../types/User';
 import { formatPhone } from '../../../utils/formatters';
-import { Heading3 } from '../../../components/Typography';
+import { Heading1, Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../../components/Table';
 import { Indicator } from '../../../components/Indicator';
@@ -11,7 +11,7 @@ import { TextInput } from '../../../components/Input';
 
 function Users() {
 
-    const [users, setUsers] = useState<User[]>([]),
+    const [users, setUsers] = useState<User[] | null>(null),
           [currentPage, setCurrentPage] = useState<number>(1),
           [resultCount, setResultCount] = useState<number>(0),
           pageLimit = 25;
@@ -52,7 +52,7 @@ function Users() {
                     <TH>Is beeping?</TH>
                 </THead>
                 <TBody>
-                    {users && (users).map(user => {
+                    {users ? (users).map(user => {
                         return (
                             <TR key={user.id}>
                                 <TDProfile
@@ -83,7 +83,9 @@ function Users() {
                                 </TDText>
                             </TR>
                         )
-                    })}
+                    }) :
+                        <Heading1>Loading</Heading1>
+                    }
                 </TBody>
             </Table>
         </Card>

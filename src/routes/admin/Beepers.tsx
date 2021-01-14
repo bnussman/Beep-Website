@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
 import api from '../../api';
 import Beeper from '../../types/Beeper';
-
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
-import { Badge } from '../../components/Indicator';
 
 function Beepers() {
 
@@ -32,7 +29,6 @@ function Beepers() {
                     <TH>Ride capacity</TH>
                     <TH>Rate</TH>
                     <TH>Masks required?</TH>
-                    <TH>User level</TH>
                 </THead>
                 <TBody>
                     {beepers && (beepers).map(beeper => {
@@ -47,9 +43,6 @@ function Beepers() {
                                 <TDText>{beeper.capacity} riders</TDText>
                                 <TDText>${beeper.singlesRate} / ${beeper.groupRate}</TDText>
                                 <TDText>{beeper.masksRequired ? 'Yes' : 'No'}</TDText>
-                                <TDText>
-                                    <Badge>{beeper.userLevel === 0 ? 'normal' : 'admin'}</Badge>
-                                </TDText>
                             </TR>
                         )
                     })}
