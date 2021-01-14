@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { config } from "../utils/config";
 import socket from "../utils/Socket";
 import { Nav, NavItem } from './Nav';
+import {Indicator} from './Indicator';
 
 interface props {
     noErrors?: boolean;
@@ -23,42 +24,41 @@ const BeepAppBar = (props: props) => {
         setToggle(false);
     })
 
-    function logout() {
-        fetch(config.apiUrl + '/auth/logout', {
-            method: 'POST',
-            headers: {
-                "Authorization": "Bearer " + user.token,
-                "Content-Type": "application/json"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                localStorage.clear();
-                history.push("/");
-                setUser(null);
-                socket.emit("stopGetUser");
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+    async function logout() {
+        try {
+            fetch(config.apiUrl + '/auth/logout', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                    "Content-Type": "application/json"
+                }
             });
+
+            localStorage.clear();
+            setUser(null);
+            socket.emit("stopGetUser");
+            history.push("/");
+        }
+        catch(error) {
+            console.error(error);
+        }
     }
 
-    function resendVarificationEmail() {
-        fetch(config.apiUrl + '/account/verify/resend', {
-            method: 'POST',
-            headers: {
-                "Authorization": "Bearer " + user.token,
-                "Content-Type": "application/json"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                setResendStatus(data.message);
+    async function resendVarificationEmail() {
+        try {
+            const response = await fetch(config.apiUrl + '/account/verify/resend', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                    "Content-Type": "application/json"
+                }
             })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+            const data = await response.json();
+            setResendStatus(data.message);
+        }
+        catch(error) {
+            console.error('Error:', error);
+        }
     }
 
     return (
@@ -98,13 +98,13 @@ const BeepAppBar = (props: props) => {
                             : <NavItem to="/login">Login</NavItem>
                         }
 
-
                         {user &&
                             <NavItem to="/profile" className="mt-1 flex flex-row items-center">
                                 {user.photoUrl &&
                                     <img className="block lg:inline-block mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.photoUrl} />
                                 }
                                 <span className="mb-1">{user.first + " " + user.last}</span>
+                                {user.isBeeping && <Indicator color="green" className="mb-1 ml-3 animate-pulse" />}
                             </NavItem>
                         }
                     </Nav>

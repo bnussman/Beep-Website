@@ -33,7 +33,7 @@ function Login() {
                 socket.emit("getUser", data.token);
             }
             else {
-                setError(data.message);
+                setError(data);
             }
         }
         catch(error) {

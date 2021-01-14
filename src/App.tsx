@@ -19,9 +19,7 @@ import './assets/style.css'
 import './assets/tailwind.css';
 import socket, { getUpdatedUser } from "./utils/Socket";
 
-
-
-interface props {
+interface Props {
 
 }
 
@@ -30,28 +28,21 @@ interface User {
     token: string; 
 }
 
-interface state {
+interface State {
     user: User;
 }
 
-export default class App extends Component<props, state> {
+export default class App extends Component<Props, State> {
 
-    constructor(props: props) {
+    constructor(props: Props) {
         super(props);
         const user = localStorage.getItem('user');
-        if (user) {
-            this.state = {
-                user: JSON.parse(user)
-            };
-        }
-        else {
-            this.state = {
-                user: null
-            };
-        }
+        this.state = {
+            user: user ? JSON.parse(user) : null
+        };
     }
     
-    setUser = (user: User) => {
+    setUser = (user: User): void => {
         this.setState({ user: user });
     }
     
@@ -70,14 +61,13 @@ export default class App extends Component<props, state> {
     }
 
     render() {
-        let user = this.state.user;
-        let setUser = this.setUser;
+        const user = this.state.user;
+        const setUser = this.setUser;
 
         return (
             <UserContext.Provider value={{user, setUser}}>
                 <Router>
                     <BeepAppBar/>
-                    
                     <Switch>
                         <Route path="/password/forgot" component={ForgotPassword} />
                         <Route path="/password/reset/:id" component={ResetPassword} />

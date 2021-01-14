@@ -41,9 +41,6 @@ function UserProfile(props) {
                         <Subtitle>
                             <span>⭐⭐⭐⭐⭐</span>
                         </Subtitle>
-
-
-
                         <Subtitle>@{user.username}</Subtitle>
                         <Subtitle><a href={`mailto:${user.email}`}>{user.email}</a></Subtitle>
                         <Subtitle>{formatPhone(user.phone || '')}</Subtitle>
