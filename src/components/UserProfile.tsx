@@ -86,16 +86,10 @@ function UserProfile(props) {
                     <LocationTable userId={user.id}/>
                 </div>
 
-                <div className="lg:flex flex-row">
-                    <div>
-                        <Heading5>Beep history</Heading5>
-                        <BeepHistoryTable userId={user.id} />
-                    </div>
-                    <div>
-                        <Heading5>Ride history</Heading5>
-                        <RideHistoryTable userId={user.id} />
-                    </div>
-                </div>
+                <Heading5>Beep history</Heading5>
+                <BeepHistoryTable userId={user.id} />
+                <Heading5>Ride history</Heading5>
+                <RideHistoryTable userId={user.id} />
             </>
         )}
     </>;
