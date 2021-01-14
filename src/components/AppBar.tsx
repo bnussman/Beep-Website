@@ -89,8 +89,9 @@ const BeepAppBar = (props: props) => {
 
                     <Nav direction={toggleNav ? 'col' : 'row'} className={toggleNav ? 'pl-0 pt-4' : ''}>
                         <NavItem to="/faq">FAQ</NavItem>
+                        <NavItem to="/about">About Us</NavItem>
                         {user && user.userLevel > 0 &&
-                            <NavItem to="/admin/beepers">Admin</NavItem>
+                            <NavItem to="/admin/users">Admin</NavItem>
                         }
 
                         {user

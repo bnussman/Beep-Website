@@ -12,9 +12,8 @@ import Reports from './reports';
 import Report from './reports/Report';
 import Beeps from './beeps';
 import Beep from './beeps/Beep';
-
 import { Nav, NavItem } from '../../components/Nav';
-import { Heading6 } from '../../components/Typography';
+import { Heading5 } from '../../components/Typography';
 
 function Admin() {
 
@@ -23,16 +22,19 @@ function Admin() {
     return (
         <div className="sm:flex flex-row">
             <Nav title="Database" direction="col">
-                <Heading6>Database</Heading6>
-                <hr/>
+                <Heading5>Admin</Heading5>
+                <NavItem to={`${match.url}/users`}>Users</NavItem>
                 <NavItem to={`${match.url}/beepers`}>Beepers</NavItem>
                 <NavItem to={`${match.url}/beeps`}>Beeps</NavItem>
-                <NavItem to={`${match.url}/users`}>Users</NavItem>
                 <NavItem to={`${match.url}/reports`}>Reports</NavItem>
             </Nav>
 
             <div className="container mx-auto w-4/5 mb-4">
                 <Switch>
+                    <Route exact path={`${match.path}/users`}>
+                        <Users />
+                    </Route>
+
                     <Route exact path={`${match.path}/beepers`}>
                         <Beepers />
                     </Route>
@@ -45,9 +47,6 @@ function Admin() {
                         <Beep />
                     </Route>
 
-                    <Route exact path={`${match.path}/users`}>
-                        <Users />
-                    </Route>
 
                     <Route exact path={`${match.path}/users/:userId`}>
                         <User />
