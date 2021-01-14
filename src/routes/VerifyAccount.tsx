@@ -1,26 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { config } from '../utils/config';
 import { UserContext } from '../UserContext';
-import {Heading1} from '../components/Typography';
+import { Heading1 } from '../components/Typography';
 
 function VerifyAccount({ match }) {
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const id = match.params.id;
     const [status, setStatus]: [any, any] = useState();
     
-    async function handleVerify() {
-        fetch(config.apiUrl + '/account/verify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'id': id
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
+    async function handleVerify(): Promise<void> {
+        try {
+            const response = await fetch(config.apiUrl + '/account/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: id })
+            });
+
+            const data = await response.json();
+
             setStatus(data);
+
             if (data.status === "success" && user) {
                 let tempUser = JSON.parse(JSON.stringify(user));
                 if (data.data.isStudent) {
@@ -31,19 +32,16 @@ function VerifyAccount({ match }) {
                 localStorage.setItem("user", JSON.stringify(tempUser));
                 setUser(tempUser);
             }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        }
+        catch(error) {
+            console.error(error);
+        }
     }
 
     useEffect(() => {
         handleVerify();
-        // eslint-disable-next-line
     }, []);
 
-    
-    //Return the main login page
     return (
         <div className="lg:container px-4 mx-auto">
             {status ? 

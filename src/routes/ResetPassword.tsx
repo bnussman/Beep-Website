@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
+import APIResultBanner from '../components/APIResultBanner';
 import { config } from '../utils/config';
-import { Error } from "../utils/errors";
 
 interface Status {
     status: string;
@@ -12,35 +12,30 @@ function ResetPassword({ match }) {
     const [password, setPassword] = useState("");
     const [status, setStatus]: [Status, any] = useState();
     
-    function handleResetPassword(e) {
+    async function handleResetPassword(e: FormEvent): Promise<void> {
         e.preventDefault();
-        fetch(config.apiUrl + '/auth/password/reset', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'id': id,
-                'password': password
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const response = await fetch(config.apiUrl + '/auth/password/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: id,
+                    password: password
+                })
+            });
+            const data = await response.json();
             setStatus(data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        }
+        catch(error) {
+            console.error(error);
+        }
     }
-    
-    //Return the main login page
+
     return (
         <div className="lg:container px-4 mx-auto">
-            {status && 
-                <div role="alert" className={status.status === "success" ? "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" : "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" }>
-                    <Error error={status.message}/>
-                </div>
-            }
+            {status && <APIResultBanner response={status} setResponse={setStatus}/>}
             <form onSubmit={handleResetPassword}>
                 <label className="text-gray-500 font-bold" htmlFor="password">
                     New Password
