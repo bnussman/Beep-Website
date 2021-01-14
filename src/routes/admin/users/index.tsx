@@ -45,7 +45,6 @@ function Users() {
                     <TH>Is Student?</TH>
                     <TH>Is Email Verified?</TH>
                     <TH>Is beeping?</TH>
-                    <TH>User level</TH>
                 </THead>
                 <TBody>
                     {users && (users).map(user => {
@@ -76,9 +75,6 @@ function Users() {
                                         ? <Indicator color="green" className="animate-pulse" />
                                         : <Indicator color="red" />
                                     }
-                                </TDText>
-                                <TDText>
-                                    <Badge>{user.userLevel === 0 ? 'normal' : 'admin'}</Badge>
                                 </TDText>
                             </TR>
                         )

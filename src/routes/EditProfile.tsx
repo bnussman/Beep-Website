@@ -6,14 +6,15 @@ import { Button, TextInput } from '../components/Input';
 import { Caption } from '../components/Typography';
 import APIResultBanner from '../components/APIResultBanner';
 
-interface props {
+interface Props {
 }
+
 interface status {
     status: string;
     message: string;
 }
 
-interface state {
+interface State {
     first: string;
     last: string;
     username: string;
@@ -21,12 +22,14 @@ interface state {
     email: string;
     venmo: string;
     status: status | null;
+    photoStatus: status | null;
+    photo: any | null;
 }
 
-export default class EditProfile extends Component<props, state> {
+export default class EditProfile extends Component<Props, State> {
     static contextType = UserContext;
 
-    constructor(props, context) {
+    constructor(props: Props, context) {
         super(props);
         this.state = {
             username: context.user.username,
@@ -35,7 +38,9 @@ export default class EditProfile extends Component<props, state> {
             email: context.user.email,
             phone: context.user.phone,
             venmo: context.user.venmo,
-            status: null
+            status: null,
+            photoStatus: null,
+            photo: null
         };
     }
 
@@ -57,54 +62,88 @@ export default class EditProfile extends Component<props, state> {
         }
     }
 
-    handleEdit = (e) => {
+    async handleEdit(e) {
         e.preventDefault();
-        fetch(config.apiUrl + '/account', {
-            method: 'PATCH',
-            headers: {
-                "Authorization": "Bearer " + this.context.user.token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                first: this.state.first,
-                last: this.state.last,
-                email: this.state.email,
-                phone: this.state.phone,
-                venmo: this.state.venmo
-            }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    //make a temporary user object
-                    let tempUser = this.context.user;
-                    //update values of user
-                    tempUser.first = this.state.first;
-                    tempUser.last = this.state.last;
-                    tempUser.email = this.state.email;
-                    tempUser.phone = this.state.phone;
-                    tempUser.venmo = this.state.venmo;
-                    //if email was changed, make sure the context knows the user is no longer verified
-                    if (this.state.email !== this.context.user.email) {
-                        tempUser.isEmailVerified = false;
-                        tempUser.isStudent = false;
-                    }
-                    //update the context
-                    this.context.setUser(tempUser);
-                    //update localStorage
-                    localStorage.setItem("user", JSON.stringify(tempUser));
-                }
-                this.setState({ status: data });
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+
+        try {
+            const response = await fetch(config.apiUrl + '/account', {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${this.context.user.token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    first: this.state.first,
+                    last: this.state.last,
+                    email: this.state.email,
+                    phone: this.state.phone,
+                    venmo: this.state.venmo
+                }),
             });
+            const data = await response.json();
+
+            if (data.status === "success") {
+                //make a temporary user object
+                const tempUser = this.context.user;
+                //update values of user
+                tempUser.first = this.state.first;
+                tempUser.last = this.state.last;
+                tempUser.email = this.state.email;
+                tempUser.phone = this.state.phone;
+                tempUser.venmo = this.state.venmo;
+                //if email was changed, make sure the context knows the user is no longer verified
+                if (this.state.email !== this.context.user.email) {
+                    tempUser.isEmailVerified = false;
+                    tempUser.isStudent = false;
+                }
+                //update the context
+                this.context.setUser(tempUser);
+                //update localStorage
+                localStorage.setItem("user", JSON.stringify(tempUser));
+            }
+            console.log(this.state.photo);
+            if (this.state.photo) this.uploadPhoto();
+            this.setState({ status: data });
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
-    //Return the main login page
+    async uploadPhoto() {
+        const form = new FormData();
+        form.append('photo', this.state.photo);
+
+        
+        fetch(config.apiUrl + "/files/upload", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + this.context.user.token
+            },
+            body: form
+        })
+        .then(response => {
+            response.json().then(data => {
+                if (data.status === "success") {
+                    //make a copy of the current user
+                    const tempUser = this.context.user;
+
+                    //update the tempUser with the new data
+                    tempUser.photoUrl = data.url;
+
+                    //update the context
+                    this.context.setUser(tempUser);
+
+                    //put the tempUser back into storage
+                    localStorage.setItem("user", JSON.stringify(tempUser));
+
+                    this.setState({ photoStatus: data });
+                }
+            });
+        })
+    }
+
     render() {
-        //if some function tells us to redirect or a user is defined
-        //redirect to the home page
         if (!this.context.user) {
             return <Redirect to={{ pathname: "/login" }} />;
         }
@@ -112,8 +151,9 @@ export default class EditProfile extends Component<props, state> {
         return (
             <div className="lg:container px-4 mx-auto">
                 {this.state.status && <APIResultBanner response={this.state.status} setResponse={(val) => this.setState({status: val})}/>}
+                {this.state.photoStatus && <APIResultBanner response={this.state.photoStatus} setResponse={(val) => this.setState({photoStatus: val})}/>}
 
-                <form onSubmit={this.handleEdit}>
+                <form onSubmit={(e) => this.handleEdit(e)}>
                     <TextInput
                         className="mb-4"
                         id="username"
@@ -176,6 +216,22 @@ export default class EditProfile extends Component<props, state> {
                         placeholder={this.state.venmo}
                         onChange={(value) => this.setState({ venmo: value.target.value })}
                     />
+                    
+                    {this.state.photo && <img src={URL.createObjectURL(this.state.photo)} className="rounded-full h-24 w-24" alt="new"/>}
+
+                    <div className="flex flex-row mb-4">
+                        <svg fill="#00000" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                        </svg>
+                        <span className="ml-2">New Profile Photo</span>
+                        <input
+                            className="cursor-pointer absolute block opacity-0 pin-r pin-t"
+                            type="file"
+                            onChange={(e) => this.setState({ photo: e.target.files[0] })}
+                        />
+                    </div>
+
 
                     <Button raised>Update profile</Button>
                 </form>

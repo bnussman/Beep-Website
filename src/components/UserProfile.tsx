@@ -83,7 +83,7 @@ function UserProfile(props) {
                 </div>
 
                 <div>
-                    <LocationTable userId={user.id}/>
+                    {props.admin && <LocationTable userId={user.id}/>}
                 </div>
 
                 <Heading5>Beep history</Heading5>

@@ -2,6 +2,9 @@ import React from "react";
 
 export function Error(props) {  
     const validatorError = props.error;
+    if (!validatorError) {
+        return <p>...</p>;
+    }
 
     if ((typeof validatorError) == "string") {
         return (<p>{validatorError}</p>); 
