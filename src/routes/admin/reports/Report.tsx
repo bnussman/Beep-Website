@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
 import api from '../../../api';
 import { Report } from '../../../types/Report';
-
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-
-import { Heading3, Body1, Body2, Heading5, Heading1 } from '../../../components/Typography';
+import { Heading3, Body1, Heading5, Heading1 } from '../../../components/Typography';
 import { Indicator } from '../../../components/Indicator';
 import { Button } from '../../../components/Input';
 import { Formik, Form, Field } from 'formik';
@@ -49,12 +46,14 @@ function ReportPage(props) {
         fetchReport();
     }, []);
 
-    return report ? (
-        <> 
-            <Heading3>Report</Heading3>
 
-            {response && <APIResultBanner response={response} setResponse={setResponse}/>}
+    return (
+        <>
+        <Heading3>Report</Heading3>
+        {response && <APIResultBanner response={response} setResponse={setResponse}/>}
 
+        {report ?
+            <> 
             <div className="flex flex-row">
                 <div className="w-6/12">
                     <Heading5>Reporter</Heading5>
@@ -141,9 +140,10 @@ function ReportPage(props) {
             </Formik>
             </div>
         </>
-        )
         :
         <Heading1>Loading</Heading1>
-}
+        }
+    </>
+)}
 
 export default ReportPage;

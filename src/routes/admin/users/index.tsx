@@ -52,7 +52,7 @@ function Users() {
                     <TH>Is beeping?</TH>
                 </THead>
                 <TBody>
-                    {users ? (users).map(user => {
+                    {users && (users).map(user => {
                         return (
                             <TR key={user.id}>
                                 <TDProfile
@@ -83,9 +83,7 @@ function Users() {
                                 </TDText>
                             </TR>
                         )
-                    }) :
-                        <Heading1>Loading</Heading1>
-                    }
+                    })}
                 </TBody>
             </Table>
         </Card>
