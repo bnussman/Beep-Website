@@ -27,10 +27,6 @@ function ReportPage(props) {
 
     async function fetchReport() {
         const { report } = await api.reports.get(reportId);
-        const { user: reporter } = await api.users.get(report.reporterId);
-        const { user: reported } = await api.users.get(report.reportedId);
-        report.reporter = reporter;
-        report.reported = reported;
         setReport(report);
     }
 
