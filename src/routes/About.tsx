@@ -11,6 +11,7 @@ function About() {
                     Ride beep app is currently a substitute for the facebook page that people use to get around Boone, NC and Appalachian State University. This app allows college students to make money by beeping and allows for an easy and cheap way to get where they want around campus and Boone. The owners are students at App State, Ian Murphy and Banks Nussman, who saw the flaws of the facebook page and wanted to improve the experience with leaving everything that was great about the original idea.
                 </p>
             </div>
+            {/*
             <div className="coding inverse-toggle px-5 pt-4 shadow-lg text-gray-100 text-sm font-mono subpixel-antialiased           bg-gray-800  pb-6 pt-4 rounded-lg leading-normal overflow-hidden">
                 <div className="top mb-2 flex">
                     <div className="h-3 w-3 bg-red-500 rounded-full"></div>
@@ -25,6 +26,7 @@ function About() {
                         </p>
                     </div>
                 </div>
+              */}
         </div>
     );
 }
