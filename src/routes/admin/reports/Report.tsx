@@ -95,6 +95,17 @@ function ReportPage(props) {
                 <>
                     <Indicator color='green' className="mr-2"/>
                     <span>Handled</span>
+                    <Heading5>Handled by</Heading5>
+                    <div className="flex flex-row">
+                    {report.handledByUser.photoUrl && (
+                        <div className="flex mr-3">
+                            <img className="h-10 w-10 shadow-lg rounded-full" src={report.handledByUser.photoUrl} alt={`${report.handledByUser.first} ${report.handledByUser.last}`}></img>
+                        </div>
+                    )}
+                    <NavLink to={`/admin/users/${report.handledByUser.id}`}>
+                        {report.handledByUser.first} {report.handledByUser.last}
+                    </NavLink>
+                    </div>
                 </>
                 :
                 <>

@@ -6,6 +6,7 @@ export interface Report {
     reported: User;
     reporterId: string;
     reporter: User;
+    handledByUser: User | null;
     timestamp: number;
     adminNotes: string;
     handled: boolean;
