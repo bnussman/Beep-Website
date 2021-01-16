@@ -65,7 +65,7 @@ function UserProfile(props) {
                             <Button>Edit {props.admin ? 'user' : 'profile'}</Button>
                         </NavLink>
 
-                        {props.admin && <Button onClick={() => deleteUser(user.id)}>Delete User</Button>}
+                        {props.admin && <Button onClick={() => deleteUser(user.id)} className="text-white bg-red-500 hover:bg-red-700">Delete User</Button>}
 
                         { !props.admin &&
                             <NavLink to={'password/change'}>
