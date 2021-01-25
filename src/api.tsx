@@ -90,8 +90,8 @@ const api = {
         },
     },
     beeps: {
-        list: async function() {
-            return await GET('beeps');
+        list: async function(offset = 0, show = DEFAULT_LIMIT) {
+            return await GET(`beeps?show=${show}&offset=${offset}`);
         },
         get: async function(beepId) {
             return await GET(`beeps/${beepId}`);

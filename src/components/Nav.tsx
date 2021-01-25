@@ -15,15 +15,15 @@ export function Nav(props) {
 
     return (
         <ul
-            className={`px-6 flex flex-row flex-${props.direction || 'row'} ${props.className}`}>
-            { children}
+            className={`pl-4 flex flex-row flex-${props.direction || 'row'} ${props.className}`}>
+            {children}
         </ul>
     )
 }
 
 export function NavItem(props) {
     return (
-        <li className={`${props.direction === 'col' ? 'py-2' : 'px-2'} mr-3 flex items-center`}>
+        <li className={`${props.direction === 'col' ? 'py-4' : 'px-2'} mr-3 flex items-center`}>
             { props.to
                 ?
                 // Navigation link
