@@ -9,7 +9,7 @@ function Profile(props) {
     return (
         <div className="container mx-auto">
             <Heading3>My profile</Heading3>
-            <UserProfile user={user} />
+            <UserProfile user={user.user} />
         </div>
     );
 }

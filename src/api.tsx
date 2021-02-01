@@ -5,7 +5,8 @@ const DEFAULT_LIMIT = 25;
 // Some HTTP helper methods
 async function http(url: string, method: string, headers?: object, body?: object) {
     
-    const { token } = JSON.parse(localStorage.getItem('user'));
+    const { token } = JSON.parse(localStorage.getItem('user')).tokens;
+    console.log(token);
 
     const response = await fetch(`${config.apiUrl}/${url}`, {
         method,

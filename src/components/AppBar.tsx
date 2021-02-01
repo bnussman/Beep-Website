@@ -29,7 +29,7 @@ const BeepAppBar = (props: props) => {
             fetch(config.apiUrl + '/auth/logout', {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${user.tokens.token}`,
                     "Content-Type": "application/json"
                 }
             });
@@ -49,7 +49,7 @@ const BeepAppBar = (props: props) => {
             const response = await fetch(config.apiUrl + '/account/verify/resend', {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${user.tokens.token}`,
                     "Content-Type": "application/json"
                 }
             })
@@ -90,7 +90,7 @@ const BeepAppBar = (props: props) => {
                     <Nav direction={toggleNav ? 'col' : 'row'} className={toggleNav ? 'pl-0 pt-4' : ''}>
                         <NavItem to="/faq">FAQ</NavItem>
                         <NavItem to="/about">About Us</NavItem>
-                        {user && user.userLevel > 0 &&
+                        {(user && user.user.userLevel) > 0 &&
                             <NavItem to="/admin/users">Admin</NavItem>
                         }
 
@@ -101,18 +101,18 @@ const BeepAppBar = (props: props) => {
 
                         {user &&
                             <NavItem to="/profile" className="mt-1 flex flex-row items-center">
-                                {user.photoUrl &&
-                                    <img className="block lg:inline-block mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.photoUrl} />
+                                {user.user.photoUrl &&
+                                    <img className="block lg:inline-block mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.user.photoUrl} />
                                 }
-                                <span className="mb-1">{user.first + " " + user.last}</span>
-                                {user.isBeeping && <Indicator color="green" className="mb-1 ml-3 animate-pulse" />}
+                                <span className="mb-1">{user.user.first + " " + user.user.last}</span>
+                                {user.user.isBeeping && <Indicator color="green" className="mb-1 ml-3 animate-pulse" />}
                             </NavItem>
                         }
                     </Nav>
                 </div>
             </nav>
 
-            {(user && !user.isEmailVerified && !props.noErrors) &&
+            {(user && !user.user.isEmailVerified && !props.noErrors) &&
 
                 <div className="lg:container px-4 mx-auto mb-4" >
                     <div role="alert">
