@@ -42,7 +42,7 @@ function QueueTable(props: Props) {
         fetchQueue();
     }, []);
 
-    if (queue.length <= 0) {
+    if (!queue || queue.length <= 0) {
         return null;
     }
 

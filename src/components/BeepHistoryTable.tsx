@@ -43,7 +43,7 @@ function BeepHistoryTable(props: Props) {
                     {beeps && (beeps).map(beep => {
                         return (
 
-                            <TR key={beep.beep.id}>
+                            <TR key={beep.id}>
                                 <TDProfile
                                     photoUrl={beep.rider.photoUrl}
                                     title={`${beep.rider.first} ${beep.rider.last}`}
@@ -51,12 +51,12 @@ function BeepHistoryTable(props: Props) {
                                     to={`/admin/users/${beep.rider.id}`}
                                 >
                                 </TDProfile>
-                                <TDText>{beep.beep.origin}</TDText>
-                                <TDText>{beep.beep.destination}</TDText>
-                                <TDText>{beep.beep.groupSize}</TDText>
-                                <TDText>{dayjs().to(beep.beep.timeEnteredQueue)}</TDText>
-                                <TDText>{dayjs().to(beep.beep.doneTime)}</TDText>
-                                <TDText>{dayjs.duration(beep.beep.doneTime - beep.beep.timeEnteredQueue).humanize()}</TDText>
+                                <TDText>{beep.origin}</TDText>
+                                <TDText>{beep.destination}</TDText>
+                                <TDText>{beep.groupSize}</TDText>
+                                <TDText>{dayjs().to(beep.timeEnteredQueue)}</TDText>
+                                <TDText>{dayjs().to(beep.doneTime)}</TDText>
+                                <TDText>{dayjs.duration(beep.doneTime - beep.timeEnteredQueue).humanize()}</TDText>
                             </TR>
                         )
                     })}
