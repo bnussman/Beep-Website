@@ -1,10 +1,4 @@
 import User from '../types/User';
-export interface BeepEntry {
-    beep: Beep;
-    rider: User;
-    beeper: User;
-}
-
 export interface Beep {
     id: string;
     beeper: User;

@@ -118,13 +118,13 @@ function ReportPage(props) {
                                     <Indicator color='green' className="mr-2"/>
                                     <span className="mr-2">Handled by</span>
                                     <div className="flex flex-row items-center">
-                                        {report.handledByUser.photoUrl && (
+                                        {report.handledBy.photoUrl && (
                                             <div className="flex mr-3">
-                                                <img className="h-10 w-10 shadow-lg rounded-full" src={report.handledByUser.photoUrl} alt={`${report.handledByUser.first} ${report.handledByUser.last}`}></img>
+                                                <img className="h-10 w-10 shadow-lg rounded-full" src={report.handledBy.photoUrl} alt={`${report.handledBy.first} ${report.handledBy.last}`}></img>
                                             </div>
                                         )}
-                                        <NavLink to={`/admin/users/${report.handledByUser.id}`}>
-                                            {report.handledByUser.first} {report.handledByUser.last}
+                                        <NavLink to={`/admin/users/${report.handledBy.id}`}>
+                                            {report.handledBy.first} {report.handledBy.last}
                                         </NavLink>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@ function ReportPage(props) {
             <Heading3>Update Report Info</Heading3>
             <Formik
                 initialValues={{
-                    adminNotes: report.adminNotes,
+                    notes: report.notes,
                     handled: report.handled
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
@@ -156,7 +156,7 @@ function ReportPage(props) {
                     <Form>
                         <div>
                             <Heading5>Admin Notes</Heading5>
-                            <Field type="text" component="textarea" name="adminNotes" className="h-32 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"/>
+                            <Field type="text" component="textarea" name="notes" className="h-32 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-yellow-500"/>
                         </div>
                         <div>
                             <Heading5>Handled</Heading5>

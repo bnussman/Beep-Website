@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-
 import api from '../../../api';
 import { Report } from '../../../types/Report';
-
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';

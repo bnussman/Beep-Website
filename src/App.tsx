@@ -25,8 +25,8 @@ interface Props {
 }
 
 interface User {
-    id: any;
-    token: string; 
+    user: any;
+    tokens: any; 
 }
 
 interface State {
@@ -49,14 +49,19 @@ export default class App extends Component<Props, State> {
     
     componentDidMount() {
         if (this.state.user) {
-            socket.emit("getUser", this.state.user.token);
+            socket.emit("getUser", this.state.user.tokens.token);
         }
 
-        socket.on('updateUser', (data: unknown) => {
-            const updated = getUpdatedUser(this.state.user, data);
+        socket.on('updateUser', (data) => {
+
+            if (data.status === "error") return console.log(data.message);
+
+            const updated = getUpdatedUser(this.state.user.user, data);
             if (updated != null) {
-                this.setState({ user: updated });
-                localStorage.setItem("user", JSON.stringify(updated));
+                const newUserState = this.state.user;
+                newUserState['user'] = updated;
+                this.setState({ user: newUserState });
+                localStorage.setItem("user", JSON.stringify(newUserState));
             }
         });
     }

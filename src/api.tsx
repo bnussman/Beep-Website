@@ -69,16 +69,7 @@ const api = {
     },
     reports: {
         list: async function(offset = 0, show = DEFAULT_LIMIT) {
-            const res = await GET(`reports?show=${show}&offset=${offset}`);
-            // TODO: Reduce data on server side
-            res.reports = res.reports.map(r => {
-                return {
-                    ...r.report,
-                    reported: r.reported,
-                    reporter: r.reporter
-                };
-            });
-            return res;
+            return await GET(`reports?show=${show}&offset=${offset}`);
         },
         get: async function(reportId) {
             return await GET(`reports/${reportId}`);

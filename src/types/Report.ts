@@ -6,9 +6,9 @@ export interface Report {
     reported: User;
     reporterId: string;
     reporter: User;
-    handledByUser: User | null;
+    handledBy: User | null;
     timestamp: number;
-    adminNotes: string;
+    notes: string | null;
     handled: boolean;
     beepEventId: string | undefined | null;
 }
