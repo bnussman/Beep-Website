@@ -32,12 +32,12 @@ export default class EditProfile extends Component<Props, State> {
     constructor(props: Props, context) {
         super(props);
         this.state = {
-            username: context.user.username,
-            first: context.user.first,
-            last: context.user.last,
-            email: context.user.email,
-            phone: context.user.phone,
-            venmo: context.user.venmo,
+            username: context.user.user.username,
+            first: context.user.user.first,
+            last: context.user.user.last,
+            email: context.user.user.email,
+            phone: context.user.user.phone,
+            venmo: context.user.user.venmo,
             status: null,
             photoStatus: null,
             photo: null
@@ -45,20 +45,20 @@ export default class EditProfile extends Component<Props, State> {
     }
 
     UNSAFE_componentWillReceiveProps() {
-        if (this.state.first !== this.context.user.first) {
-            this.setState({ first: this.context.user.first });
+        if (this.state.first !== this.context.user.user.first) {
+            this.setState({ first: this.context.user.user.first });
         }
-        if (this.state.last !== this.context.user.last) {
-            this.setState({ last: this.context.user.last });
+        if (this.state.last !== this.context.user.user.last) {
+            this.setState({ last: this.context.user.user.last });
         }
-        if (this.state.email !== this.context.user.email) {
-            this.setState({ email: this.context.user.email });
+        if (this.state.email !== this.context.user.user.email) {
+            this.setState({ email: this.context.user.user.email });
         }
-        if (this.state.phone !== this.context.user.phone) {
-            this.setState({ phone: this.context.user.phone });
+        if (this.state.phone !== this.context.user.user.phone) {
+            this.setState({ phone: this.context.user.user.phone });
         }
-        if (this.state.venmo !== this.context.user.venmo) {
-            this.setState({ venmo: this.context.user.venmo });
+        if (this.state.venmo !== this.context.user.user.venmo) {
+            this.setState({ venmo: this.context.user.user.venmo });
         }
     }
 
@@ -69,7 +69,7 @@ export default class EditProfile extends Component<Props, State> {
             const response = await fetch(config.apiUrl + '/account', {
                 method: 'PATCH',
                 headers: {
-                    Authorization: `Bearer ${this.context.user.token}`,
+                    Authorization: `Bearer ${this.context.user.tokens.token}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
@@ -86,20 +86,20 @@ export default class EditProfile extends Component<Props, State> {
                 //make a temporary user object
                 const tempUser = this.context.user;
                 //update values of user
-                tempUser.first = this.state.first;
-                tempUser.last = this.state.last;
-                tempUser.email = this.state.email;
-                tempUser.phone = this.state.phone;
-                tempUser.venmo = this.state.venmo;
+                tempUser.user.first = this.state.first;
+                tempUser.user.last = this.state.last;
+                tempUser.user.email = this.state.email;
+                tempUser.user.phone = this.state.phone;
+                tempUser.user.venmo = this.state.venmo;
                 //if email was changed, make sure the context knows the user is no longer verified
-                if (this.state.email !== this.context.user.email) {
-                    tempUser.isEmailVerified = false;
-                    tempUser.isStudent = false;
+                if (this.state.email !== this.context.user.user.email) {
+                    tempUser.user.isEmailVerified = false;
+                    tempUser.user.isStudent = false;
                 }
                 //update the context
                 this.context.setUser(tempUser);
                 //update localStorage
-                localStorage.setItem("user", JSON.stringify(tempUser));
+                localStorage.setItem("user", JSON.stringify(this.context.user));
             }
             console.log(this.state.photo);
             if (this.state.photo) this.uploadPhoto();
@@ -118,18 +118,18 @@ export default class EditProfile extends Component<Props, State> {
         fetch(config.apiUrl + "/files/upload", {
             method: "POST",
             headers: {
-                "Authorization": "Bearer " + this.context.user.token
+                "Authorization": "Bearer " + this.context.user.tokens.token
             },
             body: form
         })
         .then(response => {
             response.json().then(data => {
                 if (data.status === "success") {
-                    //make a copy of the current user
+
                     const tempUser = this.context.user;
 
                     //update the tempUser with the new data
-                    tempUser.photoUrl = data.url;
+                    tempUser['user']['photoUrl'] = data.url;
 
                     //update the context
                     this.context.setUser(tempUser);
@@ -144,7 +144,7 @@ export default class EditProfile extends Component<Props, State> {
     }
 
     render() {
-        if (!this.context.user) {
+        if (!this.context.user.user) {
             return <Redirect to={{ pathname: "/login" }} />;
         }
 
@@ -158,7 +158,7 @@ export default class EditProfile extends Component<Props, State> {
                         className="mb-4"
                         id="username"
                         label="Username"
-                        value={this.context.user.username}
+                        value={this.context.user.user.username}
                         disabled
                     />
 
@@ -190,8 +190,8 @@ export default class EditProfile extends Component<Props, State> {
                     />
                     <Caption className="mb-2">
                         {
-                            this.context.user.isEmailVerified
-                            ? this.context.user.isStudent
+                            this.context.user.user.isEmailVerified
+                            ? this.context.user.user.isStudent
                                 ? "Your email is verified and you are a student"
                                 : "Your email is verified"
                             : "Your email is not verified"

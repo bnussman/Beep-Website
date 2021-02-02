@@ -36,7 +36,7 @@ function ChangePassword() {
             const response = await fetch(config.apiUrl + '/account/password', {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${user.tokens.token}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
