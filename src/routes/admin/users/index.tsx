@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../../api';
-import User from '../../../types/User';
+import { User } from '../../../types/User';
 import { formatPhone } from '../../../utils/formatters';
-import { Heading1, Heading3 } from '../../../components/Typography';
+import { Heading3 } from '../../../components/Typography';
 import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../../components/Table';
 import { Indicator } from '../../../components/Indicator';

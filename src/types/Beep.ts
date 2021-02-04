@@ -1,4 +1,5 @@
-import User from '../types/User';
+import { User } from './User';
+
 export interface Beep {
     id: string;
     beeper: User;

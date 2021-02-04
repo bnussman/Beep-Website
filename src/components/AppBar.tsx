@@ -6,6 +6,7 @@ import { config } from "../utils/config";
 import socket from "../utils/Socket";
 import { Nav, NavItem } from './Nav';
 import {Indicator} from './Indicator';
+import { UserRole } from '../types/User';
 
 interface props {
     noErrors?: boolean;
@@ -90,7 +91,7 @@ const BeepAppBar = (props: props) => {
                     <Nav direction={toggleNav ? 'col' : 'row'} className={toggleNav ? 'pl-0 pt-4' : ''}>
                         <NavItem to="/faq">FAQ</NavItem>
                         <NavItem to="/about">About Us</NavItem>
-                        {(user && user.user.userLevel) > 0 &&
+                        {(user && user.user.role == UserRole.ADMIN) &&
                             <NavItem to="/admin/users">Admin</NavItem>
                         }
 

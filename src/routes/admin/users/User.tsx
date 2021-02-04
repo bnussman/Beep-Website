@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 
 import api from '../../../api';
-import User from '../../../types/User';
+import { User } from '../../../types/User';
 
 import UserProfile from '../../../components/UserProfile';
 import { Heading1, Heading3 } from '../../../components/Typography';

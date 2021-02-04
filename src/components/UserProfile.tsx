@@ -10,6 +10,7 @@ import BeepHistoryTable from './BeepHistoryTable';
 import QueueTable from './QueueTable';
 import api from '../api';
 import LocationTable from './LocationTable';
+import { UserRole } from '../types/User';
 
 function UserProfile(props) {
     const history = useHistory();
@@ -35,7 +36,7 @@ function UserProfile(props) {
                             <span className="mr-2">{user.first} {user.last}</span>
                         </Heading4>
                         <div>
-                            {user.userLevel === 1 ? <Badge className="transform -translate-y-1">admin</Badge> : <></>}
+                            {user.role === UserRole.ADMIN ? <Badge className="transform -translate-y-1">admin</Badge> : <></>}
                             {user.isStudent ? <Badge className="transform -translate-y-1">student</Badge> : <></>}
                         </div>
                         <Subtitle>

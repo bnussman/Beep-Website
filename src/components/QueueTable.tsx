@@ -68,9 +68,9 @@ function QueueTable(props: Props) {
 
                             <TR key={entry.id}>
                                 <TDProfile
-                                    photoUrl={entry.personalInfo.photoUrl}
-                                    title={`${entry.personalInfo.first} ${entry.personalInfo.last}`}
-                                    to={`/admin/users/${entry.riderid}`}
+                                    photoUrl={entry.rider.photoUrl}
+                                    title={`${entry.rider.first} ${entry.rider.last}`}
+                                    to={`/admin/users/${entry.rider.id}`}
                                 >
                                 </TDProfile>
                                 <TDText>{entry.origin}</TDText>

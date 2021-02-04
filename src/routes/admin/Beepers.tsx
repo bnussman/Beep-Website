@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../api';
-import Beeper from '../../types/Beeper';
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
+import {User} from '../../types/User';
 
 function Beepers() {
 
-    const [ beepers, setBeepers ] = useState<Beeper[]>([]);
+    const [ beepers, setBeepers ] = useState<User[]>([]);
 
     async function fetchRides() {
         const { beeperList } = await api.beepers.list();

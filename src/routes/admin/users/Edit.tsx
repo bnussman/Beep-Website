@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import api from '../../../api';
-import User from '../../../types/User';
+import { User } from '../../../types/User';
 import { Heading1, Heading3, Heading5 } from '../../../components/Typography';
 import { Formik, Form, Field } from 'formik';
 import APIResultBanner from '../../../components/APIResultBanner';

@@ -1,8 +1,9 @@
-enum UserLevel {
-    Normal = 0,
-    Admin = 1
+export enum UserRole {
+    USER = "user",
+    ADMIN = "admin"
 }
-interface User {
+
+export interface User {
     id?: string,
     first: string,
     last: string,
@@ -10,7 +11,7 @@ interface User {
     email?: string,
     isEmailVerified?: boolean,
     phone?: string,
-    userLevel: UserLevel,
+    role: UserRole,
     capacity: number,
     isStudent: boolean,
     masksRequired: boolean,
@@ -21,5 +22,3 @@ interface User {
     isBeeping: boolean,
     photoUrl: string
 }
-
-export default User;
