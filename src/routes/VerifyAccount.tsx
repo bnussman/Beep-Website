@@ -23,12 +23,12 @@ function VerifyAccount({ match }) {
             setStatus(data);
 
             if (data.status === "success" && user) {
-                let tempUser = JSON.parse(JSON.stringify(user));
+                let tempUser = user;
                 if (data.data.isStudent) {
-                    tempUser.isStudent = data.data.isStudent;
+                    tempUser.user.isStudent = data.data.isStudent;
                 }
-                tempUser.isEmailVerified = data.data.isEmailVerified;
-                tempUser.email = data.data.email;
+                tempUser.user.isEmailVerified = data.data.isEmailVerified;
+                tempUser.user.email = data.data.email;
                 localStorage.setItem("user", JSON.stringify(tempUser));
                 setUser(tempUser);
             }

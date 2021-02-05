@@ -99,7 +99,7 @@ export default class EditProfile extends Component<Props, State> {
                 //update the context
                 this.context.setUser(tempUser);
                 //update localStorage
-                localStorage.setItem("user", JSON.stringify(this.context.user));
+                localStorage.setItem("user", JSON.stringify(tempUser));
             }
             console.log(this.state.photo);
             if (this.state.photo) this.uploadPhoto();
