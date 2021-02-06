@@ -102,8 +102,8 @@ function ReportPage(props) {
                 <Card className="mb-4">
                     <div className="m-4">
                         <Heading5>Associated Beep Event</Heading5>
-                        <NavLink to={`/admin/beeps/${report.beep.id}`}>
-                            {report.beep.id}  
+                        <NavLink to={`/admin/beeps/${report.id}`}>
+                            {report.id}  
                         </NavLink>
                     </div>
                 </Card>
