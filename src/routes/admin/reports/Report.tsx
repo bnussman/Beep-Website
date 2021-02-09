@@ -99,6 +99,7 @@ function ReportPage(props) {
                         <Body1>{dayjs().to(report.timestamp)}</Body1>  
                     </div>
                 </Card>
+                {report.beep &&
                 <Card className="mb-4">
                     <div className="m-4">
                         <Heading5>Associated Beep Event</Heading5>
@@ -107,6 +108,7 @@ function ReportPage(props) {
                         </NavLink>
                     </div>
                 </Card>
+                }
                 <Card className="mb-4">
                     <div className="m-4">
                         {report.handled ?

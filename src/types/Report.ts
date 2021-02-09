@@ -9,5 +9,5 @@ export interface Report {
     timestamp: number;
     notes: string | null;
     handled: boolean;
-    beep: any;
+    beep?: any;
 }
