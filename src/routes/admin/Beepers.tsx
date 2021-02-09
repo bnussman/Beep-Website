@@ -10,8 +10,8 @@ function Beepers() {
     const [ beepers, setBeepers ] = useState<User[]>([]);
 
     async function fetchRides() {
-        const { beeperList } = await api.beepers.list();
-        setBeepers(beeperList);
+        const { beepers } = await api.beepers.list();
+        setBeepers(beepers);
     }
 
     useEffect(() => {
