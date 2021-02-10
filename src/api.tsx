@@ -6,7 +6,6 @@ const DEFAULT_LIMIT = 25;
 async function http(url: string, method: string, headers?: object, body?: object) {
     
     const { token } = JSON.parse(localStorage.getItem('user')).tokens;
-    console.log(token);
 
     const response = await fetch(`${config.apiUrl}/${url}`, {
         method,
