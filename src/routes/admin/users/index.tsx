@@ -8,38 +8,52 @@ import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../../compone
 import { Indicator } from '../../../components/Indicator';
 import Pagination from '../../../components/Pagination';
 import { TextInput } from '../../../components/Input';
+import {gql, useQuery} from '@apollo/client';
+import { GetUsersQuery } from '../../../generated/graphql';
 
-function Users() {
+const UsersGraphQL = gql`
+    query getUsers($show: Int, $offset: Int) {
+        getUsers(show: $show, offset: $offset) {
+            items {
+                id
+                photoUrl
+                first
+                last
+                email
+                isStudent
+                isEmailVerified
+                username
+                phone
+                isBeeping
+            }
+            count
+        }
+    }
+`;
+function Users(props) {
+    const { loading, error, data, refetch } = useQuery<GetUsersQuery>(UsersGraphQL, { variables: { offset: 0, show: 25 }});
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const pageLimit = 25;
 
-    const [users, setUsers] = useState<User[] | null>(null),
-          [currentPage, setCurrentPage] = useState<number>(1),
-          [resultCount, setResultCount] = useState<number>(0),
-          pageLimit = 25;
 
-    async function fetchUsers(page: number, search?: string) {
-        const { users, total } = await api.users.list(page, pageLimit, search);
-        setUsers(users);
-        setResultCount(total);
+    async function fetchUsers(page: number) {
+        refetch({
+            offset: page 
+        })
     }
 
-    useEffect(() => {
-        fetchUsers(0);
-    }, []);
+    if (loading) return <p>Loading</p>;
+    if (error) console.log(error);
 
     return <>
         <Heading3>Users</Heading3>
 
         <Pagination
-            resultCount={resultCount}
+            resultCount={data?.getUsers.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             onPageChange={fetchUsers}
-        />
-        <TextInput
-            className="mb-4"
-            placeholder="Search"
-            onChange={(value) => fetchUsers(0, value.target.value)} 
         />
         <Card>
             <Table>
@@ -52,7 +66,7 @@ function Users() {
                     <TH>Is beeping?</TH>
                 </THead>
                 <TBody>
-                    {users && (users).map(user => {
+                    {data?.getUsers && (data?.getUsers.items).map(user => {
                         return (
                             <TR key={user.id}>
                                 <TDProfile
@@ -89,11 +103,12 @@ function Users() {
         </Card>
 
         <Pagination
-            resultCount={resultCount}
+            resultCount={data?.getUsers.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            onPageChange={fetchUsers}/>
+            onPageChange={fetchUsers}
+        />
     </>;
 }
 
