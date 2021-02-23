@@ -7,32 +7,60 @@ import { Card } from '../../../components/Card';
 import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../../components/Table';
 import { Heading3 } from '../../../components/Typography';
 import Pagination from '../../../components/Pagination';
+import {gql, useQuery} from '@apollo/client';
+import {GetBeepsQuery} from '../../../generated/graphql';
 
 dayjs.extend(duration);
 
+const BeepsGraphQL = gql`
+    query getBeeps($show: Int, $offset: Int) {
+        getBeeps(show: $show, offset: $offset) {
+            items {
+                id
+                origin
+                destination
+                timeEnteredQueue
+                doneTime
+                groupSize
+                beeper {
+                    id
+                    first
+                    last
+                    photoUrl
+                    username
+                }
+                rider {
+                    id
+                    first
+                    last
+                    photoUrl
+                    username
+                }
+            }
+            count
+        }
+    }
+`;
 function Beeps() {
 
-    const [beeps, setBeeps] = useState<Beep[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1),
-          [resultCount, setResultCount] = useState<number>(0),
-          pageLimit = 25;
+    const { loading, error, data, refetch } = useQuery<GetBeepsQuery>(BeepsGraphQL, { variables: { offset: 0, show: 25 }});
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const pageLimit = 25;
 
-    //async function fetchBeeps(page: number, limit: number) {
     async function fetchBeeps(page: number) {
-        const { beeps, total } = await api.beeps.list(page, pageLimit);
-        setBeeps(beeps);
-        setResultCount(total);
+        refetch({
+            offset: page 
+        })
     }
 
-    useEffect(() => {
-        fetchBeeps(0);
-    }, []);
+    if (loading) return <p>Loading</p>;
+    if (error) console.log(error);
 
     return <>
         <Heading3>Beeps</Heading3>
 
         <Pagination
-            resultCount={resultCount}
+            resultCount={data.getBeeps.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -52,7 +80,7 @@ function Beeps() {
                     <TH></TH>
                 </THead>
                 <TBody>
-                    {beeps && (beeps).map(beepEntry => {
+                    {data.getBeeps && (data.getBeeps.items).map(beepEntry => {
                         return (
 
                             <TR key={beepEntry.id}>
@@ -82,11 +110,12 @@ function Beeps() {
             </Table>
         </Card>
         <Pagination
-            resultCount={resultCount}
+            resultCount={data.getBeeps.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            onPageChange={fetchBeeps}/>
+            onPageChange={fetchBeeps}
+        />
     </>;
 }
 

@@ -23,7 +23,7 @@ export type Query = {
   findBeep: User;
   getRiderStatus: QueueEntry;
   getBeeperList: Array<User>;
-  getBeeps: Array<Beep>;
+  getBeeps: BeepsResponse;
   getBeep: Array<Beep>;
   getReports: Array<Report>;
   getReport: Array<Report>;
@@ -164,6 +164,12 @@ export type Beep = {
 export type UsersResponse = {
   __typename?: 'UsersResponse';
   items: Array<User>;
+  count: Scalars['Int'];
+};
+
+export type BeepsResponse = {
+  __typename?: 'BeepsResponse';
+  items: Array<Beep>;
   count: Scalars['Int'];
 };
 
@@ -403,6 +409,16 @@ export type LogoutMutation = (
   & Pick<Mutation, 'logout'>
 );
 
+export type ChangePasswordMutationVariables = Exact<{
+  password: Scalars['String'];
+}>;
+
+
+export type ChangePasswordMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'changePassword'>
+);
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -430,6 +446,55 @@ export type LoginMutation = (
       { __typename?: 'TokenEntry' }
       & Pick<TokenEntry, 'id' | 'tokenid'>
     ) }
+  ) }
+);
+
+export type GetBeepersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBeepersQuery = (
+  { __typename?: 'Query' }
+  & { getBeeperList: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username' | 'photoUrl' | 'singlesRate' | 'groupRate' | 'capacity' | 'isStudent' | 'first' | 'last' | 'queueSize' | 'masksRequired'>
+  )> }
+);
+
+export type GetBeepsQueryVariables = Exact<{
+  show?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetBeepsQuery = (
+  { __typename?: 'Query' }
+  & { getBeeps: (
+    { __typename?: 'BeepsResponse' }
+    & Pick<BeepsResponse, 'count'>
+    & { items: Array<(
+      { __typename?: 'Beep' }
+      & Pick<Beep, 'id' | 'origin' | 'destination' | 'timeEnteredQueue' | 'doneTime' | 'groupSize'>
+      & { beeper: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+      ), rider: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+      ) }
+    )> }
+  ) }
+);
+
+export type GetUserQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetUserQuery = (
+  { __typename?: 'Query' }
+  & { getUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'first' | 'last' | 'isBeeping' | 'isStudent' | 'role' | 'venmo' | 'singlesRate' | 'groupRate' | 'capacity' | 'masksRequired' | 'photoUrl' | 'queueSize' | 'phone' | 'username'>
   ) }
 );
 
@@ -481,6 +546,36 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($password: String!) {
+  changePassword(password: $password)
+}
+    `;
+export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, baseOptions);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -567,6 +662,151 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const GetBeepersDocument = gql`
+    query GetBeepers {
+  getBeeperList {
+    id
+    username
+    photoUrl
+    singlesRate
+    groupRate
+    capacity
+    isStudent
+    first
+    last
+    queueSize
+    masksRequired
+  }
+}
+    `;
+
+/**
+ * __useGetBeepersQuery__
+ *
+ * To run a query within a React component, call `useGetBeepersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBeepersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBeepersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetBeepersQuery(baseOptions?: Apollo.QueryHookOptions<GetBeepersQuery, GetBeepersQueryVariables>) {
+        return Apollo.useQuery<GetBeepersQuery, GetBeepersQueryVariables>(GetBeepersDocument, baseOptions);
+      }
+export function useGetBeepersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBeepersQuery, GetBeepersQueryVariables>) {
+          return Apollo.useLazyQuery<GetBeepersQuery, GetBeepersQueryVariables>(GetBeepersDocument, baseOptions);
+        }
+export type GetBeepersQueryHookResult = ReturnType<typeof useGetBeepersQuery>;
+export type GetBeepersLazyQueryHookResult = ReturnType<typeof useGetBeepersLazyQuery>;
+export type GetBeepersQueryResult = Apollo.QueryResult<GetBeepersQuery, GetBeepersQueryVariables>;
+export const GetBeepsDocument = gql`
+    query getBeeps($show: Int, $offset: Int) {
+  getBeeps(show: $show, offset: $offset) {
+    items {
+      id
+      origin
+      destination
+      timeEnteredQueue
+      doneTime
+      groupSize
+      beeper {
+        id
+        first
+        last
+        photoUrl
+        username
+      }
+      rider {
+        id
+        first
+        last
+        photoUrl
+        username
+      }
+    }
+    count
+  }
+}
+    `;
+
+/**
+ * __useGetBeepsQuery__
+ *
+ * To run a query within a React component, call `useGetBeepsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBeepsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBeepsQuery({
+ *   variables: {
+ *      show: // value for 'show'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetBeepsQuery(baseOptions?: Apollo.QueryHookOptions<GetBeepsQuery, GetBeepsQueryVariables>) {
+        return Apollo.useQuery<GetBeepsQuery, GetBeepsQueryVariables>(GetBeepsDocument, baseOptions);
+      }
+export function useGetBeepsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBeepsQuery, GetBeepsQueryVariables>) {
+          return Apollo.useLazyQuery<GetBeepsQuery, GetBeepsQueryVariables>(GetBeepsDocument, baseOptions);
+        }
+export type GetBeepsQueryHookResult = ReturnType<typeof useGetBeepsQuery>;
+export type GetBeepsLazyQueryHookResult = ReturnType<typeof useGetBeepsLazyQuery>;
+export type GetBeepsQueryResult = Apollo.QueryResult<GetBeepsQuery, GetBeepsQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser($id: String!) {
+  getUser(id: $id) {
+    id
+    first
+    last
+    isBeeping
+    isStudent
+    role
+    venmo
+    singlesRate
+    groupRate
+    capacity
+    masksRequired
+    photoUrl
+    queueSize
+    phone
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, baseOptions);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, baseOptions);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUsersDocument = gql`
     query getUsers($show: Int, $offset: Int) {
   getUsers(show: $show, offset: $offset) {

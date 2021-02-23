@@ -4,18 +4,35 @@ import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
 import {User} from '../../types/User';
+import {gql, useQuery} from '@apollo/client';
+import {GetBeepersQuery} from '../../generated/graphql';
+
+const BeepersGraphQL = gql`
+    query GetBeepers {
+        getBeeperList {
+            id
+            username
+            photoUrl
+            singlesRate
+            groupRate
+            capacity
+            isStudent
+            first
+            last
+            queueSize
+            masksRequired
+        }
+    }
+`;
 
 function Beepers() {
-
-    const [ beepers, setBeepers ] = useState<User[]>([]);
-
-    async function fetchRides() {
-        const { beepers } = await api.beepers.list();
-        setBeepers(beepers);
-    }
+    const { data, loading, error, stopPolling, startPolling } = useQuery<GetBeepersQuery>(BeepersGraphQL);
 
     useEffect(() => {
-        fetchRides();
+        startPolling(6000);
+        return () => {
+            stopPolling();
+        };
     }, []);
 
     return <>
@@ -31,12 +48,12 @@ function Beepers() {
                     <TH>Masks required?</TH>
                 </THead>
                 <TBody>
-                    {beepers && (beepers).map(beeper => {
+                    {data?.getBeeperList && (data.getBeeperList).map(beeper => {
                         return (
                             <TR key={beeper.id}>
                                 <TDProfile
                                     to={`users/${beeper.id}`}
-                                    photoUrl={beeper.photoUrl}
+                                    photoUrl={beeper?.photoUrl}
                                     title={`${beeper.first} ${beeper.last} ${beeper.isStudent ? '🎓' : ''}`}>
                                 </TDProfile>
                                 <TDText>{beeper.queueSize} riders</TDText>

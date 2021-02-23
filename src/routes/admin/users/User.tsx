@@ -1,35 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
-
-import api from '../../../api';
-import { User } from '../../../types/User';
-
 import UserProfile from '../../../components/UserProfile';
 import { Heading1, Heading3 } from '../../../components/Typography';
+import { gql, useQuery } from '@apollo/client';
+import {GetUserQuery} from '../../../generated/graphql';
+
+const GetUser = gql`
+    query GetUser($id: String!) {
+        getUser(id: $id) {
+            id
+            first
+            last
+            isBeeping
+            isStudent
+            role
+            venmo
+            singlesRate
+            groupRate
+            capacity
+            masksRequired
+            photoUrl
+            queueSize
+            phone
+            username
+        }
+    }
+`;
 
 function UserPage(props) {
     const { userId } = useParams<{ userId: string }>();
-    const [user, setUser] = useState<User>(null);
-
-    async function fetchUser(userId) {
-        const { user } = await api.users.get(userId);
-        setUser(user);
-    }
-
-    useEffect(() => {
-        fetchUser(userId);
-
-        //TODO: open socket to listen for user changes
-
-        return function cleanup() {
-            //TODO: close socket connection
-        }
-    }, [userId]);
+    const { data, loading, error } = useQuery<GetUserQuery>(GetUser, { variables: { id: userId } }); 
 
     return (
         <>
             <Heading3>User</Heading3>
-            {!user ? <Heading1>Loading</Heading1> : <UserProfile user={user} admin />}
+            {error && error}
+            {loading ? <Heading1>Loading</Heading1> : <UserProfile user={data?.getUser} admin />}
         </>
     );
 }

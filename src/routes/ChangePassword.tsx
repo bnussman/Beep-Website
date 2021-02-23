@@ -4,8 +4,16 @@ import { Redirect } from "react-router-dom";
 import { config } from '../utils/config';
 import { Button, TextInput } from '../components/Input';
 import APIResultBanner from '../components/APIResultBanner';
+import {gql, useMutation} from '@apollo/client';
+import {ChangePasswordMutation} from '../generated/graphql';
 
+const ChangePasswordGraphQL = gql`
+    mutation ChangePassword($password: String!) {
+        changePassword (password: $password)
+    }
+`;
 function ChangePassword() {
+    const [changePassword, { data, loading, error }] = useMutation<ChangePasswordMutation>(ChangePasswordGraphQL);
     const { user } = useContext(UserContext);
     const [status, setStatus]: [any, any] = useState();
     const [password, setPassword] = useState("");
@@ -33,18 +41,9 @@ function ChangePassword() {
         }
 
         try {
-            const response = await fetch(config.apiUrl + '/account/password', {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${user.tokens.token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    password: password
-                }),
-            });
-            const data = await response.json();
-            setStatus(data);
+            const response = await changePassword({ variables: {
+                password: password
+            }});
         }
         catch(error) {
             console.error(error);
@@ -53,6 +52,9 @@ function ChangePassword() {
 
     return (
         <div className="lg:container px-4 mx-auto">
+            {data?.changePassword && <p>Success</p>}
+            {error && error}
+            {loading && <p>Loading</p>}
             {status && <APIResultBanner response={status} setResponse={setStatus}/>}
             <form onSubmit={handleEdit}>
                 <TextInput
