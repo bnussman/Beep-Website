@@ -28,7 +28,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }) => {
     // get the authentication token from local storage if it exists
-    const tit = JSON.parse(localStorage.getItem('user'));
+    const tit = localStorage.getItem('user');
 
     if (!tit) return;
 
@@ -49,9 +49,6 @@ const defaultOptions: DefaultOptions = {
     },
     query: {
         fetchPolicy: 'no-cache',
-        errorPolicy: 'none',
-    },
-    mutate: {
         errorPolicy: 'none',
     }
 };

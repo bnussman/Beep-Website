@@ -7,13 +7,21 @@ import socket from "../utils/Socket";
 import { Nav, NavItem } from './Nav';
 import {Indicator} from './Indicator';
 import { UserRole } from '../types/User';
+import {gql, useMutation} from '@apollo/client';
+import {LogoutMutation} from '../generated/graphql';
 
 interface props {
     noErrors?: boolean;
 }
 
-const BeepAppBar = (props: props) => {
+const Logout = gql`
+    mutation Logout {
+        logout (isApp: false)
+    }
+`;
 
+const BeepAppBar = (props: props) => {
+    const [logout, { loading, error }] = useMutation<LogoutMutation>(Logout);
     const { user, setUser } = useContext(UserContext);
     const [toggleNav, setToggle] = useState(false);
     const [resendStatus, setResendStatus] = useState();
@@ -25,15 +33,9 @@ const BeepAppBar = (props: props) => {
         setToggle(false);
     })
 
-    async function logout() {
+    async function handleLogout() {
         try {
-            fetch(config.apiUrl + '/auth/logout', {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${user.tokens.token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            await logout();
 
             localStorage.clear();
             setUser(null);
@@ -96,7 +98,7 @@ const BeepAppBar = (props: props) => {
                         }
 
                         {user
-                            ? <NavItem onClick={logout}>Logout</NavItem>
+                            ? <NavItem onClick={handleLogout}>Logout</NavItem>
                             : <NavItem to="/login">Login</NavItem>
                         }
 
