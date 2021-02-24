@@ -89,7 +89,7 @@ function App(props: Props) {
                     console.log(key, "updated");
                 }
                 localStorage.setItem("user", JSON.stringify(currentState));
-                setUser(currentState);
+                setUser({ ...currentState });
             }
         });
     }, []);

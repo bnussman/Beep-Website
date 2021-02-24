@@ -67,7 +67,6 @@ const BeepAppBar = (props: props) => {
             console.error('Error:', error);
         }
     }
-
     return (
         <>
             <nav className="flex items-center justify-between flex-wrap p-6 mb-2">
