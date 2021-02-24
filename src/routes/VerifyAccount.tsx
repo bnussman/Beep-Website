@@ -1,37 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { config } from '../utils/config';
 import { UserContext } from '../UserContext';
 import { Heading1 } from '../components/Typography';
+import {gql, useMutation} from '@apollo/client';
+
+const VerifyAccountGraphQL = gql`
+    mutation VerifyAccount($id: String!) {
+        verifyAccount(id: $id)
+    }
+`;
 
 function VerifyAccount({ match }) {
     const { user, setUser } = useContext(UserContext);
     const id = match.params.id;
-    const [status, setStatus]: [any, any] = useState();
+    const [verify, {data, loading, error}] = useMutation(VerifyAccountGraphQL);
     
     async function handleVerify(): Promise<void> {
         try {
-            const response = await fetch(config.apiUrl + '/account/verify', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: id })
-            });
-
-            const data = await response.json();
-
-            setStatus(data);
-
-            if (data.status === "success" && user) {
-                let tempUser = user;
-                if (data.data.isStudent) {
-                    tempUser.user.isStudent = data.data.isStudent;
-                }
-                tempUser.user.isEmailVerified = data.data.isEmailVerified;
-                tempUser.user.email = data.data.email;
-                localStorage.setItem("user", JSON.stringify(tempUser));
-                setUser(tempUser);
-            }
+            const response = await verify({ variables: {
+                id: id
+            }});
         }
         catch(error) {
             console.error(error);
@@ -44,9 +31,11 @@ function VerifyAccount({ match }) {
 
     return (
         <div className="lg:container px-4 mx-auto">
-            {status ? 
-                <div role="alert" className={status.status === "success" ? "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" : "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" }>
-                    {status.message}
+            {loading && "Loading"}
+            {data ? 
+                <div role="alert" className={data ? "bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" : "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" }>
+                    {data && "Success"}
+                    {error && error}
                 </div>
                 :
                 <Heading1>Loading</Heading1>

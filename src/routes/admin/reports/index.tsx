@@ -8,31 +8,57 @@ import { Table, THead, TH, TBody, TR, TDText, TDButton, TDProfile } from '../../
 import { Heading3 } from '../../../components/Typography';
 import { Indicator } from '../../../components/Indicator';
 import Pagination from '../../../components/Pagination';
+import {gql, useQuery} from '@apollo/client';
+import {GetReportsQuery} from '../../../generated/graphql';
 
 dayjs.extend(relativeTime);
 
+const ReportsGraphQL = gql`
+    query getReports($show: Int, $offset: Int) {
+        getReports(show: $show, offset: $offset) {
+            items {
+                id
+                timestamp
+                reason
+                notes
+                handled
+                reporter {
+                    id
+                    first
+                    last
+                    photoUrl
+                    username
+                }
+                reported {
+                    id
+                    first
+                    last
+                    photoUrl
+                    username
+                }
+            }
+            count
+        }
+    }
+`;
+
 function Reports() {
 
-    const [reports, setReports] = useState<Report[]>([]);
+    const { loading, error, data, refetch } = useQuery<GetReportsQuery>(ReportsGraphQL, { variables: { offset: 0, show: 25 }});
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [resultCount, setResultCount] = useState<number>(0);
     const pageLimit = 25;
 
     async function fetchReports(page) {
-        const { reports, total } = await api.reports.list(page, pageLimit);
-        setReports(reports);
-        setResultCount(total);
+        refetch({ variables: {
+            offset: page
+        }});
     }
-
-    useEffect(() => {
-        fetchReports(0);
-    }, []);
 
     return <>
         <Heading3>Reports</Heading3>
 
         <Pagination
-            resultCount={resultCount}
+            resultCount={data?.getReports.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -49,7 +75,7 @@ function Reports() {
                     <TH></TH>
                 </THead>
                 <TBody>
-                    {reports && (reports).map(report => {
+                    {data?.getReports && (data.getReports.items).map(report => {
                         return (
                             <TR key={report.id}>
                                 <TDProfile
@@ -81,7 +107,7 @@ function Reports() {
         </Card>
 
         <Pagination
-            resultCount={resultCount}
+            resultCount={data?.getReports.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

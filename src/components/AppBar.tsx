@@ -2,13 +2,12 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from '../UserContext';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import { config } from "../utils/config";
 import socket from "../utils/Socket";
 import { Nav, NavItem } from './Nav';
 import {Indicator} from './Indicator';
 import { UserRole } from '../types/User';
 import {gql, useMutation} from '@apollo/client';
-import {LogoutMutation} from '../generated/graphql';
+import {LogoutMutation, ResendEmailMutation} from '../generated/graphql';
 
 interface props {
     noErrors?: boolean;
@@ -20,12 +19,19 @@ const Logout = gql`
     }
 `;
 
+const Resend = gql`
+    mutation ResendEmail {
+        resendEmailVarification
+    }
+`;
+
 const BeepAppBar = (props: props) => {
     const [logout, { loading, error }] = useMutation<LogoutMutation>(Logout);
+    const [resend, { loading: resendLoading, error: resendError }] = useMutation<ResendEmailMutation>(Resend);
     const { user, setUser } = useContext(UserContext);
     const [toggleNav, setToggle] = useState(false);
-    const [resendStatus, setResendStatus] = useState();
-    const [refreshStatus, setRefreshStatus] = useState();
+    const [resendStatus, setResendStatus] = useState<string>();
+    const [refreshStatus, setRefreshStatus] = useState<string>();
     let history = useHistory();
 
     // Collapse nav on route change
@@ -49,15 +55,13 @@ const BeepAppBar = (props: props) => {
 
     async function resendVarificationEmail() {
         try {
-            const response = await fetch(config.apiUrl + '/account/verify/resend', {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${user.tokens.token}`,
-                    "Content-Type": "application/json"
-                }
-            })
-            const data = await response.json();
-            setResendStatus(data.message);
+            const result = await resend();
+            if (result) {
+                setResendStatus("Successfully resent email");
+            }
+            else {
+                setResendStatus(error.message);
+            }
         }
         catch(error) {
             console.error('Error:', error);

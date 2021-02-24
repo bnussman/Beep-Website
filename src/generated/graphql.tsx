@@ -24,8 +24,8 @@ export type Query = {
   getRiderStatus: QueueEntry;
   getBeeperList: Array<User>;
   getBeeps: BeepsResponse;
-  getBeep: Array<Beep>;
-  getReports: Array<Report>;
+  getBeep: Beep;
+  getReports: ReportsResponse;
   getReport: Array<Report>;
   getDirections: Scalars['String'];
   getUserRating: Array<Rating>;
@@ -61,6 +61,11 @@ export type QueryGetQueueArgs = {
 export type QueryGetBeepsArgs = {
   offset?: Maybe<Scalars['Int']>;
   show?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetBeepArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -173,6 +178,12 @@ export type BeepsResponse = {
   count: Scalars['Int'];
 };
 
+export type ReportsResponse = {
+  __typename?: 'ReportsResponse';
+  items: Array<Report>;
+  count: Scalars['Int'];
+};
+
 export type Report = {
   __typename?: 'Report';
   id: Scalars['String'];
@@ -180,7 +191,7 @@ export type Report = {
   reported: User;
   handledBy?: Maybe<User>;
   reason: Scalars['String'];
-  notes: Scalars['String'];
+  notes?: Maybe<Scalars['String']>;
   timestamp: Scalars['Float'];
   handled: Scalars['Boolean'];
   beep: Beep;
@@ -206,7 +217,7 @@ export type Mutation = {
   editAccount: User;
   changePassword: Scalars['Boolean'];
   updatePushToken: Scalars['Boolean'];
-  verifyAccount: User;
+  verifyAccount: Scalars['Boolean'];
   resendEmailVarification: Scalars['Boolean'];
   deleteAccount: Scalars['Boolean'];
   rateUser: Scalars['Boolean'];
@@ -409,6 +420,14 @@ export type LogoutMutation = (
   & Pick<Mutation, 'logout'>
 );
 
+export type ResendEmailMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ResendEmailMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'resendEmailVarification'>
+);
+
 export type ChangePasswordMutationVariables = Exact<{
   password: Scalars['String'];
 }>;
@@ -449,6 +468,16 @@ export type LoginMutation = (
   ) }
 );
 
+export type VerifyAccountMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type VerifyAccountMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'verifyAccount'>
+);
+
 export type GetBeepersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -458,6 +487,26 @@ export type GetBeepersQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username' | 'photoUrl' | 'singlesRate' | 'groupRate' | 'capacity' | 'isStudent' | 'first' | 'last' | 'queueSize' | 'masksRequired'>
   )> }
+);
+
+export type GetBeepQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetBeepQuery = (
+  { __typename?: 'Query' }
+  & { getBeep: (
+    { __typename?: 'Beep' }
+    & Pick<Beep, 'id' | 'origin' | 'destination' | 'timeEnteredQueue' | 'doneTime' | 'groupSize'>
+    & { beeper: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+    ), rider: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+    ) }
+  ) }
 );
 
 export type GetBeepsQueryVariables = Exact<{
@@ -478,6 +527,31 @@ export type GetBeepsQuery = (
         { __typename?: 'User' }
         & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
       ), rider: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+      ) }
+    )> }
+  ) }
+);
+
+export type GetReportsQueryVariables = Exact<{
+  show?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetReportsQuery = (
+  { __typename?: 'Query' }
+  & { getReports: (
+    { __typename?: 'ReportsResponse' }
+    & Pick<ReportsResponse, 'count'>
+    & { items: Array<(
+      { __typename?: 'Report' }
+      & Pick<Report, 'id' | 'timestamp' | 'reason' | 'notes' | 'handled'>
+      & { reporter: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+      ), reported: (
         { __typename?: 'User' }
         & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
       ) }
@@ -546,6 +620,35 @@ export function useLogoutMutation(baseOptions?: Apollo.MutationHookOptions<Logou
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = Apollo.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = Apollo.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export const ResendEmailDocument = gql`
+    mutation ResendEmail {
+  resendEmailVarification
+}
+    `;
+export type ResendEmailMutationFn = Apollo.MutationFunction<ResendEmailMutation, ResendEmailMutationVariables>;
+
+/**
+ * __useResendEmailMutation__
+ *
+ * To run a mutation, you first call `useResendEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResendEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resendEmailMutation, { data, loading, error }] = useResendEmailMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useResendEmailMutation(baseOptions?: Apollo.MutationHookOptions<ResendEmailMutation, ResendEmailMutationVariables>) {
+        return Apollo.useMutation<ResendEmailMutation, ResendEmailMutationVariables>(ResendEmailDocument, baseOptions);
+      }
+export type ResendEmailMutationHookResult = ReturnType<typeof useResendEmailMutation>;
+export type ResendEmailMutationResult = Apollo.MutationResult<ResendEmailMutation>;
+export type ResendEmailMutationOptions = Apollo.BaseMutationOptions<ResendEmailMutation, ResendEmailMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($password: String!) {
   changePassword(password: $password)
@@ -662,6 +765,36 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const VerifyAccountDocument = gql`
+    mutation VerifyAccount($id: String!) {
+  verifyAccount(id: $id)
+}
+    `;
+export type VerifyAccountMutationFn = Apollo.MutationFunction<VerifyAccountMutation, VerifyAccountMutationVariables>;
+
+/**
+ * __useVerifyAccountMutation__
+ *
+ * To run a mutation, you first call `useVerifyAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyAccountMutation, { data, loading, error }] = useVerifyAccountMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useVerifyAccountMutation(baseOptions?: Apollo.MutationHookOptions<VerifyAccountMutation, VerifyAccountMutationVariables>) {
+        return Apollo.useMutation<VerifyAccountMutation, VerifyAccountMutationVariables>(VerifyAccountDocument, baseOptions);
+      }
+export type VerifyAccountMutationHookResult = ReturnType<typeof useVerifyAccountMutation>;
+export type VerifyAccountMutationResult = Apollo.MutationResult<VerifyAccountMutation>;
+export type VerifyAccountMutationOptions = Apollo.BaseMutationOptions<VerifyAccountMutation, VerifyAccountMutationVariables>;
 export const GetBeepersDocument = gql`
     query GetBeepers {
   getBeeperList {
@@ -704,6 +837,58 @@ export function useGetBeepersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetBeepersQueryHookResult = ReturnType<typeof useGetBeepersQuery>;
 export type GetBeepersLazyQueryHookResult = ReturnType<typeof useGetBeepersLazyQuery>;
 export type GetBeepersQueryResult = Apollo.QueryResult<GetBeepersQuery, GetBeepersQueryVariables>;
+export const GetBeepDocument = gql`
+    query GetBeep($id: String!) {
+  getBeep(id: $id) {
+    id
+    origin
+    destination
+    timeEnteredQueue
+    doneTime
+    groupSize
+    beeper {
+      id
+      first
+      last
+      photoUrl
+      username
+    }
+    rider {
+      id
+      first
+      last
+      photoUrl
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBeepQuery__
+ *
+ * To run a query within a React component, call `useGetBeepQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBeepQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBeepQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBeepQuery(baseOptions: Apollo.QueryHookOptions<GetBeepQuery, GetBeepQueryVariables>) {
+        return Apollo.useQuery<GetBeepQuery, GetBeepQueryVariables>(GetBeepDocument, baseOptions);
+      }
+export function useGetBeepLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBeepQuery, GetBeepQueryVariables>) {
+          return Apollo.useLazyQuery<GetBeepQuery, GetBeepQueryVariables>(GetBeepDocument, baseOptions);
+        }
+export type GetBeepQueryHookResult = ReturnType<typeof useGetBeepQuery>;
+export type GetBeepLazyQueryHookResult = ReturnType<typeof useGetBeepLazyQuery>;
+export type GetBeepQueryResult = Apollo.QueryResult<GetBeepQuery, GetBeepQueryVariables>;
 export const GetBeepsDocument = gql`
     query getBeeps($show: Int, $offset: Int) {
   getBeeps(show: $show, offset: $offset) {
@@ -760,6 +945,61 @@ export function useGetBeepsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetBeepsQueryHookResult = ReturnType<typeof useGetBeepsQuery>;
 export type GetBeepsLazyQueryHookResult = ReturnType<typeof useGetBeepsLazyQuery>;
 export type GetBeepsQueryResult = Apollo.QueryResult<GetBeepsQuery, GetBeepsQueryVariables>;
+export const GetReportsDocument = gql`
+    query getReports($show: Int, $offset: Int) {
+  getReports(show: $show, offset: $offset) {
+    items {
+      id
+      timestamp
+      reason
+      notes
+      handled
+      reporter {
+        id
+        first
+        last
+        photoUrl
+        username
+      }
+      reported {
+        id
+        first
+        last
+        photoUrl
+        username
+      }
+    }
+    count
+  }
+}
+    `;
+
+/**
+ * __useGetReportsQuery__
+ *
+ * To run a query within a React component, call `useGetReportsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReportsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReportsQuery({
+ *   variables: {
+ *      show: // value for 'show'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGetReportsQuery(baseOptions?: Apollo.QueryHookOptions<GetReportsQuery, GetReportsQueryVariables>) {
+        return Apollo.useQuery<GetReportsQuery, GetReportsQueryVariables>(GetReportsDocument, baseOptions);
+      }
+export function useGetReportsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReportsQuery, GetReportsQueryVariables>) {
+          return Apollo.useLazyQuery<GetReportsQuery, GetReportsQueryVariables>(GetReportsDocument, baseOptions);
+        }
+export type GetReportsQueryHookResult = ReturnType<typeof useGetReportsQuery>;
+export type GetReportsLazyQueryHookResult = ReturnType<typeof useGetReportsLazyQuery>;
+export type GetReportsQueryResult = Apollo.QueryResult<GetReportsQuery, GetReportsQueryVariables>;
 export const GetUserDocument = gql`
     query GetUser($id: String!) {
   getUser(id: $id) {

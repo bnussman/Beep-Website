@@ -49,7 +49,7 @@ function Users(props) {
         <Heading3>Users</Heading3>
 
         <Pagination
-            resultCount={data?.getUsers.count}
+            resultCount={data?.getUsers?.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
