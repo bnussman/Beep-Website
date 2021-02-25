@@ -1,116 +1,94 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../UserContext';
 import { Redirect } from "react-router-dom";
 import { config } from '../utils/config';
 import { Button, TextInput } from '../components/Input';
 import { Caption } from '../components/Typography';
 import APIResultBanner from '../components/APIResultBanner';
+import {gql, useMutation} from '@apollo/client';
+import {EditAccountMutation} from '../generated/graphql';
 
 interface Props {
 }
 
-interface status {
-    status: string;
-    message: string;
-}
-
-interface State {
-    first: string;
-    last: string;
-    username: string;
-    phone: string;
-    email: string;
-    venmo: string;
-    status: status | null;
-    photoStatus: status | null;
-    photo: any | null;
-}
-
-export default class EditProfile extends Component<Props, State> {
-    static contextType = UserContext;
-
-    constructor(props: Props, context) {
-        super(props);
-        this.state = {
-            username: context.user.user.username,
-            first: context.user.user.first,
-            last: context.user.user.last,
-            email: context.user.user.email,
-            phone: context.user.user.phone,
-            venmo: context.user.user.venmo,
-            status: null,
-            photoStatus: null,
-            photo: null
-        };
-    }
-
-    UNSAFE_componentWillReceiveProps() {
-        if (this.state.first !== this.context.user.user.first) {
-            this.setState({ first: this.context.user.user.first });
-        }
-        if (this.state.last !== this.context.user.user.last) {
-            this.setState({ last: this.context.user.user.last });
-        }
-        if (this.state.email !== this.context.user.user.email) {
-            this.setState({ email: this.context.user.user.email });
-        }
-        if (this.state.phone !== this.context.user.user.phone) {
-            this.setState({ phone: this.context.user.user.phone });
-        }
-        if (this.state.venmo !== this.context.user.user.venmo) {
-            this.setState({ venmo: this.context.user.user.venmo });
+const EditAccount = gql`
+    mutation EditAccount($first: String, $last: String, $email: String, $phone: String, $venmo: String) {
+        editAccount (
+            input: {
+                first : $first,
+                last: $last,
+                email: $email,
+                phone: $phone,
+                venmo: $venmo
+            }
+        ) {
+        id
+        name
         }
     }
+`;
 
-    async handleEdit(e) {
+function EditProfile(props: Props) {
+
+    const { user, setUser } = useContext(UserContext);
+    const [edit, { data, loading, error }] = useMutation<EditAccountMutation>(EditAccount);
+
+    //const [username] = useState<string | undefined>(user?.user.username);
+    const [first, setFirst] = useState<string | undefined>(user?.user.first);
+    const [last, setLast] = useState<string | undefined>(user?.user.last);
+    const [email, setEmail] = useState<string | undefined>(user?.user.email);
+    const [phone, setPhone] = useState<string | undefined>(user?.user.phone);
+    const [venmo, setVenmo] = useState<string | undefined>(user?.user.venmo);
+    const [photo, setPhoto] = useState(null);
+
+    useEffect(() => {
+        if (first !== user?.user.first) setFirst(user?.user.first);
+        if (last !== user?.user.last) setLast(user?.user.last);
+        if (email !== user?.user.email) setEmail(user?.user.email);
+        if (phone !== user?.user.first) setPhone(user?.user.phone);
+        if (venmo !== user?.user.venmo) setVenmo(user?.user.venmo);
+    }, [user]);
+
+    async function handleEdit(e) {
         e.preventDefault();
 
         try {
-            const response = await fetch(config.apiUrl + '/account', {
-                method: 'PATCH',
-                headers: {
-                    Authorization: `Bearer ${this.context.user.tokens.token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    first: this.state.first,
-                    last: this.state.last,
-                    email: this.state.email,
-                    phone: this.state.phone,
-                    venmo: this.state.venmo
-                }),
-            });
-            const data = await response.json();
+            const result = await edit({ variables: {
+                first: first,
+                last: last,
+                email: email,
+                phone: phone,
+                venmo: venmo
+            }});
 
-            if (data.status === "success") {
+            if (result) {
                 //make a temporary user object
-                const tempUser = this.context.user;
+                const tempUser = user;
                 //update values of user
-                tempUser.user.first = this.state.first;
-                tempUser.user.last = this.state.last;
-                tempUser.user.email = this.state.email;
-                tempUser.user.phone = this.state.phone;
-                tempUser.user.venmo = this.state.venmo;
+                tempUser.user.first = first;
+                tempUser.user.last = last;
+                tempUser.user.email = email;
+                tempUser.user.phone = phone;
+                tempUser.user.venmo = venmo;
+
                 //if email was changed, make sure the context knows the user is no longer verified
-                if (this.state.email !== this.context.user.user.email) {
+                if (email !== user.user.email) {
                     tempUser.user.isEmailVerified = false;
                     tempUser.user.isStudent = false;
                 }
                 //update the context
-                this.context.setUser(tempUser);
+                setUser(tempUser);
                 //update localStorage
                 localStorage.setItem("user", JSON.stringify(tempUser));
             }
-            console.log(this.state.photo);
-            if (this.state.photo) this.uploadPhoto();
-            this.setState({ status: data });
+            //if (this.state.photo) this.uploadPhoto();
         }
         catch (error) {
             console.log(error);
         }
     }
 
-    async uploadPhoto() {
+    async function uploadPhoto() {
         const form = new FormData();
         form.append('photo', this.state.photo);
 
@@ -143,22 +121,21 @@ export default class EditProfile extends Component<Props, State> {
         })
     }
 
-    render() {
-        if (!this.context.user.user) {
+        if (!user) {
             return <Redirect to={{ pathname: "/login" }} />;
         }
 
         return (
             <div className="lg:container px-4 mx-auto">
-                {this.state.status && <APIResultBanner response={this.state.status} setResponse={(val) => this.setState({status: val})}/>}
-                {this.state.photoStatus && <APIResultBanner response={this.state.photoStatus} setResponse={(val) => this.setState({photoStatus: val})}/>}
+                {error && error.message}
+                {loading && <p>Loading</p>}
 
-                <form onSubmit={(e) => this.handleEdit(e)}>
+                <form onSubmit={(e) => handleEdit(e)}>
                     <TextInput
                         className="mb-4"
                         id="username"
                         label="Username"
-                        value={this.context.user.user.username}
+                        value={user.user.username}
                         disabled
                     />
 
@@ -166,32 +143,32 @@ export default class EditProfile extends Component<Props, State> {
                         className="mb-4"
                         id="first"
                         label="First name"
-                        value={this.state.first}
-                        placeholder={this.state.first}
-                        onChange={(value) => this.setState({ first: value.target.value })}
+                        value={first}
+                        placeholder={first}
+                        onChange={(value) => setFirst(value.target.value)}
                     />
 
                     <TextInput
                         className="mb-4"
                         id="last"
                         label="Last name"
-                        value={this.state.last}
-                        placeholder={this.state.last}
-                        onChange={(value) => this.setState({ last: value.target.value })}
+                        value={last}
+                        placeholder={last}
+                        onChange={(value) => setLast(value.target.value)}
                     />
 
                     <TextInput
                         id="email"
                         label="Email"
                         type="email"
-                        value={this.state.email}
-                        placeholder={this.state.email}
-                        onChange={(value) => this.setState({ email: value.target.value })}
+                        value={email}
+                        placeholder={email}
+                        onChange={(value) => setEmail(value.target.value)}
                     />
                     <Caption className="mb-2">
                         {
-                            this.context.user.user.isEmailVerified
-                            ? this.context.user.user.isStudent
+                            user.user.isEmailVerified
+                            ? user.user.isStudent
                                 ? "Your email is verified and you are a student"
                                 : "Your email is verified"
                             : "Your email is not verified"
@@ -203,21 +180,21 @@ export default class EditProfile extends Component<Props, State> {
                         id="phone"
                         label="Phone"
                         type="tel"
-                        value={this.state.phone}
-                        placeholder={this.state.phone}
-                        onChange={(value) => this.setState({ phone: value.target.value })}
+                        value={phone}
+                        placeholder={phone}
+                        onChange={(value) => setPhone(value.target.value)}
                     />
 
                     <TextInput
                         className="mb-4"
                         id="venmo"
                         label="Venmo username"
-                        value={this.state.venmo}
-                        placeholder={this.state.venmo}
-                        onChange={(value) => this.setState({ venmo: value.target.value })}
+                        value={venmo}
+                        placeholder={venmo}
+                        onChange={(value) => setVenmo(value.target.value)}
                     />
                     
-                    {this.state.photo && <img src={URL.createObjectURL(this.state.photo)} className="rounded-full h-24 w-24" alt="new"/>}
+                    {photo && <img src={URL.createObjectURL(photo)} className="rounded-full h-24 w-24" alt="new"/>}
 
                     <div className="flex flex-row mb-4">
                         <svg fill="#00000" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
@@ -228,7 +205,7 @@ export default class EditProfile extends Component<Props, State> {
                         <input
                             className="cursor-pointer absolute block opacity-0 pin-r pin-t"
                             type="file"
-                            onChange={(e) => this.setState({ photo: e.target.files[0] })}
+                            onChange={(e) => setPhoto(e.target.files[0])}
                         />
                     </div>
 
@@ -237,5 +214,6 @@ export default class EditProfile extends Component<Props, State> {
                 </form>
             </div>
         );
-    }
 }
+
+export default EditProfile;

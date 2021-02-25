@@ -520,6 +520,23 @@ export type ChangePasswordMutation = (
   & Pick<Mutation, 'changePassword'>
 );
 
+export type EditAccountMutationVariables = Exact<{
+  first?: Maybe<Scalars['String']>;
+  last?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  venmo?: Maybe<Scalars['String']>;
+}>;
+
+
+export type EditAccountMutation = (
+  { __typename?: 'Mutation' }
+  & { editAccount: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name'>
+  ) }
+);
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -942,6 +959,45 @@ export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptio
 export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
 export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
+export const EditAccountDocument = gql`
+    mutation EditAccount($first: String, $last: String, $email: String, $phone: String, $venmo: String) {
+  editAccount(
+    input: {first: $first, last: $last, email: $email, phone: $phone, venmo: $venmo}
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type EditAccountMutationFn = Apollo.MutationFunction<EditAccountMutation, EditAccountMutationVariables>;
+
+/**
+ * __useEditAccountMutation__
+ *
+ * To run a mutation, you first call `useEditAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editAccountMutation, { data, loading, error }] = useEditAccountMutation({
+ *   variables: {
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      email: // value for 'email'
+ *      phone: // value for 'phone'
+ *      venmo: // value for 'venmo'
+ *   },
+ * });
+ */
+export function useEditAccountMutation(baseOptions?: Apollo.MutationHookOptions<EditAccountMutation, EditAccountMutationVariables>) {
+        return Apollo.useMutation<EditAccountMutation, EditAccountMutationVariables>(EditAccountDocument, baseOptions);
+      }
+export type EditAccountMutationHookResult = ReturnType<typeof useEditAccountMutation>;
+export type EditAccountMutationResult = Apollo.MutationResult<EditAccountMutation>;
+export type EditAccountMutationOptions = Apollo.BaseMutationOptions<EditAccountMutation, EditAccountMutationVariables>;
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
