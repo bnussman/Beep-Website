@@ -5,6 +5,8 @@ import duration from 'dayjs/plugin/duration';
 import { Card } from './Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from './Table';
 import { UserContext } from '../UserContext';
+import {gql, useQuery} from '@apollo/client';
+import {GetBeeperHistoryQuery} from '../generated/graphql';
 
 dayjs.extend(duration);
 
@@ -12,19 +14,29 @@ interface Props {
     userId: string;
 }
 
-function BeepHistoryTable(props: Props) {
-
-    const { user } = useContext(UserContext);
-    const [beeps, setBeeps] = useState([]);
-
-    async function fetchBeepHistory() {
-        const { data } = await api.users.getBeepHistory(props.userId);
-        setBeeps(data);
+const Hisory = gql`
+    query GetBeeperHistory($id: String!) {
+        getBeepHistory(id: $id) {
+            id
+            origin
+            destination
+            timeEnteredQueue
+            doneTime
+            groupSize
+            rider {
+                id
+                photoUrl
+                username
+                first
+                last
+                name
+            }
+        }
     }
+`;
 
-    useEffect(() => {
-        fetchBeepHistory();
-    }, []);
+function BeepHistoryTable(props: Props) {
+    const { data, loading, error } = useQuery<GetBeeperHistoryQuery>(Hisory, { variables: { id: props.userId }});
 
     return <>
         <div className="m-4">
@@ -40,7 +52,7 @@ function BeepHistoryTable(props: Props) {
                     <TH>Duration</TH>
                 </THead>
                 <TBody>
-                    {beeps && (beeps).map(beep => {
+                    {data?.getBeepHistory && (data.getBeepHistory).map(beep => {
                         return (
 
                             <TR key={beep.id}>

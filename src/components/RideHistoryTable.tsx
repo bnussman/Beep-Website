@@ -5,6 +5,8 @@ import duration from 'dayjs/plugin/duration';
 import { Card } from './Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from './Table';
 import { UserContext } from '../UserContext';
+import {gql, useQuery} from '@apollo/client';
+import {GetRideHistoryQuery} from '../generated/graphql';
 
 dayjs.extend(duration);
 
@@ -12,19 +14,29 @@ interface Props {
     userId: string;
 }
 
-function RideHistoryTable(props: Props) {
-
-    const { user } = useContext(UserContext);
-    const [rides, setRides] = useState([]);
-
-    async function fetchRideHistory() {
-        const { data } = await api.users.getRideHistory(props.userId);
-        setRides(data);
+const Hisory = gql`
+    query GetRideHistory($id: String!) {
+        getRideHistory(id: $id) {
+            id
+            origin
+            destination
+            timeEnteredQueue
+            doneTime
+            groupSize
+            beeper {
+                id
+                photoUrl
+                username
+                first
+                last
+                name
+            }
+        }
     }
+`;
 
-    useEffect(() => {
-        fetchRideHistory();
-    }, []);
+function RideHistoryTable(props: Props) {
+    const { data, loading, error } = useQuery<GetRideHistoryQuery>(Hisory, { variables: { id: props.userId }});
 
     return <>
         <div className="m-4">
@@ -40,7 +52,7 @@ function RideHistoryTable(props: Props) {
                     <TH>Duration</TH>
                 </THead>
                 <TBody>
-                    {rides && (rides).map(ride => {
+                    {data?.getRideHistory && (data.getRideHistory).map(ride => {
                         return (
 
                             <TR key={ride.id}>

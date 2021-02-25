@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import api from '../api';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Card } from './Card';
 import { Table, THead, TH, TBody, TR, TDText } from './Table';
-import { UserContext } from '../UserContext';
 import {Heading5} from './Typography';
 import Pagination from './Pagination';
+import {gql, useQuery} from '@apollo/client';
+import {GetLocationsQuery} from '../generated/graphql';
 
 dayjs.extend(duration);
 
@@ -14,25 +14,35 @@ interface Props {
     userId: string;
 }
 
-function LocationTable(props: Props) {
+const Location = gql`
+    query GetLocations($id: String!) {
+        getLocations(id: $id) {
+            items {
+                id
+                longitude
+                latitude
+                speed
+                timestamp
+                accuracy
+                heading
+            }
+            count
+        }
+    }
+`;
 
-    const { user } = useContext(UserContext);
-    const [locations, setLocations] = useState([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [resultCount, setResultCount] = useState<number>(0);
+function LocationTable(props: Props) {
     const pageLimit = 5;
+    const { data, loading, error, refetch } = useQuery<GetLocationsQuery>(Location, { variables: { id: props.userId, show: pageLimit, offset: 0}});
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     async function fetchLocation(page: number) {
-        const { locations, total } = await api.users.getLocation(props.userId, page, pageLimit);
-        setLocations(locations);
-        setResultCount(total);
+        refetch({
+            variables: { id: props.userId, offset: page }
+        });
     }
 
-    useEffect(() => {
-        fetchLocation(0);
-    }, []);
-
-    if (!locations || locations.length <= 0) {
+    if (!data?.getLocations || data.getLocations.items.length <= 0) {
         return null;
     }
 
@@ -45,10 +55,10 @@ function LocationTable(props: Props) {
             title="Map"
             width="100%"
             height="250"
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBgabJrpu7-ELWiUIKJlpBz2mL6GYjwCVI&q=${locations[0].latitude},${locations[0].longitude}`}>
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBgabJrpu7-ELWiUIKJlpBz2mL6GYjwCVI&q=${data.getLocations.items[0].latitude},${data.getLocations.items[0].longitude}`}>
         </iframe>
         <Pagination
-            resultCount={resultCount}
+            resultCount={data.getLocations.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -64,7 +74,7 @@ function LocationTable(props: Props) {
                     <TH>Timestamp</TH>
                 </THead>
                 <TBody>
-                    {locations && (locations).map(location => {
+                    {data.getLocations && (data.getLocations.items).map(location => {
                         return (
 
                             <TR key={location.id}>
@@ -81,7 +91,7 @@ function LocationTable(props: Props) {
             </Table>
         </Card>
         <Pagination
-            resultCount={resultCount}
+            resultCount={data.getLocations.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

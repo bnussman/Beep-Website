@@ -7,6 +7,8 @@ import { Table, THead, TH, TBody, TR, TDProfile, TDText } from './Table';
 import { UserContext } from '../UserContext';
 import {Indicator} from './Indicator';
 import {Heading5} from './Typography';
+import {gql, useQuery} from '@apollo/client';
+import {GetQueueQuery} from '../generated/graphql';
 
 dayjs.extend(duration);
 
@@ -14,15 +16,31 @@ interface Props {
     userId: string;
 }
 
-function QueueTable(props: Props) {
-
-    const { user } = useContext(UserContext);
-    const [queue, setQueue] = useState([]);
-
-    async function fetchQueue() {
-        const { queue } = await api.users.getQueue(props.userId);
-        setQueue(queue);
+const Queue = gql`
+    query GetQueue($id: String!) {
+        getQueue(id: $id) {
+            id
+            origin
+            destination
+            timeEnteredQueue
+            groupSize
+            isAccepted
+            state
+            rider {
+                id
+                photoUrl
+                username
+                first
+                last
+                name
+            }
+        }
     }
+`;
+
+function QueueTable(props: Props) {
+    const { data, loading, error } = useQuery<GetQueueQuery>(Queue, { variables: { id: props.userId }});
+
     function getStatus(value: number): string {
         switch (value) {
             case 0:
@@ -38,11 +56,7 @@ function QueueTable(props: Props) {
         }
     }
 
-    useEffect(() => {
-        fetchQueue();
-    }, []);
-
-    if (!queue || queue.length <= 0) {
+    if (!data || data.getQueue.length <= 0) {
         return null;
     }
 
@@ -63,7 +77,7 @@ function QueueTable(props: Props) {
                     <TH>Status</TH>
                 </THead>
                 <TBody>
-                    {queue && (queue).map(entry => {
+                    {data.getQueue && (data.getQueue).map(entry => {
                         return (
 
                             <TR key={entry.id}>
