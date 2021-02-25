@@ -26,7 +26,7 @@ export type Query = {
   getBeeps: BeepsResponse;
   getBeep: Beep;
   getReports: ReportsResponse;
-  getReport: Array<Report>;
+  getReport: Report;
   getDirections: Scalars['String'];
   getUserRating: Array<Rating>;
   getLocations: LocationsResponse;
@@ -73,6 +73,11 @@ export type QueryGetBeepArgs = {
 export type QueryGetReportsArgs = {
   offset?: Maybe<Scalars['Int']>;
   show?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetReportArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -202,7 +207,7 @@ export type Report = {
   notes?: Maybe<Scalars['String']>;
   timestamp: Scalars['Float'];
   handled: Scalars['Boolean'];
-  beep: Beep;
+  beep?: Maybe<Beep>;
 };
 
 export type LocationsResponse = {
@@ -272,6 +277,11 @@ export type MutationReportUserArgs = {
 
 export type MutationUpdateReportArgs = {
   input: UpdateReportInput;
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteReportArgs = {
   id: Scalars['String'];
 };
 
@@ -629,6 +639,57 @@ export type GetBeepsQuery = (
         { __typename?: 'User' }
         & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
       ) }
+    )> }
+  ) }
+);
+
+export type DeleteReportMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteReportMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteReport'>
+);
+
+export type UpdateReportMutationVariables = Exact<{
+  id: Scalars['String'];
+  notes?: Maybe<Scalars['String']>;
+  handled?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type UpdateReportMutation = (
+  { __typename?: 'Mutation' }
+  & { updateReport: (
+    { __typename?: 'Report' }
+    & Pick<Report, 'id'>
+  ) }
+);
+
+export type GetReportQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetReportQuery = (
+  { __typename?: 'Query' }
+  & { getReport: (
+    { __typename?: 'Report' }
+    & Pick<Report, 'id' | 'reason' | 'timestamp' | 'handled' | 'notes'>
+    & { beep?: Maybe<(
+      { __typename?: 'Beep' }
+      & Pick<Beep, 'id'>
+    )>, reporter: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+    ), reported: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
+    ), handledBy?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
     )> }
   ) }
 );
@@ -1264,6 +1325,131 @@ export function useGetBeepsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetBeepsQueryHookResult = ReturnType<typeof useGetBeepsQuery>;
 export type GetBeepsLazyQueryHookResult = ReturnType<typeof useGetBeepsLazyQuery>;
 export type GetBeepsQueryResult = Apollo.QueryResult<GetBeepsQuery, GetBeepsQueryVariables>;
+export const DeleteReportDocument = gql`
+    mutation DeleteReport($id: String!) {
+  deleteReport(id: $id)
+}
+    `;
+export type DeleteReportMutationFn = Apollo.MutationFunction<DeleteReportMutation, DeleteReportMutationVariables>;
+
+/**
+ * __useDeleteReportMutation__
+ *
+ * To run a mutation, you first call `useDeleteReportMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteReportMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteReportMutation, { data, loading, error }] = useDeleteReportMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteReportMutation(baseOptions?: Apollo.MutationHookOptions<DeleteReportMutation, DeleteReportMutationVariables>) {
+        return Apollo.useMutation<DeleteReportMutation, DeleteReportMutationVariables>(DeleteReportDocument, baseOptions);
+      }
+export type DeleteReportMutationHookResult = ReturnType<typeof useDeleteReportMutation>;
+export type DeleteReportMutationResult = Apollo.MutationResult<DeleteReportMutation>;
+export type DeleteReportMutationOptions = Apollo.BaseMutationOptions<DeleteReportMutation, DeleteReportMutationVariables>;
+export const UpdateReportDocument = gql`
+    mutation UpdateReport($id: String!, $notes: String, $handled: Boolean) {
+  updateReport(id: $id, input: {notes: $notes, handled: $handled}) {
+    id
+  }
+}
+    `;
+export type UpdateReportMutationFn = Apollo.MutationFunction<UpdateReportMutation, UpdateReportMutationVariables>;
+
+/**
+ * __useUpdateReportMutation__
+ *
+ * To run a mutation, you first call `useUpdateReportMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateReportMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateReportMutation, { data, loading, error }] = useUpdateReportMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      notes: // value for 'notes'
+ *      handled: // value for 'handled'
+ *   },
+ * });
+ */
+export function useUpdateReportMutation(baseOptions?: Apollo.MutationHookOptions<UpdateReportMutation, UpdateReportMutationVariables>) {
+        return Apollo.useMutation<UpdateReportMutation, UpdateReportMutationVariables>(UpdateReportDocument, baseOptions);
+      }
+export type UpdateReportMutationHookResult = ReturnType<typeof useUpdateReportMutation>;
+export type UpdateReportMutationResult = Apollo.MutationResult<UpdateReportMutation>;
+export type UpdateReportMutationOptions = Apollo.BaseMutationOptions<UpdateReportMutation, UpdateReportMutationVariables>;
+export const GetReportDocument = gql`
+    query GetReport($id: String!) {
+  getReport(id: $id) {
+    id
+    reason
+    timestamp
+    handled
+    notes
+    beep {
+      id
+    }
+    reporter {
+      id
+      first
+      last
+      photoUrl
+      username
+    }
+    reported {
+      id
+      first
+      last
+      photoUrl
+      username
+    }
+    handledBy {
+      id
+      first
+      last
+      photoUrl
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetReportQuery__
+ *
+ * To run a query within a React component, call `useGetReportQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReportQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReportQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetReportQuery(baseOptions: Apollo.QueryHookOptions<GetReportQuery, GetReportQueryVariables>) {
+        return Apollo.useQuery<GetReportQuery, GetReportQueryVariables>(GetReportDocument, baseOptions);
+      }
+export function useGetReportLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReportQuery, GetReportQueryVariables>) {
+          return Apollo.useLazyQuery<GetReportQuery, GetReportQueryVariables>(GetReportDocument, baseOptions);
+        }
+export type GetReportQueryHookResult = ReturnType<typeof useGetReportQuery>;
+export type GetReportLazyQueryHookResult = ReturnType<typeof useGetReportLazyQuery>;
+export type GetReportQueryResult = Apollo.QueryResult<GetReportQuery, GetReportQueryVariables>;
 export const GetReportsDocument = gql`
     query getReports($show: Int, $offset: Int) {
   getReports(show: $show, offset: $offset) {

@@ -11,58 +11,103 @@ import { Button } from '../../../components/Input';
 import { Formik, Form, Field } from 'formik';
 import APIResultBanner from '../../../components/APIResultBanner';
 import {Card} from '../../../components/Card';
+import {gql, useMutation, useQuery} from '@apollo/client';
+import {GetReportQuery, UpdateReportMutation} from '../../../generated/graphql';
 
 dayjs.extend(relativeTime);
 
+const DeleteReport = gql`
+    mutation DeleteReport($id: String!) {
+        deleteReport(id: $id)
+    }
+`;
+
+const UpdateReport = gql`
+    mutation UpdateReport($id: String!, $notes: String, $handled: Boolean) {
+        updateReport(id: $id, input: {
+            notes: $notes,
+            handled: $handled
+        }) {
+            id
+        }
+    }
+`;
+
+const GetReport = gql`
+    query GetReport($id: String!) {
+        getReport(id: $id) {
+            id
+            reason
+            timestamp
+            handled
+            notes
+            beep {
+                id
+            }
+            reporter {
+                id
+                first
+                last
+                photoUrl
+                username
+            }
+            reported {
+                id
+                first
+                last
+                photoUrl
+                username
+            }
+            handledBy {
+                id
+                first
+                last
+                photoUrl
+                username
+            }
+        }
+    }
+`;
+
 function ReportPage(props) {
-
     const { reportId } = useParams<{reportId: string}>();
-    const [ report, setReport ] = useState<Report>(null);
+    const { data, loading, error, refetch } = useQuery<GetReportQuery>(GetReport, { variables: { id: reportId }});
+    const [update, { data: updateData, loading: updateLoading, error: updateError }] = useMutation<UpdateReportMutation>(UpdateReport);
+    const [deleteReport, { data: deleteData, loading: deleteLoading, error: deleteError }] = useMutation(DeleteReport);
     const history = useHistory();
-    const [response, setResponse] = useState<any>(null);
 
-    async function deleteReport(id: string) {
-        await api.reports.delete(id);
+    async function doDeleteReport() {
+        await deleteReport({ variables: { id: reportId } });
         history.goBack();
     }
 
-    async function fetchReport() {
-        const { report } = await api.reports.get(reportId);
-        setReport(report);
-    }
-
     async function updateReport(values) {
-        const data = await api.reports.updateReport(reportId, values);
-        setResponse(data);
-        if (data.status === "success") {
-            fetchReport();
+        const result = await update({ variables: { id: reportId, ...values }});
+        if (data) {
+            refetch();
         }
     }
-
-    useEffect(() => {
-        fetchReport();
-    }, []);
-
 
     return (
         <>
         <Heading3>Report</Heading3>
-        {response && <APIResultBanner response={response} setResponse={setResponse}/>}
+        {loading && <p>Loading</p>}
+        {error && error.message}
 
-        {report ?
+        {data?.getReport ?
             <>
                 <div className="flex flex-wrap">
                     <Card className="mb-4 flex-grow sm:mr-2">
                         <div className="m-4">
                             <Heading5>Reporter</Heading5>
                             <div className="flex flex-row items-center">
-                                {report.reporter.photoUrl && (
+                                {data.getReport.reporter.photoUrl && (
                                     <div className="flex mr-3">
-                                        <img className="h-10 w-10 shadow-lg rounded-full" src={report.reporter.photoUrl} alt={`${report.reporter.first} ${report.reporter.last}`}></img>
+                                        <img className="h-10 w-10 shadow-lg rounded-full" src={data.getReport.reporter.photoUrl} alt={`${data.getReport.reporter.first} ${data.getReport.reporter.last}`}></img>
                                     </div>
                                 )}
-                                <NavLink to={`/admin/users/${report.reporter.id}`}>
-                                    {report.reporter.first} {report.reporter.last}
+                                <NavLink to={`/admin/users/${data.getReport.reporter.id}`}>
+                                    {data.getReport.reporter.first} {data.getReport.reporter.last}
                                 </NavLink>
                             </div>
                         </div>
@@ -71,13 +116,13 @@ function ReportPage(props) {
                         <div className="m-4">
                             <Heading5>Reported</Heading5>
                             <div className="flex flex-row items-center">
-                                {report.reported.photoUrl && (
+                                {data.getReport.reported.photoUrl && (
                                     <div className="flex mr-3">
-                                        <img className="h-10 w-10 shadow-lg rounded-full" src={report.reported.photoUrl} alt={`${report.reported.first} ${report.reported.last}`}></img>
+                                        <img className="h-10 w-10 shadow-lg rounded-full" src={data.getReport.reported.photoUrl} alt={`${data.getReport.reported.first} ${data.getReport.reported.last}`}></img>
                                     </div>
                                 )}
-                                <NavLink to={`/admin/users/${report.reported.id}`}>
-                                    {report.reported.first} {report.reported.last}
+                                <NavLink to={`/admin/users/${data.getReport.reported.id}`}>
+                                    {data.getReport.reported.first} {data.getReport.reported.last}
                                 </NavLink>
                             </div>
                         </div>
@@ -86,7 +131,7 @@ function ReportPage(props) {
                 <Card className="mb-4">
                     <div className="m-4">
                         <Heading5>Reason</Heading5>
-                        <Body1>{report.reason}</Body1>  
+                        <Body1>{data.getReport.reason}</Body1>  
                     </div>
                 </Card>
             {/*
@@ -96,22 +141,22 @@ function ReportPage(props) {
                 <Card className="mb-4">
                     <div className="m-4">
                         <Heading5>Created</Heading5>
-                        <Body1>{dayjs().to(report.timestamp)}</Body1>  
+                        <Body1>{dayjs().to(data.getReport.timestamp)}</Body1>  
                     </div>
                 </Card>
-                {report.beep &&
+                {data.getReport.beep &&
                 <Card className="mb-4">
                     <div className="m-4">
                         <Heading5>Associated Beep Event</Heading5>
-                        <NavLink to={`/admin/beeps/${report.beep.id}`}>
-                            {report.beep.id}  
+                        <NavLink to={`/admin/beeps/${data.getReport.beep.id}`}>
+                            {data.getReport.beep.id}  
                         </NavLink>
                     </div>
                 </Card>
                 }
                 <Card className="mb-4">
                     <div className="m-4">
-                        {report.handled ?
+                        {data.getReport.handled ?
                             <div>
                                 <div>
                                     <Heading5>Status</Heading5>
@@ -120,13 +165,13 @@ function ReportPage(props) {
                                     <Indicator color='green' className="mr-2"/>
                                     <span className="mr-2">Handled by</span>
                                     <div className="flex flex-row items-center">
-                                        {report.handledBy.photoUrl && (
+                                        {data.getReport.handledBy.photoUrl && (
                                             <div className="flex mr-3">
-                                                <img className="h-10 w-10 shadow-lg rounded-full" src={report.handledBy.photoUrl} alt={`${report.handledBy.first} ${report.handledBy.last}`}></img>
+                                                <img className="h-10 w-10 shadow-lg rounded-full" src={data.getReport.handledBy.photoUrl} alt={`${data.getReport.handledBy.first} ${data.getReport.handledBy.last}`}></img>
                                             </div>
                                         )}
-                                        <NavLink to={`/admin/users/${report.handledBy.id}`}>
-                                            {report.handledBy.first} {report.handledBy.last}
+                                        <NavLink to={`/admin/users/${data.getReport.handledBy.id}`}>
+                                            {data.getReport.handledBy.first} {data.getReport.handledBy.last}
                                         </NavLink>
                                     </div>
                                 </div>
@@ -146,8 +191,8 @@ function ReportPage(props) {
             <Heading3>Update Report Info</Heading3>
             <Formik
                 initialValues={{
-                    notes: report.notes,
-                    handled: report.handled
+                    notes: data.getReport.notes,
+                    handled: data.getReport.handled
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
                     await updateReport(values);
@@ -170,7 +215,7 @@ function ReportPage(props) {
                             disabled={isSubmitting}>
                             Update Report
                         </button>
-                        <Button onClick={() => deleteReport(reportId)} className="text-white bg-red-500 hover:bg-red-700">Delete Report</Button>
+                        <Button onClick={() => doDeleteReport()} className="text-white bg-red-500 hover:bg-red-700">Delete Report</Button>
                     </Form>
                 )}
             </Formik>
