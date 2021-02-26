@@ -57,7 +57,7 @@ function Beeps() {
         <Heading3>Beeps</Heading3>
 
         <Pagination
-            resultCount={data.getBeeps.count}
+            resultCount={data?.getBeeps.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -77,7 +77,7 @@ function Beeps() {
                     <TH></TH>
                 </THead>
                 <TBody>
-                    {data.getBeeps && (data.getBeeps.items).map(beepEntry => {
+                    {data?.getBeeps && (data.getBeeps.items).map(beepEntry => {
                         return (
 
                             <TR key={beepEntry.id}>
@@ -107,7 +107,7 @@ function Beeps() {
             </Table>
         </Card>
         <Pagination
-            resultCount={data.getBeeps.count}
+            resultCount={data?.getBeeps.count}
             limit={pageLimit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

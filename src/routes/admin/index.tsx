@@ -15,6 +15,7 @@ import Beep from './beeps/Beep';
 import { Nav, NavItem } from '../../components/Nav';
 import { Heading5 } from '../../components/Typography';
 import {Card} from '../../components/Card';
+import Locations from './locations';
 
 function Admin() {
 
@@ -29,6 +30,7 @@ function Admin() {
                     <NavItem to={`${match.url}/beepers`}>Beepers</NavItem>
                     <NavItem to={`${match.url}/beeps`}>Beeps</NavItem>
                     <NavItem to={`${match.url}/reports`}>Reports</NavItem>
+                    <NavItem to={`${match.url}/locations`}>Locations</NavItem>
                 </Card>
             </Nav>
 
@@ -65,6 +67,10 @@ function Admin() {
 
                     <Route exact path={`${match.path}/reports/:reportId`}>
                         <Report />
+                    </Route>
+
+                    <Route exact path={`${match.path}/locations`}>
+                        <Locations />
                     </Route>
                 </Switch>
             </div>

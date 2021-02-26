@@ -23,7 +23,7 @@ import { setContext } from '@apollo/client/link/context';
 import { APIResponse } from './types/types';
 
 const httpLink = createHttpLink({
-    uri: 'http://192.168.1.57:3001',
+    uri: 'http://localhost:3001',
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -43,11 +43,11 @@ const authLink = setContext(async (_, { headers }) => {
 
 const defaultOptions: DefaultOptions = {
     watchQuery: {
-        fetchPolicy: 'no-cache',
+        //fetchPolicy: 'no-cache',
         errorPolicy: 'ignore',
     },
     query: {
-        fetchPolicy: 'no-cache',
+        //fetchPolicy: 'no-cache',
         errorPolicy: 'none',
     }
 };

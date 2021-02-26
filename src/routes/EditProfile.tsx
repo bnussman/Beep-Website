@@ -5,7 +5,7 @@ import { config } from '../utils/config';
 import { Button, TextInput } from '../components/Input';
 import { Caption } from '../components/Typography';
 import {gql, useMutation} from '@apollo/client';
-import {EditAccountMutation} from '../generated/graphql';
+import {EditAccountMutation, UploadPhotoMutation} from '../generated/graphql';
 
 const EditAccount = gql`
     mutation EditAccount($first: String, $last: String, $email: String, $phone: String, $venmo: String) {
@@ -24,10 +24,24 @@ const EditAccount = gql`
     }
 `;
 
+const PhotoUpload = gql`
+    mutation UploadPhoto($photo: Upload!) {
+        uploadPhoto(photo: $photo)
+    }
+`;
+
 function EditProfile() {
 
     const { user, setUser } = useContext(UserContext);
     const [edit, { data, loading, error }] = useMutation<EditAccountMutation>(EditAccount);
+    const [upload, { data: uploadData, loading: uploadLoading, error: uploadError }] = useMutation<UploadPhotoMutation>(PhotoUpload);
+
+    const onChange = ({
+        target: {
+            validity,
+            files: [file]
+        }
+    }: any) => validity.valid && upload({ variables: { file } });
 
     const [first, setFirst] = useState<string | undefined>(user?.user.first);
     const [last, setLast] = useState<string | undefined>(user?.user.last);
@@ -76,7 +90,7 @@ function EditProfile() {
                 //update localStorage
                 localStorage.setItem("user", JSON.stringify(tempUser));
             }
-            //if (this.state.photo) this.uploadPhoto();
+            if (photo) uploadPhoto();
         }
         catch (error) {
             console.log(error);
@@ -84,36 +98,11 @@ function EditProfile() {
     }
 
     async function uploadPhoto() {
-        const form = new FormData();
-        form.append('photo', this.state.photo);
-
-        
-        fetch(config.apiUrl + "/files/upload", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + this.context.user.tokens.token
-            },
-            body: form
-        })
-        .then(response => {
-            response.json().then(data => {
-                if (data.status === "success") {
-
-                    const tempUser = this.context.user;
-
-                    //update the tempUser with the new data
-                    tempUser['user']['photoUrl'] = data.url;
-
-                    //update the context
-                    this.context.setUser(tempUser);
-
-                    //put the tempUser back into storage
-                    localStorage.setItem("user", JSON.stringify(tempUser));
-
-                    this.setState({ photoStatus: data });
-                }
-            });
-        })
+        const result = await upload({ variables: { photo }});
+        console.log(photo);
+        if (result) {
+            console.log("GOOD!");
+        }
     }
 
         if (!user) {
@@ -197,11 +186,7 @@ function EditProfile() {
                             <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
                         </svg>
                         <span className="ml-2">New Profile Photo</span>
-                        <input
-                            className="cursor-pointer absolute block opacity-0 pin-r pin-t"
-                            type="file"
-                            onChange={(e) => setPhoto(e.target.files[0])}
-                        />
+                        <input type="file" required onChange={onChange} />
                     </div>
 
 
