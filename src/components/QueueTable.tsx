@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Card } from './Card';
@@ -37,7 +37,14 @@ const Queue = gql`
 `;
 
 function QueueTable(props: Props) {
-    const { data, loading, error } = useQuery<GetQueueQuery>(Queue, { variables: { id: props.userId }});
+    const { data, loading, error, startPolling, stopPolling } = useQuery<GetQueueQuery>(Queue, { variables: { id: props.userId }});
+
+    useEffect(() => {
+        startPolling(4000); 
+        return () => {
+            stopPolling();
+        };
+    }, []);
 
     function getStatus(value: number): string {
         switch (value) {
