@@ -1,3 +1,5 @@
+import './assets/style.css'
+import './assets/tailwind.css';
 import React, { useEffect, useState } from 'react';
 import Home from './routes/Home';
 import Login from './routes/Login';
@@ -15,29 +17,27 @@ import Faq from './routes/FAQ';
 import BeepAppBar from './components/AppBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
-import './assets/style.css'
-import './assets/tailwind.css';
 import socket, { didUserChange } from "./utils/Socket";
 import About from './routes/About';
 import { ApolloClient, ApolloProvider, createHttpLink, DefaultOptions, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { APIResponse } from './types/types';
 
 const httpLink = createHttpLink({
     uri: 'http://192.168.1.57:3001',
 });
 
 const authLink = setContext(async (_, { headers }) => {
-    // get the authentication token from local storage if it exists
-    const tit = localStorage.getItem('user');
+    const stored = localStorage.getItem('user');
 
-    if (!tit) return;
+    if (!stored) return;
 
-    const auth = JSON.parse(tit);
-    // return the headers to the context so httpLink can read them
+    const auth = JSON.parse(stored);
+
     return {
         headers: {
             ...headers,
-            Authorization: auth.tokens.id ? `Bearer ${auth.tokens.id}` : "",
+            Authorization: auth.tokens.id ? `Bearer ${auth.tokens.id}` : undefined
         }
     }
 });
@@ -59,27 +59,15 @@ export const client = new ApolloClient({
     defaultOptions: defaultOptions
 });
 
-interface Props {
-
-}
-
-interface User {
-    user: any;
-    tokens: {
-        id: string;
-        tokenid: string;
-    }; 
-}
-
-function App(props: Props) {
-    const [user, setUser] = useState<User | null>(JSON.parse(localStorage.getItem('user')) || null);
+function App() {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
     
     useEffect(() => {
         if (user) {
             socket.emit("getUser", user.tokens.id);
         }
 
-        socket.on('updateUser', (data) => {
+        socket.on('updateUser', (data: APIResponse) => {
             if (data.status === "error") return console.log(data.message);
             
             if (didUserChange(user, data)) {
@@ -116,109 +104,7 @@ function App(props: Props) {
                     <Route path="/" component={Home} />
                 </Switch>
             </Router>
-            {/*
-                <footer className="bg-white pt-10 sm:mt-10 pt-10 flex items-center bottom-0">
-                <div className="w-11/12 m-4 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 mb-4">
-                <div className="max-w-6xl m-auto text-gray-800 flex flex-wrap justify-left">
-                <div className="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-                <div className="text-xs uppercase text-gray-800 font-medium mb-6">
-                Getting Started
-                </div>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Installation
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Release Notes
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Upgrade Guide
-                </a>
-                </div>
-
-                <div className="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-                <div className="text-xs uppercase text-gray-800 font-medium mb-6">
-                Core Concepts
-                </div>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Installation
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Release Notes
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Upgrade Guide
-                </a>
-                </div>
-
-                <div className="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-                <div className="text-xs uppercase text-gray-800 font-medium mb-6">
-                Customization
-                </div>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Utility-First
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Responsive Design
-                </a>
-
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Hover, Focus, & Other States
-                </a>
-                </div>
-
-                <div className="p-5 w-1/2 sm:w-4/12 md:w-3/12">
-                <div className="text-xs uppercase text-gray-800 font-medium mb-6">
-                Community
-                </div>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                GitHub
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Discord
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                Twitter
-                </a>
-                <a href="#" className="my-3 block text-gray-600 hover:text-gray-100 text-sm font-medium duration-700">
-                YouTube
-                </a>
-                </div>
-                </div>
-                <div className="pt-2">
-                <div className="flex pb-5 px-3 m-auto pt-5 
-                border-t border-gray-500 text-gray-800 text-sm 
-                flex-col md:flex-row max-w-6xl">
-
-                    <div className="mt-2">
-                    © Ride Beep App - Ian & Banks LLC - All Rights Reserved.
-                    </div>
-
-                    <div className="md:flex-auto md:flex-row-reverse mt-2 flex-row flex">
-                    <a href="#" className="w-6 mx-1">
-                    <i className="uil uil-facebook-f"></i>
-                    </a>
-
-                    <a href="#" className="w-6 mx-1">
-                    <i className="uil uil-twitter-alt"></i>
-                    </a>
-
-                    <a href="#" className="w-6 mx-1">
-                    <i className="uil uil-youtube"></i>
-                    </a>
-
-                    <a href="#" className="w-6 mx-1">
-                    <i className="uil uil-linkedin"></i>
-                    </a>
-
-                    <a href="#" className="w-6 mx-1">
-                    <i className="uil uil-instagram"></i>
-                    </a>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </footer>
-                    */}
+            {/*<Footer/>*/}
             </UserContext.Provider>
         </ApolloProvider>
     );

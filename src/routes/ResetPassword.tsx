@@ -1,41 +1,28 @@
+import { gql, useMutation } from '@apollo/client';
 import React, { FormEvent, useState } from 'react';
-import APIResultBanner from '../components/APIResultBanner';
-import { config } from '../utils/config';
+import {ResetPasswordMutation} from '../generated/graphql';
 
-interface Status {
-    status: string;
-    message: string;
-}
+const Reset = gql`
+    mutation ResetPassword($id: String!, $password: String!) {
+        resetPassword(id: $id, password: $password)
+    }
+`;
 
 function ResetPassword({ match }) {
     const id = match.params.id;
-    const [password, setPassword] = useState("");
-    const [status, setStatus]: [Status, any] = useState();
+    const [password, setPassword] = useState<string>("");
+    const [reset, {data, loading, error}] = useMutation<ResetPasswordMutation>(Reset);
     
     async function handleResetPassword(e: FormEvent): Promise<void> {
         e.preventDefault();
-        try {
-            const response = await fetch(config.apiUrl + '/auth/password/reset', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: id,
-                    password: password
-                })
-            });
-            const data = await response.json();
-            setStatus(data);
-        }
-        catch(error) {
-            console.error(error);
-        }
+        await reset({ variables: { id: id, password: password }});
     }
 
     return (
         <div className="lg:container px-4 mx-auto">
-            {status && <APIResultBanner response={status} setResponse={setStatus}/>}
+            {loading && <p>Loading</p>}
+            {error && error.message}
+            {data && <p>Success</p>}
             <form onSubmit={handleResetPassword}>
                 <label className="text-gray-500 font-bold" htmlFor="password">
                     New Password
@@ -47,12 +34,12 @@ function ResetPassword({ match }) {
                     autoComplete="password"
                     placeholder="Password"
                     onChange={(value) => setPassword(value.target.value)}
-                    disabled={status?.status === "success"}
+                    disabled={data?.resetPassword}
                 />
                 <button 
                     type="submit"
-                    disabled={status?.status === "success"}
-                    className={ status?.status === "success" ? "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" }
+                    disabled={data?.resetPassword}
+                    className={data?.resetPassword ? "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" : "mb-4 shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" }
                 >
                     Reset Password
                 </button>

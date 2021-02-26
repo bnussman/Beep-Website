@@ -1,13 +1,20 @@
 import React from 'react'
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useHistory, useParams } from "react-router-dom";
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Body1, Heading1, Heading3, Heading5 } from '../../../components/Typography';
 import {Card} from '../../../components/Card';
-import {gql, useQuery} from '@apollo/client';
-import {GetBeepQuery} from '../../../generated/graphql';
+import {gql, useMutation, useQuery} from '@apollo/client';
+import {DeleteBeepMutation, GetBeepQuery} from '../../../generated/graphql';
+import {Button} from '../../../components/Input';
 
 dayjs.extend(duration);
+
+const DeleteBeep = gql`
+    mutation DeleteBeep($id: String!) {
+        deleteBeep(id: $id)
+    }
+`;
 
 const GetBeep = gql`
     query GetBeep($id: String!) {
@@ -39,12 +46,19 @@ const GetBeep = gql`
 function BeepPage() {
     const { beepId } = useParams<{ beepId: string }>();
     const { data, loading, error } = useQuery<GetBeepQuery>(GetBeep, { variables: { id: beepId}});
+    const [deleteBeep, { data: deleteData, loading: deleteLoading, error: deleteError }] = useMutation<DeleteBeepMutation>(DeleteBeep);
+    const history = useHistory();
+
+    async function doDeleteBeep() {
+        await deleteBeep({ variables: { id: beepId }});
+        history.goBack();
+    }
 
     return (
         <>
             <Heading3>Beep</Heading3>
             {data?.getBeep ?
-                <div>
+                <><div>
                     <iframe
                         className="mb-4"
                         title="Map"
@@ -90,37 +104,38 @@ function BeepPage() {
                         <Card className="mb-4 flex-grow sm:mr-2">
                             <div className="p-4">
                                 <Heading5>Origin</Heading5>
-                                <Body1>{data.getBeep.origin}</Body1>  
+                                <Body1>{data.getBeep.origin}</Body1>
                             </div>
                         </Card>
                         <Card className="mb-4 flex-grow">
                             <div className="p-4">
                                 <Heading5>Destination</Heading5>
-                                <Body1>{data.getBeep.destination}</Body1>  
+                                <Body1>{data.getBeep.destination}</Body1>
                             </div>
                         </Card>
                     </div>
                     <Card className="mb-4">
                         <div className="p-4">
-                        <Heading5>Group Size</Heading5>
-                        <Body1>{data.getBeep.groupSize}</Body1>  
+                            <Heading5>Group Size</Heading5>
+                            <Body1>{data.getBeep.groupSize}</Body1>
                         </div>
                     </Card>
                     <div className="flex flex-wrap">
                         <Card className="mb-4 flex-grow sm:mr-2">
                             <div className="p-4">
                                 <Heading5>Beep Started</Heading5>
-                                <Body1>{new Date(data.getBeep.timeEnteredQueue).toLocaleString()} - {dayjs().to(data.getBeep.timeEnteredQueue)}</Body1>  
+                                <Body1>{new Date(data.getBeep.timeEnteredQueue).toLocaleString()} - {dayjs().to(data.getBeep.timeEnteredQueue)}</Body1>
                             </div>
                         </Card>
                         <Card className="mb-4 flex-grow">
                             <div className="p-4">
                                 <Heading5>Beep Ended</Heading5>
-                                <Body1>{new Date(data.getBeep.doneTime).toLocaleString()} - {dayjs().to(data.getBeep.doneTime)}</Body1>  
+                                <Body1>{new Date(data.getBeep.doneTime).toLocaleString()} - {dayjs().to(data.getBeep.doneTime)}</Body1>
                             </div>
                         </Card>
                     </div>
                 </div>
+                <Button onClick={() => doDeleteBeep()} className="text-white bg-red-500 hover:bg-red-700">Delete Beep</Button></>
             :
             <Heading1>Loading</Heading1>
             }

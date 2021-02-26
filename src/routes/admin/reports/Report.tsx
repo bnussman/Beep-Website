@@ -12,7 +12,7 @@ import { Formik, Form, Field } from 'formik';
 import APIResultBanner from '../../../components/APIResultBanner';
 import {Card} from '../../../components/Card';
 import {gql, useMutation, useQuery} from '@apollo/client';
-import {GetReportQuery, UpdateReportMutation} from '../../../generated/graphql';
+import {DeleteReportMutation, GetReportQuery, UpdateReportMutation} from '../../../generated/graphql';
 
 dayjs.extend(relativeTime);
 
@@ -73,7 +73,7 @@ function ReportPage(props) {
     const { reportId } = useParams<{reportId: string}>();
     const { data, loading, error, refetch } = useQuery<GetReportQuery>(GetReport, { variables: { id: reportId }});
     const [update, { data: updateData, loading: updateLoading, error: updateError }] = useMutation<UpdateReportMutation>(UpdateReport);
-    const [deleteReport, { data: deleteData, loading: deleteLoading, error: deleteError }] = useMutation(DeleteReport);
+    const [deleteReport, { data: deleteData, loading: deleteLoading, error: deleteError }] = useMutation<DeleteReportMutation>(DeleteReport);
     const history = useHistory();
 
     async function doDeleteReport() {

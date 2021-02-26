@@ -224,6 +224,7 @@ export type Mutation = {
   riderLeaveQueue: Scalars['Boolean'];
   setBeeperStatus: Scalars['Boolean'];
   setBeeperQueue: Scalars['Boolean'];
+  deleteBeep: Scalars['Boolean'];
   reportUser: Scalars['Boolean'];
   updateReport: Report;
   deleteReport: Scalars['Boolean'];
@@ -267,6 +268,11 @@ export type MutationSetBeeperStatusArgs = {
 
 export type MutationSetBeeperQueueArgs = {
   input: UpdateQueueEntryInput;
+};
+
+
+export type MutationDeleteBeepArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -577,6 +583,17 @@ export type LoginMutation = (
   ) }
 );
 
+export type ResetPasswordMutationVariables = Exact<{
+  id: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type ResetPasswordMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'resetPassword'>
+);
+
 export type VerifyAccountMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -596,6 +613,16 @@ export type GetBeepersQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'username' | 'photoUrl' | 'singlesRate' | 'groupRate' | 'capacity' | 'isStudent' | 'first' | 'last' | 'queueSize' | 'masksRequired'>
   )> }
+);
+
+export type DeleteBeepMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteBeepMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteBeep'>
 );
 
 export type GetBeepQueryVariables = Exact<{
@@ -1145,6 +1172,37 @@ export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginM
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const ResetPasswordDocument = gql`
+    mutation ResetPassword($id: String!, $password: String!) {
+  resetPassword(id: $id, password: $password)
+}
+    `;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
+
+/**
+ * __useResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
+        return Apollo.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, baseOptions);
+      }
+export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
+export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const VerifyAccountDocument = gql`
     mutation VerifyAccount($id: String!) {
   verifyAccount(id: $id)
@@ -1217,6 +1275,36 @@ export function useGetBeepersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetBeepersQueryHookResult = ReturnType<typeof useGetBeepersQuery>;
 export type GetBeepersLazyQueryHookResult = ReturnType<typeof useGetBeepersLazyQuery>;
 export type GetBeepersQueryResult = Apollo.QueryResult<GetBeepersQuery, GetBeepersQueryVariables>;
+export const DeleteBeepDocument = gql`
+    mutation DeleteBeep($id: String!) {
+  deleteBeep(id: $id)
+}
+    `;
+export type DeleteBeepMutationFn = Apollo.MutationFunction<DeleteBeepMutation, DeleteBeepMutationVariables>;
+
+/**
+ * __useDeleteBeepMutation__
+ *
+ * To run a mutation, you first call `useDeleteBeepMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBeepMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBeepMutation, { data, loading, error }] = useDeleteBeepMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteBeepMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBeepMutation, DeleteBeepMutationVariables>) {
+        return Apollo.useMutation<DeleteBeepMutation, DeleteBeepMutationVariables>(DeleteBeepDocument, baseOptions);
+      }
+export type DeleteBeepMutationHookResult = ReturnType<typeof useDeleteBeepMutation>;
+export type DeleteBeepMutationResult = Apollo.MutationResult<DeleteBeepMutation>;
+export type DeleteBeepMutationOptions = Apollo.BaseMutationOptions<DeleteBeepMutation, DeleteBeepMutationVariables>;
 export const GetBeepDocument = gql`
     query GetBeep($id: String!) {
   getBeep(id: $id) {
