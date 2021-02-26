@@ -1058,7 +1058,7 @@ export type GetRideHistoryLazyQueryHookResult = ReturnType<typeof useGetRideHist
 export type GetRideHistoryQueryResult = Apollo.QueryResult<GetRideHistoryQuery, GetRideHistoryQueryVariables>;
 export const RemoveUserDocument = gql`
     mutation RemoveUser($id: String!) {
-  removeUser(id: "")
+  removeUser(id: $id)
 }
     `;
 export type RemoveUserMutationFn = Apollo.MutationFunction<RemoveUserMutation, RemoveUserMutationVariables>;

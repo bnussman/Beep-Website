@@ -33,7 +33,6 @@ function Users(props) {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const pageLimit = 25;
 
-
     async function fetchUsers(page: number) {
         refetch({
             offset: page 
