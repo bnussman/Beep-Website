@@ -12,7 +12,6 @@ import VerifyAccount from './routes/VerifyAccount';
 import Admin from './routes/admin';
 import Privacy from './routes/Privacy';
 import Terms from './routes/Terms';
-import Docs from './routes/Docs';
 import Faq from './routes/FAQ';
 import BeepAppBar from './components/AppBar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -99,7 +98,6 @@ function App() {
                     <Route path="/account/verify/:id" component={VerifyAccount} />
                     <Route path="/privacy" component={Privacy} />
                     <Route path="/terms" component={Terms} />
-                    <Route path="/docs" component={Docs} />
                     <Route path="/admin" component={Admin} />
                     <Route path="/faq" component={Faq} />
                     <Route path="/about" component={About} />
