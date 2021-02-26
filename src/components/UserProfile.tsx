@@ -8,15 +8,23 @@ import { formatPhone } from '../utils/formatters';
 import RideHistoryTable from './RideHistoryTable';
 import BeepHistoryTable from './BeepHistoryTable';
 import QueueTable from './QueueTable';
-import api from '../api';
 import LocationTable from './LocationTable';
 import { UserRole } from '../types/User';
+import {gql, useMutation} from '@apollo/client';
+import {RemoveUserMutation} from '../generated/graphql';
+
+const RemoveUser = gql`
+    mutation RemoveUser($id: String!) {
+        removeUser(id: $id)
+    }
+`;
 
 function UserProfile(props) {
     const history = useHistory();
+    const [remove, { data, loading, error}] = useMutation<RemoveUserMutation>(RemoveUser);
 
     async function deleteUser(id: string) {
-        await api.users.delete(id);
+        await remove({ variables: {id: id} });
         history.goBack();
     }
 

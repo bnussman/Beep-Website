@@ -1,11 +1,9 @@
 import React, { FormEvent, useContext, useState } from 'react';
 import { UserContext } from '../UserContext';
 import { Redirect, Link } from "react-router-dom";
-import { config } from '../utils/config';
 import socket from "../utils/Socket";
 import { TextInput } from '../components/Input';
 import { Caption } from '../components/Typography';
-import APIResultBanner from '../components/APIResultBanner';
 import {gql, useMutation} from '@apollo/client';
 import {LoginMutation} from '../generated/graphql';
 

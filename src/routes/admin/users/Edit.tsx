@@ -1,42 +1,64 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
-import api from '../../../api';
-import { User } from '../../../types/User';
 import { Heading1, Heading3, Heading5 } from '../../../components/Typography';
 import { Formik, Form, Field } from 'formik';
-import APIResultBanner from '../../../components/APIResultBanner';
+import {gql, useMutation, useQuery} from '@apollo/client';
+import {EditUserMutation, GetEditableUserQuery, GetUserQuery} from '../../../generated/graphql';
 
-function EditUserPage(props) {
-    const { userId } = useParams<{ userId: string }>();
-    const [user, setUser] = useState<User>(null);
-    const [response, setResponse] = useState<any>(null);
-
-    async function fetchUser(userId) {
-        const { user } = await api.users.get(userId);
-        setUser(user);
+const GetEditableUser = gql`
+    query GetEditableUser($id: String!) {
+        getUser(id: $id) {
+            first
+            last
+            isBeeping
+            isStudent
+            role
+            venmo
+            singlesRate
+            groupRate
+            capacity
+            masksRequired
+            photoUrl
+            queueSize
+            phone
+            username
+        }
     }
+`;
+
+const EditUser = gql`
+    mutation EditUser($id: String!, $data: EditUserValidator!) {
+        editUser(id: $id, data: $data) {
+            username
+        }
+    }
+`;
+
+function EditUserPage() {
+    const { userId } = useParams<{ userId: string }>();
+    const { data: user, loading, error } = useQuery<GetEditableUserQuery>(GetEditableUser, { variables: { id: userId } }); 
+    const [edit, {data, loading: editLoading, error: editError}] = useMutation<EditUserMutation>(EditUser);
 
     async function updateUser(values) {
-        const data = await api.users.editUser(userId, values);
-        console.log(data);
-        setResponse(data);
+        await edit({ variables: {
+            id: userId,
+            data: values
+        }})
     }
 
-    useEffect(() => {
-        fetchUser(userId);
-    }, [userId]);
-
-    if (!user) {
+    if (loading) {
         return <Heading1>Loading</Heading1>;
     }
 
     return (
         <>
             <Heading3>Edit User</Heading3>
-            {response && <APIResultBanner response={response} setResponse={setResponse}/>}
+            {data && <p>Success</p>}
+            {error && error.message}
+            {editError && editError.message}
 
             <Formik
-                initialValues={user}
+                initialValues={user?.getUser}
                 onSubmit={async (values, { setSubmitting }) => {
                     await updateUser(values);
                     setSubmitting(false);
@@ -44,8 +66,8 @@ function EditUserPage(props) {
             >
                 {({ isSubmitting }) => (
                     <Form>
-                        {Object.keys(user).map((key) => {
-                            const type = typeof user[key];
+                        {Object.keys(user?.getUser).map((key) => {
+                            const type = typeof user.getUser[key];
                             if (type === "number") {
 
                                 return (

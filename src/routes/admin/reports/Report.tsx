@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { NavLink, useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import api from '../../../api';
-import { Report } from '../../../types/Report';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Heading3, Body1, Heading5, Heading1 } from '../../../components/Typography';
 import { Indicator } from '../../../components/Indicator';
 import { Button } from '../../../components/Input';
 import { Formik, Form, Field } from 'formik';
-import APIResultBanner from '../../../components/APIResultBanner';
 import {Card} from '../../../components/Card';
 import {gql, useMutation, useQuery} from '@apollo/client';
 import {DeleteReportMutation, GetReportQuery, UpdateReportMutation} from '../../../generated/graphql';
@@ -69,7 +66,7 @@ const GetReport = gql`
     }
 `;
 
-function ReportPage(props) {
+function ReportPage() {
     const { reportId } = useParams<{reportId: string}>();
     const { data, loading, error, refetch } = useQuery<GetReportQuery>(GetReport, { variables: { id: reportId }});
     const [update, { data: updateData, loading: updateLoading, error: updateError }] = useMutation<UpdateReportMutation>(UpdateReport);

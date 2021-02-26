@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import api from '../../api';
+import React, { useEffect } from 'react'
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
-import {User} from '../../types/User';
 import {gql, useQuery} from '@apollo/client';
 import {GetBeepersQuery} from '../../generated/graphql';
 

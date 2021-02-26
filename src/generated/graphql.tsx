@@ -364,6 +364,8 @@ export type EditUserValidator = {
   queueSize?: Maybe<Scalars['Float']>;
   role?: Maybe<Scalars['String']>;
   pushToken?: Maybe<Scalars['String']>;
+  photoUrl?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 export type GetBeepInput = {
@@ -524,6 +526,16 @@ export type GetRideHistoryQuery = (
       & Pick<User, 'id' | 'photoUrl' | 'username' | 'first' | 'last' | 'name'>
     ) }
   )> }
+);
+
+export type RemoveUserMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type RemoveUserMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeUser'>
 );
 
 export type ChangePasswordMutationVariables = Exact<{
@@ -743,6 +755,33 @@ export type GetReportsQuery = (
         & Pick<User, 'id' | 'first' | 'last' | 'photoUrl' | 'username'>
       ) }
     )> }
+  ) }
+);
+
+export type GetEditableUserQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetEditableUserQuery = (
+  { __typename?: 'Query' }
+  & { getUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'first' | 'last' | 'isBeeping' | 'isStudent' | 'role' | 'venmo' | 'singlesRate' | 'groupRate' | 'capacity' | 'masksRequired' | 'photoUrl' | 'queueSize' | 'phone' | 'username'>
+  ) }
+);
+
+export type EditUserMutationVariables = Exact<{
+  id: Scalars['String'];
+  data: EditUserValidator;
+}>;
+
+
+export type EditUserMutation = (
+  { __typename?: 'Mutation' }
+  & { editUser: (
+    { __typename?: 'User' }
+    & Pick<User, 'username'>
   ) }
 );
 
@@ -1017,6 +1056,36 @@ export function useGetRideHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetRideHistoryQueryHookResult = ReturnType<typeof useGetRideHistoryQuery>;
 export type GetRideHistoryLazyQueryHookResult = ReturnType<typeof useGetRideHistoryLazyQuery>;
 export type GetRideHistoryQueryResult = Apollo.QueryResult<GetRideHistoryQuery, GetRideHistoryQueryVariables>;
+export const RemoveUserDocument = gql`
+    mutation RemoveUser($id: String!) {
+  removeUser(id: "")
+}
+    `;
+export type RemoveUserMutationFn = Apollo.MutationFunction<RemoveUserMutation, RemoveUserMutationVariables>;
+
+/**
+ * __useRemoveUserMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUserMutation, { data, loading, error }] = useRemoveUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRemoveUserMutation(baseOptions?: Apollo.MutationHookOptions<RemoveUserMutation, RemoveUserMutationVariables>) {
+        return Apollo.useMutation<RemoveUserMutation, RemoveUserMutationVariables>(RemoveUserDocument, baseOptions);
+      }
+export type RemoveUserMutationHookResult = ReturnType<typeof useRemoveUserMutation>;
+export type RemoveUserMutationResult = Apollo.MutationResult<RemoveUserMutation>;
+export type RemoveUserMutationOptions = Apollo.BaseMutationOptions<RemoveUserMutation, RemoveUserMutationVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($password: String!) {
   changePassword(password: $password)
@@ -1593,6 +1662,85 @@ export function useGetReportsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetReportsQueryHookResult = ReturnType<typeof useGetReportsQuery>;
 export type GetReportsLazyQueryHookResult = ReturnType<typeof useGetReportsLazyQuery>;
 export type GetReportsQueryResult = Apollo.QueryResult<GetReportsQuery, GetReportsQueryVariables>;
+export const GetEditableUserDocument = gql`
+    query GetEditableUser($id: String!) {
+  getUser(id: $id) {
+    first
+    last
+    isBeeping
+    isStudent
+    role
+    venmo
+    singlesRate
+    groupRate
+    capacity
+    masksRequired
+    photoUrl
+    queueSize
+    phone
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetEditableUserQuery__
+ *
+ * To run a query within a React component, call `useGetEditableUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEditableUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEditableUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEditableUserQuery(baseOptions: Apollo.QueryHookOptions<GetEditableUserQuery, GetEditableUserQueryVariables>) {
+        return Apollo.useQuery<GetEditableUserQuery, GetEditableUserQueryVariables>(GetEditableUserDocument, baseOptions);
+      }
+export function useGetEditableUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEditableUserQuery, GetEditableUserQueryVariables>) {
+          return Apollo.useLazyQuery<GetEditableUserQuery, GetEditableUserQueryVariables>(GetEditableUserDocument, baseOptions);
+        }
+export type GetEditableUserQueryHookResult = ReturnType<typeof useGetEditableUserQuery>;
+export type GetEditableUserLazyQueryHookResult = ReturnType<typeof useGetEditableUserLazyQuery>;
+export type GetEditableUserQueryResult = Apollo.QueryResult<GetEditableUserQuery, GetEditableUserQueryVariables>;
+export const EditUserDocument = gql`
+    mutation EditUser($id: String!, $data: EditUserValidator!) {
+  editUser(id: $id, data: $data) {
+    username
+  }
+}
+    `;
+export type EditUserMutationFn = Apollo.MutationFunction<EditUserMutation, EditUserMutationVariables>;
+
+/**
+ * __useEditUserMutation__
+ *
+ * To run a mutation, you first call `useEditUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editUserMutation, { data, loading, error }] = useEditUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useEditUserMutation(baseOptions?: Apollo.MutationHookOptions<EditUserMutation, EditUserMutationVariables>) {
+        return Apollo.useMutation<EditUserMutation, EditUserMutationVariables>(EditUserDocument, baseOptions);
+      }
+export type EditUserMutationHookResult = ReturnType<typeof useEditUserMutation>;
+export type EditUserMutationResult = Apollo.MutationResult<EditUserMutation>;
+export type EditUserMutationOptions = Apollo.BaseMutationOptions<EditUserMutation, EditUserMutationVariables>;
 export const GetUserDocument = gql`
     query GetUser($id: String!) {
   getUser(id: $id) {

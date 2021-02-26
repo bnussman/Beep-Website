@@ -1,15 +1,11 @@
-import React, { Component, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../UserContext';
 import { Redirect } from "react-router-dom";
 import { config } from '../utils/config';
 import { Button, TextInput } from '../components/Input';
 import { Caption } from '../components/Typography';
-import APIResultBanner from '../components/APIResultBanner';
 import {gql, useMutation} from '@apollo/client';
 import {EditAccountMutation} from '../generated/graphql';
-
-interface Props {
-}
 
 const EditAccount = gql`
     mutation EditAccount($first: String, $last: String, $email: String, $phone: String, $venmo: String) {
@@ -28,12 +24,11 @@ const EditAccount = gql`
     }
 `;
 
-function EditProfile(props: Props) {
+function EditProfile() {
 
     const { user, setUser } = useContext(UserContext);
     const [edit, { data, loading, error }] = useMutation<EditAccountMutation>(EditAccount);
 
-    //const [username] = useState<string | undefined>(user?.user.username);
     const [first, setFirst] = useState<string | undefined>(user?.user.first);
     const [last, setLast] = useState<string | undefined>(user?.user.last);
     const [email, setEmail] = useState<string | undefined>(user?.user.email);
@@ -128,7 +123,7 @@ function EditProfile(props: Props) {
         return (
             <div className="lg:container px-4 mx-auto">
                 {error && error.message}
-                {loading && <p>Loading</p>}
+                {data && <p>Success</p>}
 
                 <form onSubmit={(e) => handleEdit(e)}>
                     <TextInput
@@ -210,7 +205,7 @@ function EditProfile(props: Props) {
                     </div>
 
 
-                    <Button raised>Update profile</Button>
+                    <Button raised>{loading ? "Updating profile..." : "Update profile"}</Button>
                 </form>
             </div>
         );

@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import api from '../../../api';
-import { Beep } from '../../../types/Beep';
+import React, { useState } from 'react'
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Card } from '../../../components/Card';
@@ -42,7 +40,6 @@ const BeepsGraphQL = gql`
     }
 `;
 function Beeps() {
-
     const { loading, error, data, refetch } = useQuery<GetBeepsQuery>(BeepsGraphQL, { variables: { offset: 0, show: 25 }});
     const [currentPage, setCurrentPage] = useState<number>(1);
     const pageLimit = 25;
