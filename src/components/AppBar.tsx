@@ -8,6 +8,7 @@ import {Indicator} from './Indicator';
 import { UserRole } from '../types/User';
 import {gql, useMutation} from '@apollo/client';
 import {LogoutMutation, ResendEmailMutation} from '../generated/graphql';
+import {ThemeToggle} from './ThemeToggle';
 
 interface props {
     noErrors?: boolean;
@@ -69,23 +70,23 @@ const BeepAppBar = (props: props) => {
     }
     return (
         <>
-            <nav className="flex items-center justify-between flex-wrap p-6 mb-2">
+            <nav className="flex flex-wrap items-center justify-between p-6 dark:bg-black dark:text-white">
                 {/* Logo */}
-                <div className="flex items-center flex-shrink-0 text-black mr-6">
+                <div className="flex items-center flex-shrink-0 mr-6 text-black dark:text-white">
                     <img
                         alt=""
                         src="/favicon.png"
                         width="30"
                         height="30"
-                        className="d-inline-block align-top"
+                        className="align-top d-inline-block"
                     />
-                    <NavLink to="/" className="font-semibold text-xl tracking-tight pl-2">Beep App</NavLink>
+                    <NavLink to="/" className="pl-2 text-xl font-semibold tracking-tight">Beep App</NavLink>
                 </div>
 
                 {/* Menu button */}
                 <div className="block lg:hidden">
-                    <button onClick={() => setToggle(!toggleNav)} className="flex items-center px-3 py-2 border rounded text-black border-black-400 hover:text-black hover:border-white">
-                        <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+                    <button onClick={() => setToggle(!toggleNav)} className="flex items-center px-3 py-2 text-black border rounded border-black-400 hover:text-black hover:border-white">
+                        <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
                     </button>
                 </div>
 
@@ -106,36 +107,37 @@ const BeepAppBar = (props: props) => {
                         }
 
                         {user &&
-                            <NavItem to="/profile" className="mt-1 flex flex-row items-center">
+                            <NavItem to="/profile" className="flex flex-row items-center mt-1">
                                 {user.user.photoUrl &&
-                                    <img className="block lg:inline-block mr-4 w-10 h-10 rounded-full object-cover" alt="profile" src={user.user.photoUrl} />
+                                    <img className="block object-cover w-10 h-10 mr-4 rounded-full lg:inline-block" alt="profile" src={user.user.photoUrl} />
                                 }
                                 <span className="mb-1">{user.user.first + " " + user.user.last}</span>
                                 {user.user.isBeeping && <Indicator color="green" className="mb-1 ml-3 animate-pulse" />}
                             </NavItem>
                         }
+                        <ThemeToggle/>
                     </Nav>
                 </div>
             </nav>
 
             {(user && !user.user.isEmailVerified && !props.noErrors) &&
 
-                <div className="lg:container px-4 mx-auto mb-4" >
+                <div className="px-4 mx-auto mb-4 lg:container" >
                     <div role="alert">
-                        <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                        <div className="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
                             Email Varification
                         </div>
-                        <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                        <div className="px-4 py-3 text-red-700 bg-red-100 border border-t-0 border-red-400 rounded-b">
                             <p>You need to verify your email</p>
-                            <p className="text-sm mt-2 underline cursor-pointer" onClick={resendVarificationEmail}>Resend my varification email</p>
+                            <p className="mt-2 text-sm underline cursor-pointer" onClick={resendVarificationEmail}>Resend my varification email</p>
                         </div>
                     </div>
                     {refreshStatus &&
                         <div role="alert" className="mt-4" onClick={() => { setRefreshStatus(null) }}>
-                            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+                            <div className="px-4 py-2 font-bold text-white bg-blue-500 rounded-t">
                                 Refresh Message
                             </div>
-                            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
+                            <div className="px-4 py-3 text-blue-700 bg-blue-100 border border-t-0 border-blue-400 rounded-b">
                                 <p>{refreshStatus}</p>
                                 <p className="text-xs">Click to dismiss</p>
                             </div>
@@ -143,10 +145,10 @@ const BeepAppBar = (props: props) => {
                     }
                     {resendStatus &&
                         <div role="alert" className="mt-4" onClick={() => { setResendStatus(null) }}>
-                            <div className="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+                            <div className="px-4 py-2 font-bold text-white bg-blue-500 rounded-t">
                                 Resend Email Message
                             </div>
-                            <div className="border border-t-0 border-blue-400 rounded-b bg-blue-100 px-4 py-3 text-blue-700">
+                            <div className="px-4 py-3 text-blue-700 bg-blue-100 border border-t-0 border-blue-400 rounded-b">
                                 <p>{resendStatus}</p>
                                 <p className="text-xs">Click to dismiss</p>
                             </div>

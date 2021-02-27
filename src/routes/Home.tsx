@@ -2,15 +2,15 @@ import React from 'react';
 
 function Home() {
     return (
-        <>
+        <div className="bg-white dark:bg-black dark:text-white">
             <div className="hero">
-                <div className="container px-4 sm:px-8 lg:px-16 xl:px-20 mx-auto">
-                    <div className="hero-wrapper grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div className="container px-4 mx-auto sm:px-8 lg:px-16 xl:px-20 dark:bg-black">
+                    <div className="items-center hero-wrapper grid grid-cols-1 md:grid-cols-12 gap-8">
                         <div className="hero-text col-span-6">
-                            <h1 className="font-bold text-4xl md:text-5xl max-w-xl text-gray-900 leading-tight">Ride Beep App</h1>
-                            <p className="text-gray-800 text-base leading-relaxed mt-8 font-semibold">Your ultimate travel companion. A simple way to get a ride at Appalachian State University. A product by students for students.</p>
-                            <div className="get-app flex space-x-5 mt-10 justify-center md:justify-start">
-                                <button className="apple bg-white shadow-xl px-3 py-2 rounded-lg flex items-center space-x-4">
+                            <h1 className="max-w-xl text-4xl font-bold leading-tight text-gray-900 md:text-5xl dark:text-white">Ride Beep App</h1>
+                            <p className="mt-8 text-base font-semibold leading-relaxed text-gray-800 dark:text-white">Your ultimate travel companion. A simple way to get a ride at Appalachian State University. A product by students for students.</p>
+                            <div className="flex justify-center mt-10 get-app space-x-5 md:justify-start">
+                                <button className="flex items-center px-3 py-2 bg-white rounded-lg shadow-xl apple space-x-4">
                                     <div className="logo">
                                         <svg
                                             className="w-6 h-6"
@@ -29,7 +29,7 @@ function Home() {
                                         </div>
                                     </a>
                                 </button>
-                                <button className="google bg-white shadow-xl px-3 py-2 rounded-lg flex items-center space-x-4">
+                                <button className="flex items-center px-3 py-2 bg-white rounded-lg shadow-xl google space-x-4">
                                     <div className="image">
                                         <svg
                                             className="w-6 h-6"
@@ -60,7 +60,7 @@ function Home() {
                 </div>
             </div>
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
-        </>
+        </div>
     );
 
 }

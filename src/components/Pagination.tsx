@@ -2,8 +2,8 @@ import React from 'react';
 
 function PagElement(props) {
 	return (
-		<span className={`inline-flex justify-center items-center px-4 py-2 w-10 border text-sm font-medium hover:bg-gray-50 \
-						  ${props.active ? 'text-yellow-500' : 'text-gray-700'}`}>
+		<span className={`inline-flex justify-center items-center px-4 py-2 w-10 text-sm font-medium hover:bg-gray-50 \
+						  ${props.active ? 'text-yellow-400' : 'text-gray-300'}`}>
 			{props.children}
 		</span>
 	);
@@ -23,7 +23,7 @@ function PagLeft(props) {
 			disabled={props.disabled}
 			onClick={props.onClick}
 			className={`relative inline-flex items-center px-2 py-2 focus:outline-none \
-						rounded-l-md border border-gray-300 text-sm font-medium text-gray-500 \
+						rounded-l-md text-sm font-medium text-gray-500 \
 						${props.className}`}>
 
 			<svg className={`h-5 w-5 ${props.disabled ? 'opacity-50' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -39,7 +39,7 @@ function PagRight(props) {
 			disabled={props.disabled}
 			onClick={props.onClick}
 			className={`relative inline-flex items-center px-2 py-2 focus:outline-none \
-						rounded-r-md border border-gray-300 text-sm font-medium text-gray-500 \
+						rounded-r-md text-sm font-medium text-gray-500 \
 						${props.className}`}>
 
 			{/* Heroicon name: chevron-right */}
@@ -119,13 +119,13 @@ export default function Pagination({
 	return (
 		<div className="flex-1 py-3 sm:flex sm:items-center sm:justify-between">
 			{ !!resultCount &&
-				<p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 dark:text-white">
 					Showing
-					<span className="font-medium mx-1">{(currentPage - 1) * limit + 1}</span>
+					<span className="mx-1 font-medium">{(currentPage - 1) * limit + 1}</span>
 					to
-					<span className="font-medium mx-1">{currentPage * limit <= resultCount ? currentPage * limit : resultCount}</span>
+					<span className="mx-1 font-medium">{currentPage * limit <= resultCount ? currentPage * limit : resultCount}</span>
 					of
-					<span className="font-medium mx-1">{resultCount}</span>
+					<span className="mx-1 font-medium">{resultCount}</span>
 					results
 				</p>
 			}

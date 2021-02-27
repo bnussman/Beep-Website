@@ -1,5 +1,3 @@
-import './assets/style.css'
-import './assets/tailwind.css';
 import React, { useEffect, useState } from 'react';
 import Home from './routes/Home';
 import Login from './routes/Login';
@@ -21,6 +19,7 @@ import About from './routes/About';
 import { ApolloClient, ApolloProvider, createHttpLink, DefaultOptions, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { APIResponse } from './types/types';
+import {ThemeProvider} from './ThemeContext';
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:3001',
@@ -85,6 +84,7 @@ function App() {
 
     return (
         <ApolloProvider client={client}>
+        <ThemeProvider initialTheme="dark">
         <UserContext.Provider value={{user, setUser}}>
             <Router>
                 <BeepAppBar/>
@@ -106,6 +106,7 @@ function App() {
             </Router>
             {/*<Footer/>*/}
             </UserContext.Provider>
+            </ThemeProvider>
         </ApolloProvider>
     );
 }

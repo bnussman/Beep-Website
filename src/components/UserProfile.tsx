@@ -33,13 +33,13 @@ function UserProfile(props) {
     return <>
         {user && (
             <>
-                <div className="flex flex-col lg:flex-row mb-8 items-center">
+                <div className="flex flex-col items-center mb-8 lg:flex-row">
                     {user.photoUrl && (
                         <div className="flex mr-3">
-                            <img className="h-40 w-40 shadow-lg rounded-full" src={user.photoUrl} alt={`${user.first} ${user.last}`}></img>
+                            <img className="w-40 h-40 rounded-full shadow-lg" src={user.photoUrl} alt={`${user.first} ${user.last}`}></img>
                         </div>
                     )}
-                    <div className="flex flex-col mx-3 items-center lg:items-start">
+                    <div className="flex flex-col items-center mx-3 lg:items-start">
                         <Heading4>
                             <span className="mr-2">{user.first} {user.last}</span>
                         </Heading4>
@@ -55,7 +55,7 @@ function UserProfile(props) {
                         <Subtitle>{formatPhone(user.phone || '')}</Subtitle>
                         <Body1>{user.id}</Body1>
                     </div>
-                    <div className="flex flex-col m-6">
+                    <div className="flex flex-col m-6 dark:text-white">
                         <Heading6>
                             {user.isBeeping
                                 ? <><Indicator className="mr-2 animate-pulse" />Beeping now</>
@@ -74,7 +74,7 @@ function UserProfile(props) {
                             <Button>Edit {props.admin ? 'user' : 'profile'}</Button>
                         </NavLink>
 
-                        {props.admin && <Button onClick={() => deleteUser(user.id)} className="text-white bg-red-500 hover:bg-red-700">Delete User</Button>}
+                        {props.admin && <Button onClick={() => deleteUser(user.id)} className="text-white bg-red-500 hover:bg-red-700 dark:text-white">Delete User</Button>}
 
                         { !props.admin &&
                             <NavLink to={'password/change'}>

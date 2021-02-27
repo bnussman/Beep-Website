@@ -30,8 +30,8 @@ export function NavItem(props) {
                 <NavLink
                     to={props.to}
                     onClick={props.onClick}
-                    className={`hover:text-yellow-500 ${props.className}`}
-                    activeClassName="font-semibold text-yellow-600">
+                    className={`hover:text-yellow-300 ${props.className}`}
+                    activeClassName="font-semibold text-yellow-400">
                     {props.children}
                 </NavLink>
                 :
