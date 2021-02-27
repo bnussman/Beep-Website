@@ -18,7 +18,7 @@ export function TextInput(props) {
             </label>
             
             <input
-                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-yellow-500" 
+                className="w-full px-4 py-2 leading-tight text-gray-700 bg-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-yellow-500 dark:bg-gray-900 dark:text-white" 
                 id={props.id}
                 value={props.value}
                 type={props.type}
