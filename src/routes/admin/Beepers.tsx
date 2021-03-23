@@ -4,7 +4,7 @@ import Beeper from '../../types/Beeper';
 import { Heading3 } from '../../components/Typography';
 import { Card } from '../../components/Card';
 import { Table, THead, TH, TBody, TR, TDProfile, TDText } from '../../components/Table';
-import { Map } from '../../components/Map';
+import { BeeperMap } from '../../components/Map';
 
 function Beepers() {
 
@@ -22,7 +22,7 @@ function Beepers() {
     return <>
         <Heading3>Active Beepers</Heading3>
 
-        <Map/>
+        <BeeperMap/>
 
         <Card>
             <Table>

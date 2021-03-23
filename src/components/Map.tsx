@@ -10,8 +10,25 @@ interface Location {
     user: string;
 }
 
-export function Map() {
-    const [markers, setMarkers] = useState<Location[]>([]);
+class LocationStore {
+    private locations: Map<string, Location>;
+
+    constructor() {
+        this.locations = new Map<string, Location>();
+    }
+
+    public update(data: Location) {
+        this.locations.set(data.user, data);
+    }
+
+    public getData() {
+        return Array.from(this.locations).map(([name, value]) => ({...value}));
+    }
+}
+
+
+export function BeeperMap() {
+    const [markers, setMarkers] = useState<Location[]>();
     const { user } = useContext(UserContext);
 
     const mapStyles = {        
@@ -22,13 +39,20 @@ export function Map() {
     useEffect(() => {
         socket.emit("getLocations", user.token);
 
+        const l = new LocationStore();
+
         socket.on("data", (data) => {
-            let temp = markers;
-            temp = [...temp, data.new_val];
-            setMarkers([...temp]);
+            l.update(data.new_val);
         });
 
+
+        const i = setInterval(() => {
+            console.log(l.getData());
+            setMarkers(l.getData());
+        }, 1000);
+
         return () => {
+            if (i) clearInterval(i);
             socket.emit("stopLocations");
         };
     }, []);
@@ -43,9 +67,10 @@ export function Map() {
                 mapContainerStyle={mapStyles}
             >
             {
-                markers.map((item) => {
+                markers?.map((item) => {
                     return (
                         <Marker
+                            icon="/favicon.png"
                             key={item.user}
                             title={item.user} 
                             label={item.user}
